@@ -41,12 +41,12 @@ Rails::Initializer.run do |config|
   config.i18n.default_locale = :pt
 end
 
-ActionMailer::Base.smtp_settings = {
-  :address => 'smtp.inovare.net',
-  :port => '25',
-  :user_name => 'no-reply@inovare.net',
-  :password => 'inovare1105',
-  :authentication => :login
-}
+# ActionMailer::Base.smtp_settings = {
+#   :address => 'smtp.inovare.net',
+#   :port => '25',
+#   :user_name => 'no-reply@inovare.net',
+#   :password => 'inovare1105',
+#   :authentication => :login
+# }
 # Descomentar a linha abaixo quando for necessário excluir todos os arquivos em cache ao abrir o server
 # Inovare.excluir_arquivos_de_cache

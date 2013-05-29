@@ -14,7 +14,7 @@ class Entidade < ActiveRecord::Base
   has_many :compromissos
   has_many :propostas
 
-  
+
   HUMANIZED_ATTRIBUTES = {
     :nome => "O campo nome",
     :nome_reponsavel => "O campo Proprietário",

@@ -1,0 +1,101 @@
+<div style="height: 900px;">
+  <div class="graficos" >
+    <div id="grafico_compromissos">
+      <h3>Compromissos por funcionário(<%= retorna_mes(Date.today.month) %>)</h3>
+      <div>
+        <div id="compromissos" style="width:400px;height:300px;"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="graficos" >
+    <div id="grafico_compromissos">
+      <h3>Vendas por funcionário(<%= retorna_mes(Date.today.month) %>)</h3>
+      <div>
+        <div id="vendas_por_funcionario" style="width:430px;height:300px;"></div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="graficos" >
+    <div id="grafico_status_em_barras">
+      <h3>Status das Propostas(<%= retorna_mes(Date.today.month) %>)</h3>
+      <div>
+        <div id="status_propostas_barras" style="width:410px;height:300px;"></div>
+      </div>
+    </div>
+  </div>
+ 
+
+  <div class="graficos" >
+    <div id="grafico_status">
+      <h3>Status das Propostas(Visão Geral)</h3>
+      <div>
+        <div id="status_propostas" style="width:430px;height:300px;"></div>
+      </div>
+    </div>
+  </div>
+
+
+  
+
+
+</div>
+
+<script id="source" language="javascript" type="text/javascript">
+  J(function () {
+  // Relatorio funil barras
+      xax = {min:0, max:<%=@funil_barras["maximo"] %>, ticks:[
+        // Primeiro parametro é o espaco que vc vai dar entre os nomes, na programacao é usado sempre o index mais 0.5
+<%= @funil_barras["eixo_x"].join(",")  %>                     ]};
+        J.plot( J("#status_propostas_barras"),  [
+          // sempre eh [[index,0],[index,total_que_estou_medindo]]
+<%=@funil_barras["eixo_y"].join(",") %>        ],{ xaxis:xax});
+
+
+    // Relatório de Compromissos do mês
+    xax = {min:0, max:<%=@compromissos["maximo"] %>, ticks:[
+        // Primeiro parametro é o espaco que vc vai dar entre os nomes, na programacao é usado sempre o index mais 0.5
+<%= @compromissos["eixo_x"].join(",")  %>                     ]};
+        J.plot( J("#compromissos"),  [
+          // sempre eh [[index,0],[index,total_que_estou_medindo]]
+<%=@compromissos["eixo_y"].join(",") %>        ],{ xaxis:xax});
+
+          // Reltório de Vendas Por Funcionário
+          xax = {min:0, max:<%=@propostas["maximo"] %>, ticks:[
+              // Primeiro parametro é o espaco que vc vai dar entre os nomes, na programacao é usado sempre o index mais 0.5
+<%= @propostas["eixo_x"].join(",")  %>                     ]};
+              J.plot( J("#vendas_por_funcionario"),  [
+                // sempre eh [[index,0],[index,total_que_estou_medindo]]
+<%=@propostas["eixo_y"].join(",") %>        ],{ xaxis:xax});
+
+
+                // Gráfico de status
+
+                J.plot(J("#status_propostas"), [
+                    <%= @funil.join(",") %>
+                ],{pie: {show: true, pieStrokeLineWidth: 0,pieStrokeColor: '#FFF', pieChartRadius: 130, centerOffsetTop:30,
+                    centerOffsetLeft:0, showLabel: true, labelOffsetFactor: 5/6, labelBackgroundOpacity: 0.55,
+                    labelFormatter: function(serie){return '<br/>'+Math.round(serie.percent)+'%'; }
+                  },legend: {show: true, position: "ne", backgroundOpacity: 0 }
+                });
+
+
+           
+
+
+
+
+
+              });
+
+              // Para colocar label na porcentagem do grafico basta inserir essa linha apos return => serie.label+
+
+
+
+
+
+
+</script>
+

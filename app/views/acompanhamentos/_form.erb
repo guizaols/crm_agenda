@@ -1,0 +1,24 @@
+<% form_for (@acompanhamento), :builder => TableFormBuilder do |f| %>
+  <table>
+    <%= f.error_messages %>
+    <tr>
+      <td class="field_descriptor">Nome</td>
+      <td><%= f.text_field :nome,:simple_tag=>true %></td>
+    </tr>
+    <tr>
+      <td class="field_descriptor">Descrição</td>
+      <td><%= f.text_area :descricao,:simple_tag=>true %></td>
+      </tr>
+    <tr>
+      <td class="field_descriptor">Vendido?</td>
+      <td>    <%= f.select :vendido,[['Sim',1],['Não',0]],:include_blank=>true %>
+      </td>
+    </tr>
+    <tr>
+      <td class="field_descriptor"></td>
+      <td>
+        <%= f.submit '', :class=>['bt_salvar',' float_left'] %> <%= link_to '', acompanhamentos_path, :class=>['bt_voltar',' float_left'] %>
+      </td>
+    </tr>
+  </table>
+<% end %>

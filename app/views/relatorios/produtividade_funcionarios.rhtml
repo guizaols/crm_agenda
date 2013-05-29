@@ -1,0 +1,34 @@
+<h1>Produtividade por Funcionário</h1>
+<br />
+<div id="accordion">
+  <% @propostas.each do |p|%>
+    <h3><a href="#"><%= p.first.name rescue nil %> </a></h3>
+    <div>
+      <table class="listagem">
+        <thead>
+          <tr>
+            <th>Data Início</th>
+            <th>Cliente</th>
+            <th>Nome da Negociação</th>
+            <th>Produto</th>
+            <th>Consultor Comercial</th>
+            <th>Valor</th>
+          </tr>
+        </thead>
+        <%p.last.each do |proposta|%>
+          <tbody>
+            <tr>
+              <td><%=h(proposta.data_inicio) %></td>
+              <td><%=  proposta.pessoa.nome rescue nil %></td>
+              <td><%= link_to h(proposta.nome),pessoa_proposta_path(proposta.pessoa.id,proposta.id) rescue nil%></td>
+              <td><%=h proposta.produto.nome rescue nil%></td>
+              <td><%=h proposta.usuario.name rescue nil%></td>
+              <td><%=h preco_formatado((proposta.valor rescue nil ),"R$")%></td>
+            </tr>
+          </tbody>
+        <%end%>
+      </table>
+      <p><b style="color:red">VALOR VENDIDO(R$): <%= preco_formatado((p.last.collect{|x| x.converte_valor}.sum),"R$")  %> </b></p>
+    </div>
+  <%end%>
+</div>

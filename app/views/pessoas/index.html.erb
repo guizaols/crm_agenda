@@ -1,0 +1,105 @@
+<% content_for :titulo, 'Clientes' %>
+<div class="tb_grande">
+
+  <%form_tag pessoas_path,:method=>"get" do%>
+    <table class="pesquisa">
+      <tr>
+        <th>
+          <label>Filtro:</label>
+        </th>
+        <td><%=select_tag 'filtro',options_for_select(["","Geral","Telefone"],(params[:filtro] rescue nil)),{:onchange=>"
+    if(this.value == 'Geral'){
+    $('parametro').show();
+    $('telefone').hide();
+    $('botao').show();
+    }
+    else if(this.value == 'Telefone'){
+    $('telefone').show();
+    $('parametro').hide();
+    $('botao').show();
+    }
+    else
+    {
+    $('parametro').hide();
+    $('telefone').hide();
+    $('botao').hide();
+    }
+
+            "} %>        </td>
+
+
+
+
+        <td id ="parametro" style="display:none;">
+          <table>
+            <tr>
+              <th><label>Pesquisa: </label></th>
+              <td><%=text_field_tag 'busca[parametro]',(params[:busca][:parametro] rescue nil), :class=>'input_medio'%></td>
+
+            </tr>
+          </table>
+        </td>
+        <td id ="telefone" style="display:none;">
+          <table>
+            <tr>
+              <th><label>Telefone: </label></th>
+              <td><%=text_field_tag 'busca[telefone]',(params[:busca][:telefone] rescue nil), :class=>'input_medio',:onfocus=>"J(this).mask('(99) 9999-9999')"%></td>
+            </tr>
+          </table>
+        </td>
+
+
+  <%#*<tr>%>
+        <%if current_usuario.perfil_id == 3%>
+          <th><label>Concessionárias:</label></th>
+          <td><%=select_tag 'busca[usuario_id]',options_for_select(['']+Entidade.all.collect{|u| [u.nome,u.id] },(params[:busca][:usuario_id].to_i rescue nil)) %></td>
+        <%elsif current_usuario.perfil_id == 1%>
+          <td><label>Consultor:</label></td>
+          <td><%=select_tag 'busca[usuario_id]',options_for_select(['']+Usuario.all(:conditions=>["entidade_id = ?",current_usuario.entidade_id]).collect{|u| [u.name,u.id] },(params[:busca][:usuario_id].to_i rescue nil)) %></td>
+        <%end%>
+        <th><div id="botao" style="display:none"><%=submit_tag "", :class=>'bt_buscar' %></div></th>
+      </tr>
+
+    </table>
+  <%end%>
+
+
+
+
+  <br /><br />
+
+  <div id="tabela_clientes" class="listagem_duplo">
+    <h4>Total de Clientes: <%=@pessoas.length %></h4>
+    <% listagem_table :new => new_pessoa_path,  :headers => ['Nome', 'Email', 'Telefone','Responsável pelo Cliente',"Próximo Contato"] do %>
+      <% @pessoas.each do |pessoa| %>
+        <tr <%= pessoa.compromissos_hoje.blank? ? "" : "style='color:red;'"%> >
+          <td><%= link_to h(pessoa.nome), pessoa %></td>
+          <td><%=h pessoa.email.blank? ? "Nenhum email cadastrado" : pessoa.email.join(" / ") %></td>
+          <td><%=h pessoa.telefone.join(" / ") %></td>
+          <td><%=h pessoa.usuarios.collect(&:name).join(",") %></td>
+          <td style="width:190px;"><%= pessoa.ultimo_contato %></td>
+          <td class="center"><%=link_to(image_tag('alterar.gif'), edit_pessoa_path(pessoa)) %></td>
+        </tr>
+      <% end %>
+    <% end %>
+  </div>
+</div>
+
+<%javascript_tag do%>
+   if($('filtro').value == 'Geral'){
+    $('parametro').show();
+    $('telefone').hide();
+    $('botao').show();
+    }
+    else if($('filtro').value == 'Telefone'){
+    $('telefone').show();
+    $('parametro').hide();
+    $('botao').show();
+    }
+    else
+    {
+    $('parametro').hide();
+    $('telefone').hide();
+    $('botao').hide();
+    }
+<%end%>

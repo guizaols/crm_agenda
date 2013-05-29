@@ -1,0 +1,51 @@
+<h1>Clientes</h1>
+<div id="listagem_por_inicial" style="padding-bottom: 20px;"></div>
+
+<% content_for :titulo, 'Clientes' %>
+<div class="tb_grande">
+  <%form_tag pessoas_path,:method=>"get" do%>
+
+    <table class="form">
+      <tr>
+        <td><label>Pesquisa: </label></td>
+        <td colspan="2"><%=text_field_tag 'busca[parametro]',(params[:busca][:parametro] rescue nil), :class=>'input_medio'%></td>
+      </tr>
+      <%if current_usuario.perfil_id == 1%>
+        <tr>
+          <td><label>Consultor:</label></td>
+          <td><%=select_tag 'busca[usuario_id]',options_for_select(['']+Usuario.all(:conditions=>["perfil_id <> 1"]).collect{|u| [u.name,u.id] },(params[:busca][:usuario_id].to_i rescue nil)) %></td>
+          <td><%=submit_tag "Buscar", :class=>'button' %></td>
+        </tr>
+      <%end%>
+    </table>
+  <%end%>
+  <br /><br />
+
+  <div class="lista_letras">
+    <% 'A'.upto('Z') do |inicial| %>
+      <%= link_to inicial, filtro_por_inicial_pessoas_path(:inicial => inicial), :onclick => "$.ajax({url: $(this).attr('href'), dataType: 'script'}); return false;" %>
+      <br />
+    <% end %>
+      <br class="clear" />
+  </div>
+
+  <div id="tabela_clientes" class="listagem_duplo">
+    <h4>Total de Clientes: <%=@pessoas.length %></h4>
+    <% listagem_table :new => new_pessoa_path,  :headers => ['Nome', 'Email', 'Telefone','Responsável pelo Cliente',"Último Contato","Nº Propostas"] do %>
+      <% @pessoas.each do |pessoa| %>
+        <tr <%= pessoa.compromissos_hoje.blank? ? "" : "style='color:red;'"%> >
+          <td><%= link_to h(pessoa.nome), pessoa %></td>
+          <td><%=h pessoa.email.blank? ? "Nenhum email cadastrado" : pessoa.email.join(" / ") %></td>
+          <td><%=h pessoa.telefone.join(" / ") %></td>
+          <td><%=h pessoa.usuarios.collect(&:name).join(",") %></td>
+          <td style="width:190px;"><%= pessoa.ultimo_contato %></td>
+          <td style="width:80px;"><%=h pessoa.numero_de_propostas %></td>
+          <td class="center"><%=link_to(image_tag('alterar.gif'), edit_pessoa_path(pessoa)) %></td>
+        </tr>
+      <% end %>
+    <% end %>
+<br class="clear" />
+  </div>
+
+</div>
+

@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/public/!svn/ver/56/plugins/find_by_hash/trunk
+END
+Rakefile
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/public/!svn/ver/29/plugins/find_by_hash/trunk/Rakefile
+END
+init.rb
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/public/!svn/ver/35/plugins/find_by_hash/trunk/init.rb
+END
+install.rb
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/public/!svn/ver/29/plugins/find_by_hash/trunk/install.rb
+END
+MIT-LICENSE
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/public/!svn/ver/29/plugins/find_by_hash/trunk/MIT-LICENSE
+END
+uninstall.rb
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/public/!svn/ver/29/plugins/find_by_hash/trunk/uninstall.rb
+END
+README
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/public/!svn/ver/29/plugins/find_by_hash/trunk/README
+END

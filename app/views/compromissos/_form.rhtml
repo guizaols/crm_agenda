@@ -1,0 +1,54 @@
+<div class="form">
+
+  <% form_for [@pessoa, @compromisso], :builder => TableFormBuilder do |p| %>
+    <%= p.error_messages%> <br />    
+    <table>
+      <tr>
+        <td class="field_descriptor">Data:</td>
+        <td colspan="2"><%=p.text_field :data, :simple_tag=>true,:onchange=>remote_function(:url=>{:action=>"carregar_div",:controller=>"compromissos"},:with=>" 'data=' + $('compromisso_data').value + '&usuario_id=' + $('compromisso_usuario_id').value" )%></td>
+        
+      </tr>
+        <tr>
+             <td class="field_descriptor" style="text-align: right;">Tipo de Compromisso:</td>
+        <td> <%=p.select :tipo_compromisso_id,TipoCompromisso.all.collect{|x| [x.nome,x.id]},{:include_blank => true} %></td>
+
+        </tr>
+
+      <tr>
+        <td class="field_descriptor">Compromisso para o usuário</td>
+        <td colspan="2"><%=p.select :usuario_id,Compromisso.lista_usuarios_de_uma_entidade(current_usuario.entidade_id),:onselect=>remote_function(:url=>{:action=>"carregar_div",:controller=>"compromissos"},:with=>" 'data=' + $('compromisso_data').value + '&usuario_id=' + $('compromisso_usuario_id').value" ) %> </td>
+      </tr>
+
+
+              <tr>
+        <td class="field_descriptor">Hora:</td>
+        <td colspan="2">
+          <%=p.select(:hora,Compromisso::HORAS,{:include_blank=>true},{:onfocus=>remote_function(:url=>{:action=>"carregar_div",:controller=>"compromissos"},:with=>" 'data=' + $('compromisso_data').value + '&usuario_id=' + $('compromisso_usuario_id').value" )}) %>
+        <div id ="caixa_explicacao" class="div_explicativa">
+          <div id="compromisso_hora_explicacao_busca" class="explicacao_busca_auto_complete_2" style="display: none;">
+          </div>
+
+        </div>
+        </td>
+      </tr>
+
+
+      <tr>
+        <td class="field_descriptor" valign="top" >Descrição:</td>
+        <td colspan="2"><%= p.text_area :descricao,:cols => 35, :rows => 10, :simple_tag=>true  %></td>
+      </tr>
+
+      <tr>
+        <td></td>
+        <td><%= p.submit "", :class=>['bt_salvar', ' float_left'] %><%= link_to '', pessoa_compromissos_path, :class=>['bt_voltar', ' float_left'] %></td>
+        <td></td>
+
+      </tr>
+      <tr>
+      </tr>
+    </table>
+
+  <% end %>
+</div>
+
+

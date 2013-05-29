@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+  xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+  http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+
+  <% @results.each do |result| %>
+    <url>
+      <% if result.is_a? Array %>
+        <loc><%= result[0] %></loc>
+        <lastmod><%= result[1].httpdate %></lastmod>
+      <% else %>
+        <loc><%= result %></loc>
+      <% end %>
+    </url>
+  <% end %>
+</urlset>

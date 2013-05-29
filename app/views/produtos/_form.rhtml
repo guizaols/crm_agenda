@@ -1,0 +1,77 @@
+<% content_for :titulo, 'Produtos' %>
+<div class="form">
+  <% form_for(@produto,:html =>{:multipart => true}) do |f| %>
+
+    <%= f.error_messages %>
+  
+    <table>
+      <tr>
+        <td colspan="2">
+          <span class="field_descriptor">Nome</span>
+          <%= f.text_field :nome %>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <span class="field_descriptor">Descrição</span>
+          <%= f.text_area :descricao %>
+        </td>
+      </tr>
+      <%if current_usuario.perfil_id == 3%>
+        <tr>
+          <td class="field_descriptor">Concessionária</td>
+          <td><%=f.select :entidade_id,Entidade.all.collect{|x| [x.nome,x.id]},{:include_blank=>true} %></td>
+        </tr>
+      <%end%>
+
+
+        <tr>
+        <td colspan="2">
+          <span class="field_descriptor">Categoria</span>
+          <%= f.select :categoria_id,Categoria.retorna_categorias_para_select,:include_blank=>true %>
+        </td>
+      </tr>
+
+      <tr>
+        <td colspan="2">
+          <span class="field_descriptor">Acessórios</span>
+          <%= f.text_area :acessorios %>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <span class="field_descriptor">Adicionais</span>
+          <%= f.text_area :opcionais %>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <span class="field_descriptor">Preço</span>
+          <%= f.text_field :valor_virtual %>
+
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <span class="field_descriptor">Foto</span>
+        </td>
+        <td>
+          <%= file_field_tag 'arquivo' %>
+        </td>
+      </tr>
+
+      <td>
+        <%= f.submit '', :class=>'bt_salvar' %>
+      </td>
+      <td>
+        <%= link_to '', produtos_path, :class=>'bt_voltar' %>
+      </td>
+    <% end %>
+  </table>
+
+</div>
+
+<script type="text/javascript">
+J('#produto_valor_virtual').maskMoney({symbol:"R$",decimal:",",thousands:"."});
+</script>

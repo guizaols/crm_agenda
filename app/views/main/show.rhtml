@@ -1,0 +1,138 @@
+
+<% content_for :titulo, 'Compromissos' %>
+<div id ="caixa_explicacao" class="div_explicativa">
+  <div id="compromisso_hora_explicacao_busca" class="explicacao_busca_auto_complete_3" style="display: none;">
+  </div>
+</div>
+<%form_remote_tag :url=>{:controller=>"compromissos",:action=>"pesquisa"} do%>
+  <%=link_to_function '', :class=>'bt_compromisso' do |page| page << "modal_compromisso();" end%>
+  <table>
+    <tr>
+      <td>
+        <b>Data Inicial</b>
+      </td>
+      <td colspan="2">
+        <%=text_field_tag 'pesquisa[data_inicial]',(params[:pesquisa][:data_inicial] rescue nil),{:id=>"data_inicial_picker"}%>
+      </td>
+      <td style="width: 15px;"></td>
+      <td><b>Data Final</b></td>
+      <td>
+        <%=text_field_tag 'pesquisa[data_final]',(params[:pesquisa][:data_final] rescue nil),{:id=>"data_final_picker"}%>
+      </td>
+      <td><%=submit_tag "", :class=>'bt_buscar'%></td>
+    </tr>
+  </table>
+<%end%>
+<br />
+
+
+<div id="resultado">
+  <div id="accordion3">
+    <%(Date.today.to_date .. Date.today.to_date).each do |date|%>
+
+      <h3><a href="#"><%=date.to_s_br %></a></h3>
+
+      <div class="compromissos">
+        <% listagem_table  :headers => ["De","Para","Cor","Tipo do Compromisso", "Nome","Hora","Cliente","Operação"] do %>
+
+          <% if  Compromisso.retorna_compromissos_do_dia(date.to_s,current_usuario).length == 0 %>
+            <tr>
+              <td colspan="6"><i>Compromissos não foram cadastrados para esse dia</i></td>
+            </tr>
+          <%else%>
+            <% Compromisso.retorna_compromissos_do_dia(date.to_s,current_usuario).each do |compromisso| %>
+              <tr>
+                <td><%=Usuario.find_by_id(compromisso.agendado_por).name rescue nil %></td>
+                <td><%=Usuario.find_by_id(compromisso.usuario_id).name rescue nil %></td>
+                <td>
+                  <p style="background-color: #<%= compromisso.tipo_compromisso.color%>;width:18px;height: 18px;"></p>
+                </td>
+                <td>
+                  <%=compromisso.tipo_compromisso.nome%>
+                </td>
+                <td><%= compromisso.nome %></td>
+                <td><%= compromisso.hora %></td>
+                <td>            <%=link_to "#{compromisso.pessoa.nome} - #{compromisso.pessoa.telefone.join(",")}",pessoa_compromisso_path(compromisso.pessoa,compromisso) %></td>
+                <td>
+                  <%if compromisso.status == Compromisso::ANDAMENTO%>
+                    <%=link_to_remote image_tag("cancel.png"),{:url=>{:action=>"finalizar",:controller=>"compromissos",:id=>compromisso.id,:pessoa_id=>compromisso.pessoa.id},:with=>"'data_inicial=' + $('data_inicial_picker').value + '&data_final=' + $('data_final_picker').value"}%>
+                  <%else%>
+                    <%=image_tag("accept.png")%>
+                  <%end%>
+                </td>
+              </tr>
+            <%end%>
+          <%end%>
+
+        <%end%>
+      </div>
+      <br />
+      <br />
+      <br />
+      <br />
+
+
+    <%end%>
+
+  </div>
+</div>
+<div id="modal_compromisso" style="display:none;">
+  <form onsubmit="new Ajax.Request('/compromissos/novo_cadastro', {asynchronous:true, evalScripts:true, parameters:  Form.serialize(this) + '&data_inicial=' + $('data_inicial_picker').value + '&data_final=' + $('data_final_picker').value }); return false;"
+        method="post" action="/compromissos/novo_cadastro"
+        >
+<%# form_remote_tag(:url=>{:action=>"novo_cadastro",:controller=>"compromissos"},:with=>"'testesss=' + 'oii'", :builder => TableFormBuilder) do |p| %>
+    <table class="form">
+      <tr>
+        <td class="field_descriptor">Data</td>
+        <td><%=text_field_tag 'compromisso[data]',nil,:onchange=>remote_function(:url=>{:action=>"carregar_div",:controller=>"compromissos"},:with=>" 'data=' + $('compromisso_data').value + '&usuario_id=' + $('compromisso_usuario_id').value" )%></td>
+      </tr>
+      <tr>
+        <td class="field_descriptor">Tipo Compromisso</td>
+        <td><%=select_tag 'compromisso[tipo_compromisso_id]',options_for_select(['']+TipoCompromisso.all.collect{|x| [x.nome,x.id]})%></td>
+      </tr>
+      <tr>
+        <td class="field_descriptor">Cliente</td>
+        <td class="autocomplete">
+          <%=auto_complete_para_qualquer_campo_tag("compromisso[pessoa_id]", auto_complete_for_clientes_pessoas_path)%>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="field_descriptor">Compromisso para o usuário</td>
+        <td colspan="2"><%=select_tag "compromisso[usuario_id]",options_for_select(Compromisso.lista_usuarios_de_uma_entidade(current_usuario.entidade_id),:selected=>current_usuario.id),:onselect=>remote_function(:url=>{:action=>"carregar_div",:controller=>"compromissos"},:with=>" 'data=' + $('compromisso_data').value + '&usuario_id=' + $('compromisso_usuario_id').value" ) %> </td>
+      </tr>
+
+      <tr>
+        <td class="field_descriptor">Hora</td>
+        <td colspan="2">
+          <%=select_tag('compromisso[hora]',options_for_select(Compromisso::HORAS),{:onfocus=>remote_function(:url=>{:action=>"carregar_div",:controller=>"compromissos"},:with=>" 'data=' + $('compromisso_data').value + '&usuario_id=' + $('compromisso_usuario_id').value" )}) %>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="field_descriptor">Observações</td>
+        <td>
+          <%=text_area_tag 'compromisso[descricao]',nil,:rows => 5, :cols => 10 %>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="field_descriptor"></td>
+        <td class="field_descriptor" style="height: 120px; vertical-align: top;"><%=submit_tag '', :class=>'bt_salvar_modal' %></td>
+      </tr>
+
+    </table>
+  </form>
+
+<%# end %>
+
+</div>
+
+
+<br />
+<br />
+<%=link_to_function '', :class=>'bt_compromisso' do |page| page << "modal_compromisso();" end%>
+<br />
+<br />
+<br />
+<br />

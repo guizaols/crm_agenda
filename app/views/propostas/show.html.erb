@@ -1,0 +1,120 @@
+<div class="form">
+  <h1>Negociação - Produto : <%=@proposta.produto.nome %></h1>
+  <table class="show">
+    <%=show_unless_blank "Cliente",@proposta.pessoa.nome%>
+    <%=show_unless_blank "Produto",@proposta.produto.nome%>
+    <tr>
+      <td class="field_descriptor">Valor:</td>
+      <td>R$<%= @proposta.valor %></td>
+      <td>
+        <div id="valor_proposta" style="display:none; width:200px;">
+          <table style="float:left;">
+            <tr>                           
+              <td><%form_remote_tag :url=>{:controller=>"propostas",:action=>"altera_valor_proposta"} do%>
+                  <%= text_field_tag 'valor_proposta',nil,:size=>'5' %>
+              </td>
+                <td><%=submit_tag 'Salvar', :class=>'button', :style=>'float:right;'%><%end%></td>
+            </tr>
+          </table>
+        </div>
+      </td>
+    </tr>
+    <%=show_unless_blank "Data Venda",@proposta.data_venda%>
+    <tr>
+      <td class="field_descriptor">Status:</td>
+      <td><%=@proposta.acompanhamento.nome rescue nil %></td>
+      <td style="float:right;"><%= link_to_function 'Alterar Status', :class=>'button' do |page| page << "$('situacao_proposta').toggle();"  end%></td>
+      <td style="text-align:left;">
+        
+          <table style="float:left;">
+            <tr>
+              <td>
+                <%=select_tag "situacao_proposta",options_for_select([''] + Acompanhamento.all.collect{|x| [x.nome,x.id]}),:style=>"display:none; margin:10px 0 0 5px;",:onchange=>remote_function(:url=>{:controller=>"propostas",:action=>"altera_status_proposta"},:with=> "'status='+ $('situacao_proposta').value",
+                  :loading => "$('loading').show()", :complete => "$('loading').hide()") %>
+                <%= image_tag 'loading.gif', :id => "loading", :style => "display:none" %>
+              </td>
+            </tr>
+          </table>
+        
+      </td>
+      <td valign="top" style="text-align:left;">
+
+      </td>
+    </tr>
+    <%=show_unless_blank "Valor da Entrada",@proposta.valor_entrada%>
+    <%=show_unless_blank "Quantidade",@proposta.quantidade%>
+    <%if @proposta.veiculo_financiado%>
+    <tr>
+      <td class="field_descriptor">Veículo Financiado?</td>
+      <td >Sim</td>
+    </tr>
+
+    <tr>
+      <td class="field_descriptor">Número de Parcelas</td>
+      <td ><%=@proposta.financiamento_numero_parcelas%></td>
+    </tr>
+    <tr>
+      <td class="field_descriptor">Valor das Parcelas</td>
+      <td ><%=@proposta.financiamento_valor_parcelas%></td>
+    </tr>
+
+
+    <%else%>
+    <tr>
+      <td class="field_descriptor">Veículo Financiado?</td>
+      <td >Não</td>
+    </tr>
+    <%end%>
+
+
+ <%if @proposta.existe_usado%>
+    <tr>
+      <td class="field_descriptor">Veículo Usado na Negociação?</td>
+      <td >Sim</td>
+    </tr>
+    <tr>
+      <td class="field_descriptor">Veículo</td>
+      <td ><%=@proposta.usado%></td>
+    </tr>
+    <tr>
+      <td class="field_descriptor">Avaliação do Veículo Usado</td>
+      <td ><%=@proposta.avaliacao_usado%></td>
+    </tr>
+
+
+    <%else%>
+    <tr>
+      <td class="field_descriptor">Veículo Usado na Negociação?</td>
+      <td >Não</td>
+    </tr>
+    <%end%>
+
+
+
+
+  </table>
+
+  <table  cellpadding="2">
+    <tr>
+      <td><%= link_to '', pessoa_propostas_path(@pessoa), :class=>['bt_voltar',' float_left'] %>
+      </td>
+      <td><%= link_to '', edit_pessoa_proposta_path(@pessoa,@proposta), :class=>['bt_alterar',' float_left'] %>
+
+      </td>
+    </tr>
+  </table>
+  <br />
+  <br />
+  <h3>Histórico da Negociação</h3>
+  <% listagem_table :new => new_pessoa_proposta_historico_path(@pessoa,@proposta),  :headers => [ 'Data','Consultor Comercial','Descrição'] do %>
+    <% @historicos.each do |historico| %>
+      <% listagem_tr :edit => edit_pessoa_proposta_historico_path(@pessoa,@proposta,historico),:destroy=>(pessoa_proposta_historico_path(@pessoa,@proposta,historico)) do %>
+        <td><%= link_to h(historico.data), pessoa_proposta_historico_path(@pessoa,@proposta,historico)%></td>
+        <td><%=h historico.usuario.name rescue nil%></td>
+        <td><%=h historico.descricao%></td>
+      <% end %>
+    <% end %>
+  <% end %>
+  <%= draggable_element("orcamentos", :ghosting=>true) %>
+</div>
+

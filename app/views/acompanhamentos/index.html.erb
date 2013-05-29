@@ -1,0 +1,9 @@
+<% content_for :titulo, 'Status de Negociação' %>
+<% listagem_table :new => new_acompanhamento_path,  :headers => ['Nome', 'Descrição'] do %>
+  <% @acompanhamentos.each do |m| %>
+    <% listagem_tr :edit => edit_acompanhamento_path(m) do %>
+      <td><%= link_to h(m.nome), acompanhamento_path(m.id) %></td>
+      <td><%=h m.descricao%></td>
+    <% end %>
+  <% end %>
+<% end %>

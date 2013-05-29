@@ -1,0 +1,19 @@
+<% content_for :titulo, 'Moedas' %>
+<p>
+  <b>Nome:</b>
+  <%=h @moeda.nome %>
+</p>
+
+<p>
+  <b>Valor:</b>
+  <%=h @moeda.valor %>
+</p>
+
+<p>
+  <b>Unidade:</b>
+  <%=h @moeda.unidade %>
+</p>
+
+
+<%= link_to '', edit_moeda_path(@moeda), :class=>['bt_alterar',' float_left'] %>
+<%= link_to '', moedas_path, :class=>['bt_voltar',' float_left'] %>

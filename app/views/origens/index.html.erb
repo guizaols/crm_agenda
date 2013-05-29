@@ -1,0 +1,9 @@
+<% content_for :titulo, 'Origem' %>
+<% listagem_table :new => new_origem_path,  :headers => ['Nome', 'Descrição'] do %>
+  <% @origens.each do |p| %>
+    <% listagem_tr :edit => edit_origem_path(p),:destroy => origem_path(p) do %>
+      <td><%= link_to h(p.nome), origem_path(p.id) %></td>
+      <td><%=h p.descricao%></td>
+    <% end %>
+  <% end %>
+<% end %>

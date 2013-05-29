@@ -1,0 +1,10 @@
+<h1>Detalhes da Negocição</h1>
+
+<table>
+
+  <%=show_unless_blank "Data",@historico.data%>
+  <%=show_unless_blank "Consultor Comercial",@historico.usuario.name%>
+  <%=show_unless_blank "Descrição",@historico.descricao%>
+</table>
+
+<%= link_to '', pessoa_proposta_path(@historico.proposta.pessoa,@historico.proposta), :class=>'bt_voltar' %> 

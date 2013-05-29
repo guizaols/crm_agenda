@@ -1,0 +1,162 @@
+<div class="form">
+
+  <% form_for [@pessoa, @proposta], :builder => TableFormBuilder do |p| %>
+    <%= p.error_messages%> <br />
+    <table>
+      <tr>
+        <td class="field_descriptor" style="text-align: right;">Cliente: </td>
+        <td><b><%=@pessoa.nome%>
+          <%=link_to 'Editar',edit_pessoa_path(@pessoa.id), :target => "_blank" if !@pessoa.dados_estao_completos?%>
+          </b></td>
+      </tr>
+
+      <tr>
+        <td class="field_descriptor" style="text-align: right;">Status:</td>
+        <td> <%=p.select :acompanhamento_id,Acompanhamento.all.collect{|x| [x.nome,x.id]},{:include_blank => true} %></td>
+      </tr>
+
+      <tr>
+        <td class="field_descriptor" style="text-align: right;">Produto:</td>
+        <td><%=p.select :produto_id,Produto.retorna_produtos_para_select(current_usuario.entidade_id),{:include_blank=>true},:onchange=>remote_function(:url=>{"controller"=>"propostas",:action=>"carrega_preco"},:with=>"'produto_id=' + $('proposta_produto_id').value + '&quantidade=' + $('proposta_quantidade').value") %></td>
+      </tr>
+
+
+        <tr>
+        <td class="field_descriptor">Existe veículo usado na negociação?</td>
+        <td><%=p.check_box :existe_usado,:simple_tag=>true,:onclick=>"
+
+    if(this.checked)
+    {
+    $('seminovo').show();
+    $('seminovo_I').show();
+    }
+    else
+    {
+    $('proposta_usado').value = '';
+    $('proposta_avaliacao_usado').value = '';
+    $('seminovo').hide();
+    $('seminovo_I').hide();
+    }
+            ", :class=>"checkbox" %></td>
+      </tr>
+
+
+      <tr id="seminovo" style="display: none;">
+        <td class="field_descriptor">Veículo Usado</td>
+        <td><%=p.text_field :usado,:simple_tag=>true,:size=>8 %></td>
+      </tr>
+
+      <tr id="seminovo_I" style="display: none;">
+        <td class="field_descriptor">Preço do Veículo Usado</td>
+        <td><%=p.text_field :avaliacao_usado,:simple_tag=>true,:size=>8,:onblur=>remote_function(:url => { :action => 'calcula_valor_financiamento',:proposta_id=>@proposta.id }, :with => "'produto_id=' + $('proposta_produto_id').value + '&quantidade=' + $('proposta_quantidade').value+ '&valor_seminovo=' + $('proposta_avaliacao_usado').value + '&valor_entrada=' + $('proposta_valor_entrada').value") %></td>
+      </tr>
+
+      <tr>
+        <td class="field_descriptor" style="text-align: right;">Data Início:</td>
+        <td>           <%=p.text_field :data_inicio,:simple_tag=>true%>
+        </td>
+      </tr>
+      <tr>
+        <td class="field_descriptor" style="text-align: right;">Quantidade:</td>
+        <td>           <%=p.text_field :quantidade,:simple_tag=>true,  :onchange => remote_function(:url => { :action => 'calcula_preco',:proposta_id=>@proposta.id }, :with => "'produto_id=' + $('proposta_produto_id').value + '&quantidade=' + $('proposta_quantidade').value+ '&valor_seminovo=' + $('proposta_avaliacao_usado').value + '&valor_entrada=' + $('proposta_valor_entrada').value") %>
+
+        </td>
+      </tr>
+      <tr>
+        <td class="field_descriptor" style="text-align: right;">Valor:</td>
+        <td><%=p.text_field :valor,:simple_tag=>true,:size=>8 %>
+          <%=link_to_remote 'Atualizar Preço',:url => { :action => 'calcula_preco',:proposta_id=>@proposta.id }, :with => "'produto_id=' + $('proposta_produto_id').value + '&quantidade=' + $('proposta_quantidade').value"%>
+        </td>
+      </tr>
+      <tr>
+        <td class="field_descriptor" style="text-align: right;">Valor da Entrada:</td>
+        <td><%=p.text_field :valor_entrada,:simple_tag=>true,:size=>8,:onblur=>remote_function(:url => { :action => 'calcula_valor_financiamento',:proposta_id=>@proposta.id }, :with => "'produto_id=' + $('proposta_produto_id').value + '&quantidade=' + $('proposta_quantidade').value+ '&valor_seminovo=' + $('proposta_avaliacao_usado').value + '&valor_entrada=' + this.value") %></td>
+      </tr>
+
+
+      <tr>
+        <td class="field_descriptor">Este veículo será financiado?</td>
+        <td><%=p.check_box :veiculo_financiado,:simple_tag=>true,:onclick=>"
+
+  if(this.checked)
+  {
+  $('financiamento').show();
+  $('financiamento_I').show();
+  $('valor_financiado').show();
+  }
+  else
+  {
+  $('financiamento').hide();
+  $('financiamento_I').hide();
+  $('valor_financiado').hide();
+  }
+          ", :class=>"checkbox" %></td>
+      </tr>
+
+      <tr id="valor_financiado" style="display: none;">
+        <td class="field_descriptor">Valor do Financiamento</td>
+        <td><%=p.text_field :valor_financiado,:simple_tag=>true,:size=>8 %>
+                  <%=link_to_remote 'Calcular Valor de Financiamento',:url => { :action => 'calcula_valor_financiamento',:proposta_id=>@proposta.id }, :with => "'produto_id=' + $('proposta_produto_id').value + '&quantidade=' + $('proposta_quantidade').value + '&valor_seminovo=' + $('proposta_avaliacao_usado').value + '&valor_entrada=' + $('proposta_valor_entrada').value"%>
+ </td>
+      </tr>
+
+      <tr id="financiamento" style="display: none;">
+        <td class="field_descriptor">Número Parcelas</td>
+        <td><%=p.text_field :financiamento_numero_parcelas,:simple_tag=>true,:size=>8 %></td>
+      </tr>
+      <tr id="financiamento_I" style="display: none;">
+        <td class="field_descriptor">Valor das Parcelas do Financimento</td>
+        <td><%=p.text_field :financiamento_valor_parcelas,:simple_tag=>true,:size=>8 %></td>
+      </tr>
+
+
+    
+
+
+
+      <tr>
+        <td class="field_descriptor" style="text-align: right;">Consultor Comercial:</td>
+        <td><b><%=current_usuario.name %></b></td>
+      </tr>
+      <tr>
+        <td class="field_descriptor" style="text-align: right;" valign="top">Descrição:</td>
+        <td><%= p.text_area :descricao,:simple_tag=>true %></td>
+      </tr>
+
+      <tr>
+        <td></td>
+        <td><%= p.submit "", :class=>['bt_salvar', ' float_left'] %><%= link_to '', pessoa_propostas_path, :class=>['bt_voltar', ' float_left'] %></td>
+      </tr>
+
+    </table>
+  <% end %>
+</div>
+
+<script type="text/javascript">
+  J('#proposta_valor').maskMoney({symbol:"R$",decimal:",",thousands:"."});
+  J('#proposta_valor_entrada').maskMoney({symbol:"R$",decimal:",",thousands:"."});
+  J('#proposta_avaliacao_usado').maskMoney({symbol:"R$",decimal:",",thousands:"."});
+  J('#proposta_financiamento_valor_parcelas').maskMoney({symbol:"R$",decimal:",",thousands:"."});
+  if($('proposta_veiculo_financiado').checked)
+  {
+    $('financiamento').show();
+    $('financiamento_I').show();
+  }
+  else
+  {
+    $('financiamento').hide();
+    $('financiamento_I').hide();
+  }
+  if($('proposta_existe_usado').checked)
+  {
+    $('seminovo').show();
+    $('seminovo_I').show();
+  }
+  else
+  {
+    $('proposta_usado').value = '';
+    $('proposta_avaliacao_usado').value = '';
+    $('seminovo').hide();
+    $('seminovo_I').hide();
+  }
+</script>

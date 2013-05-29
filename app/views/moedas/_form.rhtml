@@ -1,0 +1,15 @@
+<% form_for (@moeda), :builder => TableFormBuilder do |f| %>
+  <table>
+    <%= f.error_messages %>
+
+    <%= f.text_field :nome %>
+    <%= f.text_field :valor %>
+    <%= f.text_field :unidade %>
+    <tr>
+      <td class="field_descriptor"></td>
+      <td>
+        <%= f.submit '', :class=>['bt_salvar',' float_left'] %> <%= link_to '', moedas_path, :class=>['bt_voltar',' float_left'] %>
+      </td>
+    </tr>
+  </table>
+<% end %>

@@ -1,0 +1,25 @@
+<% content_for :titulo, 'Retirada' %>
+<p>
+  <b>Solicitante:</b>
+  <%=h @retirada.usuario.name %>
+</p>
+
+<p>
+  <b>Data retirada:</b>
+  <%=h @retirada.data_retirada %>
+</p>
+
+<p>
+  <b>Data entrega:</b>
+  <%=h @retirada.data_entrega %>
+</p>
+
+<p>
+  <b>Justificativa:</b>
+  <%=h @retirada.justificativa %>
+</p>
+
+
+
+<%= link_to '', edit_retirada_path(@retirada), :class=>['bt_alterar', ' float_left'] %>
+<%= link_to '', retiradas_path, :class=>['bt_voltar', ' float_left'] %>

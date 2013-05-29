@@ -1,0 +1,30 @@
+<% content_for :titulo, 'Origem' %>
+<div class="form">
+  <% form_for(@origem,:html =>{:multipart => true}) do |f| %>
+    <%= f.error_messages %>
+
+
+    <table>
+      <tr>
+        <td colspan="2">
+          <span class="field_descriptor">Nome</span>
+          <%= f.text_field :nome %>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <span class="field_descriptor">Descrição</span>
+          <%= f.text_area :descricao %>
+        </td>
+      </tr>
+      <td>
+        <%= f.submit '', :class=>'bt_salvar' %>
+      </td>
+      <td>
+        <%= link_to '', categorias_path, :class=>'bt_voltar' %>
+      </td>
+    <% end %>
+  </table>
+
+</div>
+

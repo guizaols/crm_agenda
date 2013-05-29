@@ -1,0 +1,52 @@
+<h1>Relatório Financeiro</h1>
+<br />
+<div id="accordion1">
+  <h3><a href="#">0%</a></h3>
+  <div class="box">
+    <p>
+      VALOR(R$): <%=preco_formatado((Proposta.find(:all,:conditions=>["status = 6"]).collect{|x| x.mostra_valor_em_reais}.sum),"R$")%>
+    </p>
+  </div>
+  <h3><a href="#">10% e 20%</a></h3>
+  <div>
+    <p>
+      VALOR(R$): <%= preco_formatado((Proposta.find(:all,:conditions=>["status = 1"]).collect{|x| x.mostra_valor_em_reais}.sum),"R$")%>
+    </p>
+  </div>
+  <h3><a href="#">50%</a></h3>
+  <div>
+    <p>
+      VALOR(R$): <% soma_50 =  (Proposta.find(:all,:conditions=>["status = 2"]).collect{|x| x.mostra_valor_em_reais}.sum)*0.2%>
+      <%=preco_formatado(soma_50 ,'R$')%>
+    </p>
+  </div>
+  <h3><a href="#">75%</a></h3>
+  <div>
+    <p>
+      VALOR(R$): <% soma_75 = (Proposta.find(:all,:conditions=>["status = 3"]).collect{|x| x.mostra_valor_em_reais}.sum)*0.33%>
+      <%=preco_formatado(soma_75 ,'R$')%>
+    </p>
+  </div>
+
+  <h3><a href="#">90%</a></h3>
+  <div>
+    <p>
+      VALOR(R$): <% soma_90 = (Proposta.find(:all,:conditions=>["status = 4"]).collect{|x| x.mostra_valor_em_reais}.sum)*0.83%>
+      <%=preco_formatado(soma_90 ,'R$')%>
+    </p>
+  </div>
+
+  <h3><a href="#">100%</a></h3>
+  <div>
+    <p>
+      VALOR(R$): <% soma_100 = (Proposta.find(:all,:conditions=>["status = 5"]).collect{|x| x.mostra_valor_em_reais}.sum)*1%>
+      <%=preco_formatado(soma_100 ,'R$')%>
+    </p>
+  </div>
+
+  <h3><a href="#">TOTALIZADORES</a></h3>
+  <div>
+    <p>Soma Conservadora:  <%=preco_formatado(soma_75 + soma_90 + soma_100,"R$") %></p>
+    <p>Soma Realista:  <%= preco_formatado(soma_50 + soma_75 + soma_90 + soma_100,"R$") %></p>
+  </div>
+</div>

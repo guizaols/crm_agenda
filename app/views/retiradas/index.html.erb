@@ -1,0 +1,42 @@
+<% content_for :titulo, 'Solicitações de Retiradas' %>
+<%if current_usuario.perfil_id == 1%>
+  <%form_tag retiradas_path,:method=>"get" do%>
+
+    <table>
+      <tr>
+        <td>
+          <label>Data Retirada:</label>
+        </td>
+        <td colspan="2"><%=text_field_tag 'busca[data_retirada]',(params[:busca][:data_retirada] rescue nil),{:id=>"data_retirada"}%></td>
+      </tr>
+      <%if current_usuario.perfil_id == 1%>
+        <tr>
+          <td>
+            <label>Consultor:</label>
+          </td>
+          <td>
+            <%=select_tag 'busca[usuario_id]',options_for_select(['']+Usuario.all(:conditions=>["perfil_id <> 1"]).collect{|u| [u.name,u.id]},(params[:busca][:usuario_id].to_i rescue nil)), :class=>"float_left" %>
+          </td>
+          <td>
+            <%=submit_tag "", :class=>'bt_buscar' %>
+          </td>
+        </tr>
+      <%end%>
+    </table>
+  <%end%>
+
+<%end%>
+
+<% listagem_table :new => new_retirada_path,  :headers => ['Data retirada','Hora Retirada', 'Solicitante','Recurso','Data Devolução','Hora Devolução'] do %>
+  <% @retiradas.each do |r| %>
+    <% listagem_tr :edit => edit_retirada_path(r) do %>
+      <td><%= link_to h(r.data_retirada), retirada_path(r.id) %></td>
+      <td><%=h r.hora_inicial rescue nil  %></td>
+      <td><%=h r.usuario.name rescue nil  %></td>
+      <td><%=h r.recurso.nome rescue nil  %></td>
+      <td><%=h r.data_entrega%></td>
+      <td><%=h r.final%></td>
+    <% end %>
+  <% end %>
+<% end %>
+

@@ -1,0 +1,50 @@
+<h1>Produtos</h1>
+<%#*<a class="prev browse left"></a>%>
+
+<div class="scrollable">
+
+  <div class="items">
+    <%@produtos.each do |p|%>
+
+      <div>
+        <div class="item">
+          <table>
+            <tr>
+              <th>
+                <%= image_tag("/recursos/"+"#{p.id}.jpg", :width => '70') %>
+              </th>
+              <tr>
+              </tr>
+              <td>
+                <h3><%=p.nome %></h3>
+                <p>
+                  <span>Descrição:</span>
+                  <%=p.descricao%>
+                </p>
+                <span>Acessórios:</span>
+                <%=p.acessorios%>
+                <br />
+                <span>Opcionais:</span>
+                <%=p.opcionais%>
+              </td>
+            </tr>
+            <br class="clear"/>
+          </table>
+        </div>
+      </div>
+    <%end%>
+  </div>
+</div>
+
+<a class="next browse right"></a>
+
+<br clear="all" />
+
+
+<script>
+
+  $(function() {
+    $(".scrollable").scrollable();
+
+  });
+</script>

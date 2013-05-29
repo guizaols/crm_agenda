@@ -1,0 +1,45 @@
+<div id="accordion3">
+  <%(data_inicial.to_date .. data_final.to_date).each do |date|%>
+    <h3 ><a href="#"><%=date.to_s_br %></a></h3>
+    <div >
+         <% listagem_table  :headers => ["De","Para","Cor","Tipo do Compromisso", "Nome","Hora","Cliente","Operação"] do %>
+
+        <% if  Compromisso.retorna_compromissos_do_dia(date.to_s,current_usuario).length == 0 %>
+          <tr>
+            <td colspan="6"><i>Compromissos não foram cadastrados para esse dia</i></td>
+          </tr>
+        <%else%>
+          <% Compromisso.retorna_compromissos_do_dia(date.to_s,current_usuario).each do |compromisso| %>
+            <tr>
+                 <td><%=Usuario.find_by_id(compromisso.agendado_por).name rescue nil %></td>
+                <td><%=Usuario.find_by_id(compromisso.usuario_id).name rescue nil %></td>
+              <td>
+                <p style="background-color: #<%= compromisso.tipo_compromisso.color%>;width:20px;height: 20px;"></p>
+              </td>
+              <td>
+                <%=compromisso.tipo_compromisso.nome%>
+              </td>
+              <td><%= compromisso.nome %></td>
+              <td><%= compromisso.hora %></td>
+              <td>            <%=link_to "#{compromisso.pessoa.nome} - #{compromisso.pessoa.telefone.join(",")}",pessoa_compromisso_path(compromisso.pessoa,compromisso) %></td>
+              <td>
+                <%if compromisso.status == Compromisso::ANDAMENTO%>
+                  <%=link_to_remote image_tag("cancel.png"),{:url=>{:action=>"finalizar",:controller=>"compromissos",:id=>compromisso.id,:pessoa_id=>compromisso.pessoa.id},:with=>"'data_inicial=' + $('data_inicial_picker').value + '&data_final=' + $('data_final_picker').value"}%>
+                <%else%>
+                  <%=image_tag("accept.png")%>
+                <%end%>
+              </td>
+            </tr>
+          <%end%>
+        <%end%>
+
+      <%end%>
+    </div>
+    <br />
+    <br />
+  <%end%>
+</div>
+
+<%javascript_tag do%>
+  J("#accordion3").accordion();
+<%end%>

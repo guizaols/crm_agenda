@@ -1,0 +1,160 @@
+<script>
+  J(function() {
+    J( "#tabs" ).tabs();
+  });
+</script>
+<div class="form">
+  <% form_for @pessoa, :builder => TableFormBuilder do |f|  %>
+
+    <div id="tabs">
+      <ul>
+        <li><a href="#tabs-1">Dados Pessoais</a></li>
+
+        <li><a href="#tabs-2">Contato/Endereço</a></li>
+        <li><a href="#tabs-3">Vendedor Responsável</a></li>
+      </ul>
+      <div id="tabs-1">
+        <table>
+          <tr>
+            <td  class="field_descriptor" width="150">Tipo de Pessoa*</td>
+            <td> <%=f.select :tipo_pessoa,[["Pessoa Física",1],["Pessoa Jurídica",2]],{:include_blank => true}, :onchange => diferenciar_PF_PJ %></td>
+          </tr>
+          <tr id="segmento" <%= 'style="display:none"' if @pessoa.tipo_pessoa == 1  %>>
+            <td  class="field_descriptor" width="150">Segmento*</td>
+            <td> <%=f.select :grupo_id,Grupo.retorna_grupos_para_select,{:include_blank => true}, :onchange => diferenciar_PF_PJ %></td>
+          </tr>
+
+          <tr id="razao_social" <%= 'style="display:none"' if @pessoa.tipo_pessoa == 1  %>>
+            <td  class="field_descriptor">Razão Social* </td>
+            <td><%= f.text_field :razao_social, :simple_tag=>true  %></td>
+          </tr>
+
+          <tr>
+            <td id="nome"  class="field_descriptor">Nome*</td>
+            <td> <%= f.text_field :nome, :simple_tag=>true %></td>
+          </tr>
+
+          <tr>
+            <td  class="field_descriptor" valign="top">Telefones/Fax* <%= link_to_function "+" do |page|
+                page.insert_html :bottom, "telefones_secundarios", :partial => 'telefone'  end %> </td>
+            <td>
+              <ul id="telefones_secundarios" style="list-style-type: none;">
+                <%= render :partial => 'telefone'  %><%= render :partial => 'telefone', :object => 'telefone', :collection => @pessoa.telefone   if @pessoa.telefone%>
+              </ul></td>
+          </tr>
+          <tr>
+            <td  class="field_descriptor" width="150">Origem*</td>
+            <td> <%=f.select :origem_id,Origem.retorna_origem_para_select,{:include_blank => true}, :onchange => diferenciar_PF_PJ %></td>
+          </tr>
+
+
+          <tr>
+            <td id="rg_ie"  class="field_descriptor"><%=@pessoa.label_do_campo_rg_ie %></td>
+            <td> <%= f.text_field :rg_ie, :simple_tag=>true, :maxlength => 15, :size => 15 %></td>
+          </tr>
+          <tr id="cpf">
+            <td  class="field_descriptor">CPF<%="*" if @pessoa.tipo_pessoa == Pessoa::FISICA && !@origem_solicitacao.blank?  %> </td>
+            <td> <%= f.text_field(:cpf,:simple_tag=>true, :maxlength => 14, :size => 14,:onfocus=>"J(this).mask('999.999.999-99')") %></td>
+          </tr>
+
+          <tr id="cnpj">
+            <td  class="field_descriptor">CNPJ<%="*" if @pessoa.tipo_pessoa == Pessoa::JURIDICA && !@origem_solicitacao.blank?  %></td>
+            <td> <%= f.text_field(:cnpj,:simple_tag=>true, :maxlength => 18, :size => 18,:onfocus=>"J(this).mask('99.999.999/9999-99')")%></td>
+          </tr>
+        </table>
+
+      </div>
+      <div id="tabs-2">
+        <table>
+          <tr id="contato" <%= 'style="display:none"' if @pessoa.tipo_pessoa == 1  %>>
+            <td  class="field_descriptor"> Contato</td>
+            <td><%= f.text_field :contato, :simple_tag=>true  %></td>
+          </tr>
+
+          <tr id="telefone_contato" <%= 'style="display:none"' if @pessoa.tipo_pessoa == 1  %>>
+            <td  class="field_descriptor"> Telefone do Contato </td>
+            <td><%= f.text_field :telefone_contato, :simple_tag=>true  %></td>
+          </tr>
+
+          <tr id="email_contato" <%= 'style="display:none"' if @pessoa.tipo_pessoa == 1  %>>
+            <td  class="field_descriptor"> Email do Contato</td>
+            <td><%= f.text_field :telefone_contato, :simple_tag=>true  %></td>
+          </tr>
+          <tr>
+            <td  class="field_descriptor">CEP</td>
+            <td colspan="3"><%= f.text_field :cep, :maxlength => 10, :size => 10,:simple_tag=>true%> </td>
+          </tr>
+          <tr>
+            <td  class="field_descriptor">Cidade<%="*" unless @origem_solicitacao.blank?  %></td>
+            <td>
+              <%= f.text_field :cidade, :simple_tag=>true%>
+            </td>
+          </tr>
+          <tr>
+            <td  class="field_descriptor">Endereço<%="*" unless @origem_solicitacao.blank?  %></td>
+            <td>
+              <%= f.text_field :endereco, :simple_tag=>true %>
+            </td>
+          </tr>
+          <tr>
+            <td  class="field_descriptor">Bairro<%="*" unless @origem_solicitacao.blank?  %></td>
+            <td><%= f.text_field :bairro, :simple_tag=>true %></td>
+          </tr>
+          <tr>
+            <td  class="field_descriptor">Complemento</td>
+            <td><%= f.text_field :complemento, :simple_tag=>true %></td>
+          </tr>
+
+
+
+          <tr>
+            <td  class="field_descriptor" valign="top">Emails
+              <%= link_to_function "+" do |page| page.insert_html :bottom, "emails_secundarios", :partial => 'email' end %></td>
+            <td>
+              <ul id="emails_secundarios"  style="list-style-type: none;">
+                <%= render :partial => 'email'  %><%= render :partial => 'email', :object => 'email', :collection => @pessoa.email   if @pessoa.email%>
+              </ul>
+            </td>
+          </tr>
+
+          <tr>
+            <td  class="field_descriptor" valign="top">Observações</td>
+            <td>
+              <%= f.text_area :observacoes,:cols => 35, :rows => 10, :simple_tag=>true %>
+            </td>
+          </tr>
+        </table>
+
+
+
+      </div>
+      <div id="tabs-3">
+        <table>
+          <tr>
+            <td class="field_descriptor">Funcionários</td>
+            <td>
+              <ul class="lista_funcionarios">
+                <% for  usuario in Usuario.find(:all,:conditions=>["entidade_id = ?",current_usuario.entidade_id]) -%>
+                  <li>
+                    <label for="pessoa_usuario_ids">
+                      <%= check_box_tag "pessoa[usuario_ids][]", "#{usuario.id}", @pessoa.usuarios.any?{|u| u.id == usuario.id},{:simple_tag=>true, :class=>"checkbox"}%>
+                      <%= "#{usuario.name}" %></label>
+                  </li>
+                <% end %>
+              </ul>
+            </td>
+          </tr>
+        </table>
+
+
+      </div>
+    </div>
+    <table>
+      <tr>
+        <td><%= f.submit "", :class=>['bt_salvar', ' float_left'] %><%= link_to '', pessoas_path, :class=>['bt_voltar', ' float_left'] %></td>
+      </tr>
+    </table>
+
+  </div><!-- End demo -->
+
+<%end%>

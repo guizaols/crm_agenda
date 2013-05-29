@@ -1,0 +1,55 @@
+<% content_for :titulo, 'Cliente' %>
+
+<div class="form">
+
+  <div style="float: right;">  <%=render :partial=>'localizacao_cliente',:locals=>{:p=>@pessoa}%></div>
+
+
+  <table padding="2">
+    <tr>
+      <td><%= link_to 'Alterar Dados', edit_pessoa_path(@pessoa), :class=>'button' %></td>
+      <td class="separacao"><%=link_to 'Compromissos',pessoa_compromissos_path(@pessoa.id), :class=>'button' %></td>
+      <td class="separacao"><%= link_to 'Negociações',pessoa_propostas_path(@pessoa), :class=>'button' %></td>
+    </tr>
+  </table>
+
+<br />
+<br />
+
+  <table>
+    <tr>
+      <td class="field_descriptor" style="text-align: right;"><%=@pessoa.label_nome_ou_nome_fantasia%>:</td>
+      <td><%=@pessoa.nome %> </td>
+    </tr>
+    <%= show_unless_blank 'Razão Social', @pessoa.razao_social %>
+    <%= show_unless_blank 'Contato', @pessoa.contato %>
+    <%= show_unless_blank @pessoa.label_do_campo_cpf_cnpj, @pessoa.fisica? ? @pessoa.cpf : @pessoa.cnpj %>
+    <%= show_unless_blank @pessoa.label_do_campo_rg_ie, @pessoa.rg_ie %>
+    <%= show_unless_blank 'Endereço',   [@pessoa.endereco, @pessoa.numero].reject(&:blank?).join(', ') %>
+    <%= show_unless_blank 'Bairro',    @pessoa.bairro%>
+    <%#= show_unless_blank 'Localidade',   @pessoa.nome_localidade %>
+    <%= show_unless_blank 'Email',   @pessoa.email.join(",") %>
+    <%= show_unless_blank 'Telefone', @pessoa.telefone.join(",") %>
+    <%= show_unless_blank 'Observações',   @pessoa.observacoes %>
+  </table>
+  <br />
+  <br />
+  <%= link_to '', pessoas_path, :class=>['bt_voltar', ' float_left'] %>
+
+  <br />
+  <br />
+  <br style="clear: both;" />
+  
+  <h3 style="margin-top: 25px;">Histórico do Cliente</h3>
+  <% listagem_table :new => new_pessoa_historico_cliente_path(@pessoa),  :headers => [ 'Data','Consultor Comercial','Descrição'] do %>
+    <% @historico_clientes.each do |historico| %>
+      <% listagem_tr :edit => edit_pessoa_historico_cliente_path(@pessoa,historico),:destroy=>(pessoa_historico_cliente_path(@pessoa,historico)) do %>
+        <td><%= link_to h(historico.data), pessoa_historico_cliente_path(@pessoa,historico)%></td>
+        <td><%=h historico.usuario.name rescue nil%></td>
+        <td><%=h historico.descricao%></td>
+      <% end %>
+    <% end %>
+  <% end %>
+
+
+</div>

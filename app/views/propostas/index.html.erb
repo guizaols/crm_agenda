@@ -1,0 +1,21 @@
+<h1> Negociações - Cliente: <%=@pessoa.nome%> </h1>
+<div class="form">
+
+  
+    <% listagem_table :new => new_pessoa_proposta_path(@pessoa),  :headers => [ 'Data Início' ,'Produto','Consultor Comercial','Valor','Status'] do %>
+      <% @propostas.each do |proposta| %>
+        <% listagem_tr :edit => edit_pessoa_proposta_path(@pessoa,proposta), :destroy=>pessoa_proposta_path(@pessoa,proposta) do %>
+          <td><%= link_to h(proposta.data_inicio), pessoa_proposta_path(@pessoa,proposta) rescue nil%></td>
+          <td><%=h proposta.produto.nome rescue nil%></td>
+          <td><%=h proposta.usuario.name rescue nil%></td>
+          <td><%#=h preco_formatado((proposta.mostra_valor_em_reais rescue nil), proposta.moeda.blank? ? "R$" : proposta.moeda.unidade)%>
+            <%=h preco_formatado(proposta.valor,"R$")%>
+          </td>
+          <td><%=h proposta.acompanhamento.nome rescue nil%></td>
+        <% end %>
+      <% end %>
+    <% end %>
+  <br />
+  <%=link_to '',pessoa_path(@pessoa.id), :class=>'bt_voltar'%>
+  
+</div>

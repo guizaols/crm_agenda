@@ -1,0 +1,30 @@
+<h1>Compromissos por Funcionário</h1>
+<br />
+
+<div id="accordion">
+
+  <% @compromissos.each do |p|%>
+
+    <h3><a href="#"><%= p.first.name rescue nil %> </a></h3>
+    <div>
+      <table class="listagem">
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>Cliente</th>
+            <th>Data</th>
+          </tr>
+        </thead>
+        <%p.last.each do |c|%>
+          <tr class="dados">
+            <td><%=h(c.nome) %></td>
+            <td><%=h(c.pessoa.nome) %></td>
+            <td><%=h(c.data) %></td>
+          </tr>
+        <%end%>
+
+      </table>
+      <h3>Número de Compromissos: <%= p.last.length %> </h3>
+    </div>
+  <%end%>
+</div>

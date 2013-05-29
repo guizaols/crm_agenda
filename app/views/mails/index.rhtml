@@ -1,0 +1,52 @@
+<% content_for :titulo, "Grupos Para Envio" %>
+
+<% @grupos.each do |grupo| %>
+  <%unless grupo.pessoas.blank?%>
+  <%= link_to_function grupo.nome, "showMailDialog(#{grupo.id})",:class=>'arrow' %>
+<%else%>
+    <%= "Não exsitem clientes para o grupo <b>#{grupo.nome}</b>!" %>
+<%end%>
+<br />
+<br />
+<% end %>
+
+<div id="modal_mail">
+  <% form_tag mail_group_mails_path,:multipart => true do %>
+    <%= hidden_field_tag :grupo_id %>
+
+  <table class="form">
+    <tr>
+    <td class="field_descriptor">
+      <%= label_tag :assunto %>
+    </td>
+    <td>
+      <%= text_field_tag :assunto %>
+    </td>
+    </tr>
+    <tr>
+    <td class="field_descriptor">
+      <%= label_tag :anexo %>      
+    </td>
+    <td>
+      <%= file_field_tag 'arquivo' %>      
+    </td>
+    </tr>
+    <tr>
+    <td class="field_descriptor">
+      <%= label_tag :texto %><br />
+    </td>
+    <td>
+      <%= text_area_tag :texto %>
+    </td>
+    </tr>
+    <tr>
+    <td></td>
+    <td style="height: 240px; vertical-align: top;">
+      <%= submit_tag '', :class=>'bt_salvar_modal' %>
+    </td>
+    </tr>
+  </table>
+  <% end %>
+</div>
+
+<%= mail_dialog %>

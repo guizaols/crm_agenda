@@ -1,0 +1,18 @@
+<p>
+  <b>Nome:</b>
+  <%=h @historico_cliente.nome %>
+</p>
+
+<p>
+  <b>Data:</b>
+  <%=h @historico_cliente.data %>
+</p>
+
+<p>
+  <b>Descricao:</b>
+  <%=h @historico_cliente.descricao %>
+</p>
+
+
+<%= link_to 'Edit', edit_historico_cliente_path(@historico_cliente) %> |
+<%= link_to 'Back', historico_clientes_path %>

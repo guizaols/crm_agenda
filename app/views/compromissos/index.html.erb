@@ -1,0 +1,17 @@
+<% content_for :titulo, "Compromissos - Cliente: #{@pessoa.nome}" %>
+
+<% listagem_table :new => new_pessoa_compromisso_path(@pessoa.id), :headers => ['Nome','Data','Hora','Descrição','Agendador Por','Agendado Para','Status'] do %>
+  <%  @compromissos.each do |compromisso|%>
+    <% listagem_tr :edit => edit_pessoa_compromisso_path(@pessoa.id,compromisso.id) do%>
+      <td><%=h compromisso.nome%></td>
+      <td><%=h compromisso.data%></td>
+      <td><%=h compromisso.hora%></td>
+      <td><%=h compromisso.descricao%></td>
+      <td><%= (Usuario.find_by_id(compromisso.agendado_por).name rescue nil)%></td>
+
+      <td><%= (Usuario.find_by_id(compromisso.usuario_id).name rescue nil)%></td>
+      <td><%=h compromisso.status_verbose%></td>
+    <% end %>
+  <% end %>
+<%end%>
+<span><%=link_to '', pessoa_path(@pessoa.id), :class=>'bt_voltar'%></span>

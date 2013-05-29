@@ -1,0 +1,41 @@
+<h1>Totalização Funil</h1>
+<br />
+<div id="accordion1">
+  <h3><a href="#">0%</a></h3>
+  <div>
+    <p><b style="color: red">VALOR(R$): <%= preco_formatado(Proposta.find(:all,:conditions=>["status = 6"]).collect{|x| x.mostra_valor_em_reais}.sum,"R$")%>
+      </b></p>
+  </div>
+  <h3><a href="#">10% e 20%</a></h3>
+  <div>
+    <p><b style="color: red">VALOR(R$): <%= preco_formatado(Proposta.find(:all,:conditions=>["status = 1"]).collect{|x| x.mostra_valor_em_reais}.sum,"R$")%>
+      </b></p>
+  </div>
+  <h3><a href="#">50%</a></h3>
+  <div>
+    <p><b style="color: red">VALOR(R$): <%soma_50 = Proposta.find(:all,:conditions=>["status = 2"]).collect{|x| x.mostra_valor_em_reais}.sum%>
+        <%=preco_formatado(soma_50,"R$")%>
+      </b></p>
+  </div>
+  <h3><a href="#">75%</a></h3>
+  <div>
+    <p><b style="color: red">VALOR(R$): <% soma_75 = Proposta.find(:all,:conditions=>["status = 3"]).collect{|x| x.mostra_valor_em_reais}.sum%>
+<%=preco_formatado(soma_75,"R$")%>
+      </b></p>
+  </div>
+
+  <h3><a href="#">90%</a></h3>
+  <div>
+    <p><b style="color: red">VALOR(R$): <% soma_90 = Proposta.find(:all,:conditions=>["status = 4"]).collect{|x| x.mostra_valor_em_reais}.sum%>
+<%=preco_formatado(soma_90,"R$")%>
+      </b></p>
+  </div>
+
+  <h3><a href="#">100%</a></h3>
+  <div>
+    <p><b style="color: red">VALOR(R$): <% soma_100 = Proposta.find(:all,:conditions=>["status = 5"]).collect{|x| x.mostra_valor_em_reais}.sum%>
+
+      <%=preco_formatado(soma_100,"R$") %>
+      </b></p>
+  </div>
+</div>

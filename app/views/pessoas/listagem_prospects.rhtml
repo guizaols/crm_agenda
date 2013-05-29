@@ -1,0 +1,52 @@
+<% content_for :titulo, 'Prospects' %>
+<div class="tb_grande">
+
+  <%form_tag listagem_prospects_pessoas_path,:method=>"get" do%>
+    <table class="pesquisa">
+      <tr>
+        <th><label>Pesquisa: </label></th>
+        <td><%=text_field_tag 'busca[parametro]',(params[:busca][:parametro] rescue nil), :class=>'input_medio'%></td>
+        <td style="width: 15px;"></td>
+        <%if current_usuario.perfil_id == 3%>
+          <th><label>Concessionárias:</label></th>
+          <td><%=select_tag 'busca[usuario_id]',options_for_select(['']+Entidade.all.collect{|u| [u.nome,u.id] },(params[:busca][:usuario_id].to_i rescue nil)) %></td>
+        <%elsif current_usuario.perfil_id == 1%>
+          <td><label>Consultor:</label></td>
+          <td><%=select_tag 'busca[usuario_id]',options_for_select(['']+Usuario.all(:conditions=>["entidade_id = ?",current_usuario.entidade_id]).collect{|u| [u.name,u.id] },(params[:busca][:usuario_id].to_i rescue nil)) %></td>
+        <%end%>
+        <td><%=submit_tag "", :class=>'bt_buscar' %></td>
+      </tr>
+    </table>
+  <%end%>
+
+  <br /><br />
+
+  <div id="tabela_clientes" class="listagem_duplo">
+    <%unless @pessoas.blank?%>
+
+      <%contador = 0%>
+      <% listagem_table :headers => ['Nome', 'Email', 'Telefone','Responsável pelo Cliente',"Último Contato"] do %>
+        <% @pessoas.each do |pessoa| %>
+          <%if pessoa.propostas.blank? %>
+            <%contador = contador + 1%>
+            <tr>
+              <td><%= link_to h(pessoa.nome), pessoa %></td>
+              <td><%=h pessoa.email.blank? ? "Nenhum email cadastrado" : pessoa.email.join(" / ") %></td>
+              <td><%=h pessoa.telefone.join(" / ") %></td>
+              <td><%=h pessoa.usuarios.collect(&:name).join(",") %></td>
+              <td style="width:190px;"><%= pessoa.ultimo_contato %></td>
+              <td class="center"><%=link_to(image_tag('alterar.gif'), edit_pessoa_path(pessoa)) %></td>
+            </tr>
+          <%end%>
+        <% end %>
+
+      <% end %>
+      <h4>Total de Clientes sem Negociação: <%=contador rescue "Não foram encontrados clientes sem negociação"%></h4>
+
+    </div>
+  <%else%>
+    <p> Não foram encontrados clientes sem negociação</p>
+  <%end%>
+
+
+</div>

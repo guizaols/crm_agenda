@@ -1,0 +1,30 @@
+<div class="form">
+  <% form_for(@recurso) do |f| %>
+
+    <%= f.error_messages %>
+    <table>
+      <tr>
+        <td class="field_descriptor">Nome</td>
+        <td><%= f.text_field :nome %></td>
+      </tr>
+               <%if current_usuario.perfil_id == 3%>
+      <tr>
+        <td class="field_descriptor">Concessionária</td>
+        <td><%=f.select :entidade_id,Entidade.all.collect{|x| [x.nome,x.id]},{:include_blank=>true} %></td>
+      </tr>
+      <%end%>
+     
+      <tr>
+        <td class="field_descriptor">Descrição</td>
+        <td><%= f.text_area :descricao %></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>
+          <%= f.submit '', :class=>['bt_salvar', ' float_left'] %><%= link_to '', recursos_path, :class=>['bt_voltar', ' float_left'] %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+
+</div>

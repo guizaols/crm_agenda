@@ -1,0 +1,14 @@
+<% content_for :titulo, 'Recursos' %>
+<p>
+  <b>Nome:</b>
+  <%=h @recurso.nome %>
+</p>
+
+<p>
+  <b>Descrição:</b>
+  <%=h @recurso.descricao %>
+</p>
+
+
+<%= link_to '', edit_recurso_path(@recurso), :class=>['bt_alterar', ' float_left']  %>
+<%= link_to '', recursos_path, :class=>['bt_voltar', ' float_left']  %>

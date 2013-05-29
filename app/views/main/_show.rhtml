@@ -1,0 +1,125 @@
+<% content_for :titulo, "Compromissos do Usuário: #{current_usuario.name}" %>
+<b>Selecione o mês</b>
+<%=link_to_function '', :class=>'bt_compromisso' do |page| page << "modal_compromisso();" end%><br />
+<div class="float_left">
+  <%=select_tag 'pesquisa[mes]',options_for_select([['Mês Atual', Date.today.month],['Janeiro',1],['Fevereiro',2],['Marco',3],
+      ['Abril',4],['Maio',5],['Junho',6],['Julho',7],['Agosto',8],['Setembro',9],['Outubro',10],
+      ['Novembro',11],['Dezembro',12],
+    ]),:onchange=>remote_function(:url=>{:action=>'carrega_calendario_do_mes',:controller=>"compromissos"},:with => "'mes=' + $('pesquisa_mes').value") %>
+</div>
+<table id="tipo_compromisso">
+  <tr>
+    <td><div class="migracao"></div></td>
+    <th> Migração - Alterar o Tipo do Compromisso</th>
+    <td><div class="conferencia"></div></td>
+    <th>Conferência</th>
+    <td><div class="visita"></div></td>
+    <th>Visita</th>
+    <td><div class="contato"></div></td>
+    <th>Contato Telefônico</th>
+    <td><div class="lembrete"></div></td>
+    <th>Lembrete</th>
+  </tr>
+</table>
+
+<br />
+
+<div id="calendario">
+  <% calendar do |date| %>
+    <div id="recebecompromisso_<%=date.to_s_br.gsub("/","_") %>" style="border: 1px solid blue;min-height: 80px;">
+      <%p current_usuario %>
+      <% Compromisso.retorna_compromissos_do_dia(date.to_s,current_usuario).each do |compromisso| %>
+
+        <div id="compromisso_<%=compromisso.id%>_<%=date.to_s_br.gsub("/","_")%>" class="compromisso" >
+          <b>
+            <%= link_to_function "#{compromisso.nome} - #{current_usuario.perfil_id != 1 ? compromisso.hora : (compromisso.usuario.name rescue nil)} "  ,{:style=>"color:
+      #{
+              begin
+              if compromisso.tipo_compromisso.nome == "Migração"
+              "#e39600"
+              elsif compromisso.tipo_compromisso.nome == "Conferência"
+              "#0273CD"
+              elsif compromisso.tipo_compromisso.nome == "Visita"
+              "brown"
+              elsif compromisso.tipo_compromisso.nome == "Contato Telefônico"
+              "#669900"
+              elsif compromisso.tipo_compromisso.nome == "Lembrete"
+              "purple"
+              end
+              rescue Exception=>e
+              "red"
+              end
+      }"} do |page|
+              page << "$('#{compromisso.id}').toggle();"
+            end%>
+
+            <%if compromisso.status == Compromisso::ANDAMENTO%>
+              <%=link_to_remote image_tag("cancel.png"),:url=>{:action=>"finalizar",:controller=>"compromissos",:id=>compromisso.id,:pessoa_id=>compromisso.pessoa.id}%>
+
+            <%else%>
+              <%=image_tag("accept.png")%>
+            <%end%>
+          </b>
+          <span id="<%=compromisso.id%>" style="display:none;color:black;">
+            <%=link_to "#{compromisso.pessoa.nome} - #{compromisso.pessoa.telefone.join(",")}",pessoa_compromisso_path(compromisso.pessoa,compromisso) %>
+          </span>
+        </div>
+        <br />
+        <%= draggable_element("compromisso_#{compromisso.id}_#{date.to_s_br.gsub("/","_")}", :ghosting => true ) %>
+      <%end%>
+    </div>
+    <%= drop_receiving_element("recebecompromisso_#{date.to_s_br.gsub("/","_")}",
+      :accept => "compromisso",
+      :with   => "'data_nova=' + element.id + '&nova_data=' + $('recebecompromisso_#{date.to_s_br.gsub("/","_")}').id",
+      :url    => {:controller=>"compromissos",:action=>"altera_data"})%>
+
+  <%end%>
+</div>
+
+<br />
+
+
+
+<div id="modal_compromisso" style="display:none;">
+  <% form_remote_tag :url=>{:action=>"novo_cadastro",:controller=>"compromissos"}, :builder => TableFormBuilder do |p| %>
+    <table class="form">
+      <tr>
+        <td class="field_descriptor">Nome</td>
+        <td><%=text_field_tag 'compromisso[nome]'%></td>
+      </tr>
+      <tr>
+        <td class="field_descriptor">Data</td>
+        <td><%=text_field_tag 'compromisso[data]'%></td>
+      </tr>
+      <tr>
+        <td class="field_descriptor">Tipo Compromisso</td>
+        <td><%=select_tag 'compromisso[tipo_compromisso_id]',options_for_select(['']+TipoCompromisso.all.collect{|x| [x.nome,x.id]})%></td>
+      </tr>
+      <tr>
+        <td class="field_descriptor">Cliente</td>
+        <td>
+          <%=auto_complete_para_qualquer_campo_tag("compromisso[pessoa_id]", auto_complete_for_clientes_pessoas_path)%>
+        </td>
+      </tr>
+      <tr>
+        <td class="field_descriptor">Hora</td>
+        <td><%=text_field_tag 'compromisso[hora]',nil,:size=>8%></td>
+      </tr>
+      <tr>
+        <td class="field_descriptor">Observações</td>
+        <td>
+          <%=text_area_tag 'compromisso[descricao]',nil,:rows => 5, :cols => 10 %>
+        </td>
+      </tr>
+      <tr>
+        <td class="field_descriptor"></td>
+        <td class="field_descriptor"><%=submit_tag '', :class=>'bt_salvar' %></td>
+      </tr>
+
+    </table>
+
+  <% end %>
+
+</div>
+<br />
+<br />

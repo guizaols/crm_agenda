@@ -1,0 +1,123 @@
+<% content_for :titulo, 'Empresa' %>
+
+<div style="height: 850px;">
+  <div class="graficos" >
+    <div id="grafico_compromissos">
+      <h3 id="label_compromisso">
+        <%if current_usuario.perfil_id != 3%>
+        Compromissos Funcionário (<%= retorna_mes(Date.today.month) %>)
+        <%else%>
+        Compromissos Concessionárias (<%= retorna_mes(Date.today.month) %>)
+        <%end%>
+      </h3>
+      <br />
+       <%#=select_tag 'pesquisa_compromissos',options_for_select(['']+[['Mês Atual',"atual"],['Mês Anterior',"anterior"]],:selected=>"atual"),{
+          :onchange=>remote_function(:url=>{:controller=>"compromissos",:action=>"graficos"},:with=> "'status='+ $('pesquisa_compromissos').value",
+            :loading => "$('loading').show()", :complete => "$('loading').hide()")
+        }%>
+        <%#= image_tag 'loading.gif', :id => "loading", :style => "display:none" %>
+      <div>
+        <div id="compromissos" style="width:400px;height:300px;"></div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="graficos" >
+    <div id="grafico_vendas_por_funcionario">
+      <h3 id="label_vendas">
+    <%if current_usuario.perfil_id !=3%>
+        Vendas por funcionário (<%= retorna_mes(Date.today.month) %>)
+        <%else%>
+          Vendas por Concessionária (<%= retorna_mes(Date.today.month) %>)
+        <%end%>
+    <%#=link_to_function image_tag("cancel.png"),"#",{:style=>"padding-left:10px;",:id=>"cancel_compromissos"} do |page|
+          page << "J('#grafico_vendas_por_funcionario').remove(); "
+        end%>
+
+      </h3>
+      <br />
+         <%#=select_tag 'pesquisa_vendas',options_for_select(['']+[['Mês Atual',"atual"],['Mês Anterior',"anterior"]],:selected=>"atual"),{
+          :onchange=>remote_function(:url=>{:controller=>"propostas",:action=>"grafico_vendas_por_funcionario"},:with=> "'status='+ $('pesquisa_vendas').value",
+            :loading => "$('loading1').show()", :complete => "$('loading1').hide()")
+        }
+      %>
+        <%#= image_tag 'loading.gif', :id => "loading1", :style => "display:none" %>
+      
+      <div>
+        <div id="vendas_por_funcionario" style="width:430px;height:300px;"></div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <div class="graficos" >
+    <div id="grafico_status_em_barras">
+      <h3 id="label_status">Status das Propostas (<%= retorna_mes(Date.today.month) %>)
+        <%#=link_to_function image_tag("cancel.png"),"#",{:style=>"padding-left:10px;",:id=>"cancel_compromissos"} do |page|
+          page << "J('#grafico_status_em_barras').remove(); "
+        end%>
+      </h3>
+      <br />
+         <%#=select_tag 'pesquisa_status',options_for_select(['']+[['Mês Atual',"atual"],['Mês Anterior',"anterior"]],:selected=>"atual"),{
+          :onchange=>remote_function(:url=>{:controller=>"propostas",:action=>"grafico_status"},:with=> "'status='+ $('pesquisa_status').value",
+            :loading => "$('loading2').show()", :complete => "$('loading2').hide()")
+        }%>
+        <%#= image_tag 'loading.gif', :id => "loading2", :style => "display:none" %>
+      
+      <div>
+        <div id="status_propostas_barras" style="width:410px;height:300px;"></div>
+      </div>
+    </div>
+  </div>
+
+ 
+  
+  <div class="graficos" >
+    <div id="grafico_status">
+      <h3>Status das Propostas(Visão Geral)
+        <%#=link_to_function image_tag("cancel.png"),"#",{:style=>"padding-left:10px;",:id=>"cancel_compromissos"} do |page|
+          page << "J('#grafico_status').remove(); "
+        end%>
+      </h3><br />
+      <div>
+        <div id="status_propostas" style="width:430px;height:300px;"></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script id="source" language="javascript" type="text/javascript">
+  J(function () {
+
+    var maximo = <%=@funil_barras["maximo"]%>;
+    var eixo_x = [<%=@funil_barras["eixo_x"].join(",")%>];
+    var eixo_y = [<%=@funil_barras["eixo_y"].join(",")%>];
+    var id_elemento = "status_propostas_barras";
+
+    grafico_barras(maximo,eixo_x,eixo_y,id_elemento);
+
+    var maximo = <%=@compromissos["maximo"]%>;
+    var eixo_x = [<%=@compromissos["eixo_x"].join(",")%>];
+    var eixo_y = [<%=@compromissos["eixo_y"].join(",")%>];
+    var id_elemento = "compromissos";
+
+    grafico_barras(maximo,eixo_x,eixo_y,id_elemento);
+
+    var maximo = <%=@propostas["maximo"]%>;
+    var eixo_x = [<%=@propostas["eixo_x"].join(",")%>];
+    var eixo_y = [<%=@propostas["eixo_y"].join(",")%>];
+    var id_elemento = "vendas_por_funcionario";
+
+    grafico_barras(maximo,eixo_x,eixo_y,id_elemento);
+
+    var dados = [<%=@funil.join(",")%>];
+    var id_elemento = "status_propostas";
+
+    grafico_pizza(id_elemento,dados);
+  });
+            
+</script>
+

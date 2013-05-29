@@ -1,0 +1,12 @@
+<p>
+  <b>Nome:</b>
+  <%=h @tipo_compromisso.nome %>
+</p>
+<p>
+  <b class="float_left">Cor:</b>
+  <span style="background-color: #<%=h @tipo_compromisso.color%>;width:20px;height: 20px; display:block; margin-left:35px;"></span>
+</p>
+
+
+<%= link_to '', edit_tipo_compromisso_path(@tipo_compromisso), :class=>['bt_alterar', ' float_left'] %> 
+<%= link_to '', tipo_compromissos_path, :class=>['bt_voltar', ' float_left'] %>

@@ -1,0 +1,11 @@
+<% content_for :titulo, 'Produtos' %>
+<% listagem_table :new => new_produto_path,  :headers => ['Imagem','Nome', 'Descrição','Preço'] do %>
+  <% @produtos.each do |produto| %>
+    <% listagem_tr :edit => edit_produto_path(produto) do %>
+  <td><%= image_tag("/recursos/"+"#{produto.id}.jpg", :width => '70') %></td>
+      <td><%= link_to h(produto.nome), produto_path(produto.id) %></td>
+      <td><%=h produto.descricao%></td>
+      <td><%=h preco_formatado(produto.valor,"R$")%></td>
+    <% end %>
+  <% end %>
+<% end %>

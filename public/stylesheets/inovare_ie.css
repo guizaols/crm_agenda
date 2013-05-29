@@ -1,0 +1,11 @@
+/* body { behavior: url(/hover.htc); }  */
+
+/*img, div, td, th { behavior: url(/iepngfix.htc) }*/
+
+.listagem {
+    border: none;
+}
+
+.listagem thead th {
+    padding: 7px 10px 6px 10px;
+}

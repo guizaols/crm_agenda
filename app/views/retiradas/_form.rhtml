@@ -1,0 +1,51 @@
+<div class="form">
+  <% form_for(@retirada) do |f| %>
+
+    <%= f.error_messages %>
+    <table>
+      <tr>
+        <td class="field_descriptor">Data Retirada</td>
+        <td>
+          <%= f.text_field :data_retirada,:size=>"5" %>
+        </td>
+      </tr>
+      <tr>
+        <td class="field_descriptor">Hora Retirada</td>
+        <td>
+          <%= f.text_field :hora_inicial,:size=>"5" %>
+        </td>
+      </tr>
+      <tr>
+        <td class="field_descriptor">Data Entrega</td>
+        <td>
+          <%= f.text_field :data_entrega,:size=>"5" %><br />
+        </td>
+      </tr>
+      <tr>
+        <td class="field_descriptor">Hora Entrega</td>
+        <td>
+          <%= f.text_field :final,:size=>"5" %><br />
+        </td>
+      </tr>
+      <tr>
+        <td class="field_descriptor">Recurso</td>
+        <td>
+          <%= f.select :recurso_id,Recurso.all.collect{|r| [r.nome,r.id]},{:include_blank=>true} %><br />
+        </td>
+      </tr>
+      <tr>
+        <td class="field_descriptor">Justificativa</td>
+        <td>
+          <%= f.text_area :justificativa %>
+        </td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>
+          <%= f.submit '', :class=>['bt_salvar', ' float_left'] %><%= link_to '', retiradas_path, :class=>['bt_voltar', ' float_left']  %>
+        </td>
+      </tr>
+    </table>
+  <% end %>
+
+</div>

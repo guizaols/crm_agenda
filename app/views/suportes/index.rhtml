@@ -1,0 +1,60 @@
+<% content_for :titulo, 'Solicitações de Orçamento' %>
+<% listagem_table :headers => ['Data','Solicitante','Negociação', 'Status','Aprovação Técnica','Aprovação Administrativa','Proposta Enviada'] do %>
+  <% @suportes.each do |s| %>
+    <%if s.aprovacao_tecnica.blank? || s.aprovacao_adminsitrativa.blank? || s.proposta_enviada.blank?%>
+      <% listagem_tr  do %>
+        <td><%=h s.data %></td>
+        <td><%=h s.usuario.name %></td>
+        <td><%= link_to h("#{s.proposta.pessoa.nome} - #{s.proposta.id} "), pessoa_proposta_path(s.proposta.pessoa,s.proposta) rescue nil%></td>
+        <td><%=h s.status_verbose %></td>
+
+        <%if s.aprovacao_tecnica.blank?%>
+          <td>
+            <center><%=link_to_remote image_tag("cancel.png"),:url=>{:controller=>"suportes",:action=>"aprovacao_tecnica"},:with=>"'id=' + '#{s.id}' "%></center>
+          </td>
+        <%else%>
+          <td>
+            <center><%=image_tag("accept.png") %> </center>
+
+          </td>
+        <%end%>
+
+
+
+
+        <%if s.aprovacao_tecnica%>
+
+          <%if s.aprovacao_adminsitrativa.blank?%>
+            <td>
+              <center><%=link_to_remote image_tag("cancel.png"),:url=>{:controller=>"suportes",:action=>"aprovacao_administrativa"},:with=>"'id=' + '#{s.id}' "%></center>
+            </td>
+          <%else%>
+            <td>
+              <center><%=image_tag("accept.png") %> </center>
+            </td>
+          <%end%>
+        <%else%>
+          <td><center style="color:brown;">Aprovação Técnica Pendente!</center></td>
+        <%end%>
+
+        <%if s.aprovacao_adminsitrativa && s.aprovacao_tecnica%>
+
+          <%if s.proposta_enviada.blank?%>
+            <td>
+              <center><%=link_to_remote image_tag("cancel.png"),:url=>{:controller=>"suportes",:action=>"proposta_enviada"},:with=>"'id=' + '#{s.id}' "%></center>
+            </td>
+          <%else%>
+            <td>
+              <center><%=image_tag("accept.png") %> </center>
+            </td>
+          <%end%>
+        <%else%>
+          <td><center style="color:red;">Aprovação Administrativa/Ténica Pendente!</center></td>
+        <%end%>
+
+
+      <% end %>
+    <%end%>
+  <% end %>
+<% end %>
+

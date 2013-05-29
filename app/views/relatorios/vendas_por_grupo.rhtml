@@ -1,0 +1,44 @@
+<div id="accordion1">
+  <%Grupo.all.each do |g|%>
+    <h3><a href="#"><%=g.nome %></a></h3>
+    <div>
+      <table class="listagem">
+        <thead>
+          <tr>
+            <th>Cliente</th>
+            <th>Produto</th>
+            <th>Consultor</th>
+            <th>Valor</th>
+            <th>Concessionária</th>
+          </tr>
+        </thead>
+        <%valor = 0%>
+             <%total_unidades = 0%>
+        <%@propostas.each do |prop|%>
+          <%if prop.pessoa.grupo == g%>
+              <%total_unidades += prop.quantidade.to_i%>
+            <tr>
+              <td><%=prop.pessoa.nome rescue nil%></td>
+              <td><%=prop.produto.nome rescue nil %></td>
+              <td><%=prop.usuario.name rescue nil%></td>
+              <td><%=prop.valor.real_contabil  %></td>
+              <td><%=prop.usuario.entidade.nome rescue nil  %></td>
+              <% valor += prop.valor.quantia %>
+            </tr>
+          <%end%>
+        <%end%>
+
+      </table>
+      <p><b>Valor Total: </b><%=Dinheiro.new(valor/100).real_contabil%> </p>
+        <p><b>Total de Unidades: </b><%=total_unidades%> </p>
+    </div>
+
+  <%end%>
+
+
+
+
+
+
+
+</div>

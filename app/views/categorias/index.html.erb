@@ -1,0 +1,9 @@
+<% content_for :titulo, 'Categorias' %>
+<% listagem_table :new => new_categoria_path,  :headers => ['Nome', 'Descrição'] do %>
+  <% @categorias.each do |categoria| %>
+    <% listagem_tr :edit => edit_categoria_path(categoria) do %>
+      <td><%= link_to h(categoria.nome), categoria_path(categoria.id) %></td>
+      <td><%=h categoria.descricao%></td>
+    <% end %>
+  <% end %>
+<% end %>

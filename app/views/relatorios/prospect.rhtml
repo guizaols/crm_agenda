@@ -1,0 +1,32 @@
+<h1>Prospects</h1>
+<br />
+<table class="listagem">
+  <thead>
+  <tr>
+    <th>Tipo Pessoa</th>
+    <th>Nome/Razão Social</th>
+    <th>Email</th>
+    <th>Telefone</th>
+    <th>Concessionária</th>
+  </tr>
+  </thead>
+<%count = 0%>
+<%@pessoas.each do |p|%>
+
+  <%if p.propostas.blank?%>
+    <tr>
+
+      <% count = count +1 %>
+      <td><%=p.tipo_pessoa == 1 ? "Física" : "Jurídica"%></td>
+      <td><%=p.tipo_pessoa == 1 ? p.nome : p.razao_social%></td>
+      <td><%=p.email.join(",")%></td>
+      <td><%=p.telefone.join(",")%></td>
+      <td><%=p.entidade.nome rescue nil%></td>
+
+    </tr>
+  <%end%>
+<%end%>
+</table>
+<br />
+<br />
+<h3>Clientes em Prospecção: <%=count %></h3>

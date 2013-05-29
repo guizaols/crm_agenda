@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta id="viewport" name="viewport" content="width=320; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"/>
+    <%#*<meta id="viewport" name="viewport" content="initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"/>%>
+    <title>Crm Vendas</title>
+    <%= stylesheet_link_tag 'iphone', 'modalbox' %>
+<%#= javascript_include_tag 'application', 'prototype', 'effects', 'controls', "calendar_date_select", "calendar_date_select_format_br", 'modalbox', 'window', :cache => true %>
+    <%= javascript_include_tag 'aplication_jquery','mobile_js/jquery','mobile_js/jquery-ui' %>
+    <script src="http://cdn.jquerytools.org/1.2.5/full/jquery.tools.min.js"></script>
+
+  </head>
+  <body>
+    <div id="canto_TE"></div>
+    <div id="canto_TD"></div>
+    <div id="secao_interna">
+        <div id="heading">
+        <% if logged_in? %>
+          <%#*<h1 id="pageTitle">Bem vindo!</h1>%>
+          <div class="buttons">
+            <ul>
+              <li style="margin-right: 50px;"><%= link_to 'Menu', minha_empresa_path,:id=>'backButton' %></li>
+              <li><%= link_to 'Sair', logout_path,:class=>'button' %></li>
+            </ul>
+          </div>
+        <%end%>
+      </div>
+
+      <div id="conteudo_topo"></div>
+
+      <div id="conteudo">
+        <%=yield%>
+      </div>
+
+    </div>
+
+    <div id="canto_BE"></div>
+    <div id="canto_BD"></div>
+  </body>
+</html>
+

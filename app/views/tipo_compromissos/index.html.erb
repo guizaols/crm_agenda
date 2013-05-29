@@ -1,0 +1,11 @@
+<% content_for :titulo, 'Tipo de Compromissos' %>
+<% listagem_table :new => new_tipo_compromisso_path,  :headers => ['Nome','Cor'] do %>
+  <% @tipo_compromissos.each do |c| %>
+    <% listagem_tr :edit => edit_tipo_compromisso_path(c), :destroy=>tipo_compromisso_path(c) do %>
+      <td><%= h(c.nome) %></td>
+      <td><p style="background-color: #<%=c.color%>;width:20px;height: 20px; margin:0 0 2px 0; border:1px solid #ccc;"></p></td>
+    <% end %>
+  <% end %>
+<% end %>
+
+

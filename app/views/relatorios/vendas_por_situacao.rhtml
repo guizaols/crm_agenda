@@ -1,0 +1,30 @@
+<h1>Vendas por período</h1>
+<br />
+<%unless @propostas.blank?%>
+  <table class="listagem">
+    <thead>
+      <tr>
+        <th>Data Início</th>
+        <th>Cliente</th>
+        <th>Produto</th>
+        <th>Consultor Comercial</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <%@propostas.each do |proposta|%>
+        <tr>
+          <td><%= link_to h(proposta.data_inicio), pessoa_proposta_path(proposta.pessoa,proposta)%></td>
+          <td><%=h proposta.pessoa.nome rescue nil %></td>
+          <td><%=h proposta.produto.nome rescue nil%></td>
+          <td><%=h proposta.usuario.name rescue nil%></td>
+          <td><%=h proposta.acompanhamento.nome rescue nil%></td>
+        </tr>
+      </tbody>
+    <% end %>
+  </table>
+
+  <b>Número de propostas encontradas: </b><%= @propostas.length %>
+<%else%>
+  <b>Não foram encontradas propostas com esses parâmetros</b>
+<%end%>

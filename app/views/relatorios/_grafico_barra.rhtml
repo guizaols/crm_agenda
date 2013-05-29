@@ -1,0 +1,15 @@
+<div id="<%=id%>" style="width:400px;height:300px;"></div>
+<script id="source" language="javascript" type="text/javascript">
+  J(function () {
+
+    var maximo = <%=f["maximo"]%>;
+    var eixo_x = [<%=f["eixo_x"].join(",")%>];
+    var eixo_y = [<%=f["eixo_y"].join(",")%>];
+    var id_elemento = "<%=id%>";
+
+    grafico_barras(maximo,eixo_x,eixo_y,id_elemento);
+
+
+  });
+
+</script>

@@ -1,0 +1,14 @@
+<% content_for :titulo, 'Categorias' %>
+<p>
+  <b>Nome:</b>
+  <%=h @categoria.nome %>
+</p>
+
+<p>
+  <b>Descrição:</b>
+  <%=h @categoria.descricao %>
+</p>
+
+
+<%= link_to '', edit_categoria_path(@categoria), :class=>['bt_alterar',' float_left'] %>
+<%= link_to '', categorias_path, :class=>['bt_voltar',' float_left'] %>

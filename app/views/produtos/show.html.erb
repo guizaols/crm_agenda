@@ -1,0 +1,50 @@
+<% content_for :titulo, 'Produtos' %>
+
+<div class="detalhes">
+
+<%if File.exists?("#{RAILS_ROOT}/public/recursos/#{@produto.id}.jpg")%>
+  <div class="imagem">
+    <%= image_tag("/recursos/"+"#{@produto.id}.jpg") %>
+
+    <br />
+    <div style="width:160px; margin:auto; margin-top: 10px;">
+    </div>
+  </div>
+  <%else%>
+  <%= image_tag("no_picture.gif") %>
+<%end%>
+
+  <div class="informacoes">
+
+    <p>
+      <b>Nome:</b>
+      <%=h @produto.nome %>
+    </p>
+
+    <p>
+      <b>Descrição:</b>
+      <%=h @produto.descricao %>
+    </p>
+
+    <p>
+      <b>Acessórios:</b>
+      <%=h @produto.acessorios %>
+    </p>
+
+    <p>
+      <b>Opcionais:</b>
+      <%=h @produto.opcionais %>
+    </p>
+
+
+    <p>
+      <b>Preço:</b>
+      R$<%=h @produto.valor %>
+    </p>
+
+  </div>
+</div>
+
+<br class="clear" />
+      <%= link_to '', edit_produto_path(@produto), :class=>['bt_alterar',' float_left'] %>
+      <%= link_to '', produtos_path, :class=>['bt_voltar',' float_left'] %>

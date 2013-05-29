@@ -1,0 +1,25 @@
+<div class="form">
+
+  <% form_for [@pessoa, @historico], :builder => TableFormBuilder do |p| %>
+    <%= p.error_messages%> <br />
+ <table>
+      <tr>
+        <td class="field_descriptor">Consultor Comercial</td>
+        <td><b><%=current_usuario.name %></b></td>
+      </tr>
+      <tr>
+        <td class="field_descriptor">Data</td>
+        <td><%=p.text_field :data,:simple_tag=>true %></td>
+      </tr>
+      <%= p.text_area :descricao,:label=> 'Descrições',:cols => 35, :rows => 10 %>
+
+      <tr>
+        <td></td>
+        <td><%= p.submit "", :class=>['bt_salvar', ' float_left'] %> <%= link_to '', pessoa_path(@pessoa), :class=>['bt_voltar', ' float_left'] %></td>
+      </tr>
+
+    </table>
+  <% end %>
+</div>
+
+

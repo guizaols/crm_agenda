@@ -1,0 +1,24 @@
+<h1>Listing historico_clientes</h1>
+
+<table>
+  <tr>
+    <th>Nome</th>
+    <th>Data</th>
+    <th>Descricao</th>
+  </tr>
+
+<% @historico_clientes.each do |historico_cliente| %>
+  <tr>
+    <td><%=h historico_cliente.nome %></td>
+    <td><%=h historico_cliente.data %></td>
+    <td><%=h historico_cliente.descricao %></td>
+    <td><%= link_to 'Show', historico_cliente %></td>
+    <td><%= link_to 'Edit', edit_historico_cliente_path(historico_cliente) %></td>
+    <td><%= link_to 'Destroy', historico_cliente, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New historico_cliente', new_historico_cliente_path %>

@@ -1,0 +1,24 @@
+<%unless compromissos.blank?%>
+<table class="listagem">
+  <thead>
+  <tr>
+    <th>Data</th>
+    <th>Hora</th>
+    <th>Compromisso</th>
+    <th><%=link_to_function "X" do |page| page << "$('compromisso_hora_explicacao_busca').hide()" end%></th>
+  </tr>
+  </thead>
+<%compromissos.each do |c|%>
+  <tr>
+    <td><%=c.data%></td>
+    <td><%=c.hora%></td>
+    <td><%=c.tipo_compromisso.nome%></td>
+    <td></td>
+</tr>
+<%end%>
+
+</table>
+<%else%>
+
+<div style="color: #fff; margin: -4px 24px 0;">Não existem compromissos para esta data!</div>
+<%end%>

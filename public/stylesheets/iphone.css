@@ -1,0 +1,832 @@
+*
+{
+    padding:0;
+    margin:0;
+}
+
+td { padding: 0px;}
+ul, li {margin: 0; padding: 0;}
+* {outline: none;}
+.float_left{float: left;}
+.float_right{float: right;}
+.clear{clear: both;}
+.center{text-align: center;}
+h1{
+    background: url("/images/iphone/h.gif") repeat-x;
+    height: 37px;
+    color: #001841;
+    font-weight: normal;
+    padding: 2px 0 0 5px;
+}
+
+/*body {
+	padding:50px 80px;
+
+}*/
+body {
+
+    margin: 0;
+    font-family:"Lucida Grande","bitstream vera sans","trebuchet ms",sans-serif,verdana;
+    /*background: #FFFFFF;*/
+    color: #000000;
+    overflow-x: hidden;
+    -webkit-user-select: none;
+    -webkit-text-size-adjust: none;
+    /*background: #c8c8c8 url(/images/iphone/pinstripes.png);*/
+    width: 100%;
+
+
+
+    background:url(/images/iphone/background.jpg) no-repeat center top #dcdddd;
+    /*font-family: sans-serif;*/
+    font-size: 12px;
+    /*margin: 0;*/
+
+}
+table {border-collapse: collapse;}
+table td, table th {padding: 0;}
+
+
+.toolbar {
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    border-bottom: 1px solid #2d3642;
+    border-top: 1px solid #6d84a2;
+    padding: 10px;
+    height: 45px;
+    background: url(/images/iphone/toolbar.png) #6d84a2 repeat-x;
+}
+
+.toolbar > h1 {
+    position: absolute;
+    overflow: hidden;
+    left: 40%;
+    margin: 1px 0 0 -75px;
+    height: 45px;
+    font-size: 20px;
+    width: 200px;
+    font-weight: bold;
+    text-shadow: rgba(0, 0, 0, 0.4) 0px -1px 0;
+    text-align: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: #FFFFFF;
+}
+
+.button {
+    /*position: absolute;*/
+    overflow: hidden;
+    /*top: 8px;*/
+    right: 6px;
+    margin: 0;
+    border-width: 0 5px;
+    padding: 0 3px;
+    width: auto;
+    height: 30px;
+    line-height: 30px;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: bold;
+    color: #FFFFFF;
+    text-shadow: rgba(0, 0, 0, 0.6) 0px -1px 0;
+    text-overflow: ellipsis;
+    text-decoration: none;
+    white-space: nowrap;
+    background: none;
+    -webkit-border-image: url(/images/iphone/toolButton.png) 0 5 0 5;
+    display: block;
+}
+
+
+
+.panel {
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    padding: 10px;
+}
+
+.panel > fieldset {
+    position: relative;
+    margin: 0 0 20px 0;
+    padding: 0;
+    background: #FFFFFF;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border: 1px solid #999999;
+    text-align: right;
+    font-size: 16px;
+}
+
+
+.row > input:not(input[type|=radio]):not(input[type|=checkbox]) {
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    margin: 0;
+    border: none;
+    padding: 12px 10px 0 110px;
+    height: 42px;
+    background: none;
+}
+
+.row > input[type|=radio], .row > input[type|=checkbox] {
+    margin: 7px 7px 0 0;
+    height: 25px;
+    width: 25px;
+}
+
+.row > label {
+    position: absolute;
+    margin: 0 0 0 14px;
+    line-height: 42px;
+    font-weight: bold;
+}
+
+.whiteButton,
+.grayButton,
+.pagination a,
+.pagination span {
+    display: block;
+    border-width: 0 12px;
+    padding: 10px;
+    text-align: center;
+    font-size: 20px;
+    width:240px;
+    font-weight: bold;
+    text-decoration: inherit;
+    color: inherit;
+}
+
+.whiteButton,
+.pagination a {
+    -webkit-border-image: url(/images/iphone/whiteButton.png) 0 12 0 12;
+    text-shadow: rgba(255, 255, 255, 0.7) 0 1px 0;
+}
+
+.grayButton,
+.pagination span {
+    -webkit-border-image: url(/images/iphone/grayButton.png) 0 12 0 12;
+    color: #FFFFFF;
+}
+
+.pagination span {
+    color: #ccc;
+}
+
+.pagination a,
+.pagination span {
+    display: inline;
+    width: 4%;
+    margin: 2px;
+    padding: 3px;
+    font-size: 0.8em;
+}
+
+.destaque {
+    padding: 10px 10px 0px 10px;
+}
+
+.group {
+    position: relative;
+    top: -1px;
+    margin-bottom: -2px;
+    border-top: 1px solid #7d7d7d;
+    border-bottom: 1px solid #999999;
+    padding: 1px 10px;
+    background: url(/images/iphone/listGroup.png) repeat-x;
+    font-size: 17px;
+    font-weight: bold;
+    text-shadow: rgba(0, 0, 0, 0.4) 0 1px 0;
+    color: #FFFFFF;
+}
+
+.group:first-child {
+    top: 0;
+    border-top: none;
+}
+
+.center {
+    text-align: center;
+}
+
+.menu_iphone
+{
+    list-style-type:none;
+}
+
+
+.menu_iphone img{width: 50%; height: 40px;}
+.menu_iphone li
+{
+
+    padding-top: 15px;
+    /*border-top:1px solid #D5D5D5;*/
+    /*border-bottom:1px solid #D5D5D5;*/
+    min-height:40px;
+    /*background-color:white;*/
+    vertical-align:text-bottom;
+    height: 47px;
+    width: 100%;
+
+}
+.menu_iphone li.clientes{
+    background: url(/images/iphone/menu_clientes.png);
+}
+.menu_iphone li.produtos{
+    background: url(/images/iphone/menu_produtos.png);
+}
+.menu_iphone li.relatorios{
+    background: url(/images/iphone/menu_relatorios.png);
+}
+
+.menu_iphone li a
+{
+    text-decoration:none;
+    color:black;
+    font-family:Arial,Helvetica;
+    font-size:20px;
+    font-weight:bold;
+    margin: 5px;
+    padding:10px;
+
+}
+
+.input_para_mobile
+{
+    width:200px;
+    height:24px;
+}
+
+
+
+
+
+
+
+.menu_iphone{
+    height: 780px;
+}
+
+
+
+/* get rid of those system borders being generated for A tags */
+a:active {
+    outline:none;
+}
+
+:focus {
+    -moz-outline-style:none;
+}
+/* root element for scrollable */
+.vertical {
+    /* required settings */
+    position:relative;
+    overflow:hidden;
+
+    /* vertical scrollers have typically larger height than width */
+    /*height: 665px;*/
+    height: 750px;
+    /*width: 96%;*/
+}
+
+/* root element for scrollable items */
+.items {
+    position:absolute;
+
+    /* this time we have very large space for height */
+    height:20000em;
+    margin: 0px;
+    width: 100%;
+    /*border: 1px solid green;*/
+}
+
+/* single scrollable item */
+.item {
+    /*border-bottom:1px solid #ddd;*/
+    /*margin:10px 0;*/
+    /*padding:15px;*/
+    font-size:14px;
+    height:180px;
+    /*border: 1px solid red;*/
+    width: 100%;
+}
+
+/* elements inside single item */
+.item img {
+    float:left;
+    margin-right:20px;
+    height:180px;
+    width:240px;
+}
+
+.item h3 {
+    margin:0 0 5px 0;
+    font-size:18px;
+    color:#fff;
+    font-weight:normal;
+    background: #666;
+    width: 100%;
+    padding: 2px 5px;
+}
+
+.item span{
+    font-weight: bold;
+    width: 99%;
+    background: #eee;
+    padding: 2px 5px;
+    display: block;
+    margin-top: 5px;
+}
+
+.item table{
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    line-height: 20px;
+    /*border: 1px solid fuchsia;*/
+}
+.item table tr td{
+    vertical-align: top;
+    border-bottom: 1px solid #ccc;
+    padding: 15px 5px;}
+/* Scrollable */
+
+/*
+	root element for the scrollable.
+	when scrolling occurs this element stays still.
+*/
+.scrollable {
+
+	/* required settings */
+	position:relative;
+	overflow:hidden;
+	/*width: 600px;*/
+	width: 100%;
+	height:600px;
+
+	/* custom decorations */
+	/*border:1px solid #ccc;*/
+}
+
+/*
+	root element for scrollable items. Must be absolutely positioned
+	and it should have a extremely large width to accomodate scrollable items.
+	it's enough that you set the width and height for the root element and
+	not for this element.
+*/
+.scrollable .items {
+	/* this cannot be too large */
+	width:20000em;
+	position:absolute;
+	clear:both;
+}
+
+.items div {
+	float:left;
+        /*padding-right: 15px;*/
+	width:700px;
+        margin: 0 10px;
+}
+
+/* single scrollable item */
+.scrollable img {
+	float:left;
+	/*margin:20px 5px 20px 21px;*/
+	background-color:#fff;
+	padding:2px;
+	border:1px solid #ccc;
+	width:300px;
+        height: auto;
+	/*height:150px;*/
+
+	-moz-border-radius:4px;
+	-webkit-border-radius:4px;
+}
+
+/* active item */
+.scrollable .active {
+	border:2px solid #000;
+	position:relative;
+	cursor:default;
+}
+
+/* this makes it possible to add next button beside scrollable */
+.scrollable {
+	float:left;
+        padding: 15px;
+}
+
+/* prev, next, prevPage and nextPage buttons */
+a.browse {
+	background:url(../img/scrollable/arrow/hori_large.png) no-repeat;
+	display:block;
+	width:30px;
+	height:30px;
+	float:left;
+	margin:40px 10px;
+	cursor:pointer;
+	font-size:1px;
+}
+
+/* right */
+a.right 				{ background-position: 0 -30px; clear:right; margin-right: 0px;}
+a.right:hover 		{ background-position:-30px -30px; }
+a.right:active 	{ background-position:-60px -30px; }
+
+
+/* left */
+a.left				{ margin-left: 0px; }
+a.left:hover  		{ background-position:-30px 0; }
+a.left:active  	{ background-position:-60px 0; }
+
+/* up and down */
+a.up, a.down		{
+	background:url(../img/scrollable/arrow/vert_large.png) no-repeat;
+	float: none;
+	margin: 10px 50px;
+}
+
+/* up */
+a.up:hover  		{ background-position:-30px 0; }
+a.up:active  		{ background-position:-60px 0; }
+
+/* down */
+a.down 				{ background-position: 0 -30px; }
+a.down:hover  		{ background-position:-30px -30px; }
+a.down:active  	{ background-position:-60px -30px; }
+
+
+/* disabled navigational button */
+a.disabled {
+	visibility:hidden !important;
+}
+
+
+
+/* the action buttons above the scrollable */
+#actions {
+    /*width:700px;*/
+    margin:0px 0 10px 0;
+}
+
+#actions a {
+    font-size:11px;
+    cursor:pointer;
+    color:#666;
+    /*position: absolute;*/
+}
+
+#actions a:hover {
+    text-decoration:underline;
+    color:#000;
+}
+
+.disabled {
+    visibility:hidden;
+}
+
+.next {
+    float:right;
+    background: url(/images/iphone/icon_next.png) no-repeat;
+    width: 40px;
+    height: 42px;
+    display: block;
+    right: 0;
+}
+
+.prev {
+    float:left;
+    background: url(/images/iphone/icon_previous.png) no-repeat;
+    width: 40px;
+    height: 42px;
+    display: block;
+}
+
+
+
+
+
+
+
+/*LAYOUT*/
+
+#heading{
+    height: 191px;
+    background: url("/images/iphone/logo.png") no-repeat 38px 12px;}
+#heading .buttons{
+    margin: 50px 25px 0 0;
+    float: right;
+}
+#heading .buttons li{
+    display: inline-block;
+    list-style: none;
+}
+
+
+
+#backButton {
+
+    width:62px;
+    /*height: 34px;*/
+
+    /*left: 6px;*/
+    /*right: 0;*/
+    /*padding: 30px;*/
+    /*max-width: 55px;*/
+    /*border-width: 0 8px 0 14px;*/
+    /*-webkit-border-image: url(/images/iphone/bt_menu.png) 0 20 0 40;*/
+    background: url(/images/iphone/bt_menu.png) no-repeat 0px 2px;
+    
+    
+    padding: 12px 15px 8px 15px;
+    text-decoration:none;
+    color:white;
+    font-size:12px;
+    font-weight:bold;
+    margin: 8px 0 0 0;
+    line-height: 25px;
+    text-align: center;
+    top: 8px;
+
+
+
+}
+
+
+div#secao_interna {
+    /*margin:0 auto;*/
+    /*position:relative;*/
+    width:100%;
+    /*border: 1px solid fuchsia;*/
+}
+
+#canto_TE{
+    background:url("/images/iphone/canto_TE.png") no-repeat;
+    width: 193px;
+    height: 192px;
+    margin-top: 90px;
+    float: left;
+    position: absolute;
+    z-index: -2;
+    /*border: 1px solid blue;*/
+}
+#canto_TD{
+    background:url("/images/iphone/canto_TD.png") no-repeat;
+    width: 193px;
+    height: 192px;
+    float: right;
+    margin-top: 90px;
+    position: absolute;
+    right: 0;
+    z-index: -2;
+    /*border: 1px solid blue;*/
+}
+#canto_BE{
+    background:url("/images/iphone/canto_BE.png") no-repeat;
+    width: 193px;
+    height: 192px;
+    float: left;
+    /*bottom: 10px;*/
+    /*border: 1px solid blue;*/
+    margin-top: -175px;
+    /*position: absolute;*/
+    z-index: -2;
+
+}
+#canto_BD{
+    background:url("/images/iphone/canto_BD.png") no-repeat;
+    width: 193px;
+    height: 192px;
+    float: right;
+    /*bottom: 10px;*/
+    right: 0;
+    position: absolute;
+
+    /*display: block;*/
+    margin-top: -175px;
+    /*border: 1px solid blue;*/
+    z-index: -2;
+}
+
+#conteudo {
+    /*background:url("/images/iphone/conteudo_bg.png") repeat-y center;*/
+    background: #fff;
+    margin:-85px auto 0 auto;
+    /*margin:0px auto 0 auto;*/
+    /*height:800px;*/
+    /*padding:25px 37px 51px;*/
+    width:95%;
+    border-width: 1px 2px 2px 2px;
+    border-style: solid;
+    border-color: #ccc;
+    text-align: left;
+    padding: 5px;
+    /*border: 1px solid red;*/
+    height: 100%;
+
+}
+
+
+#rodape {
+    /*background:url("/images/cantos_bottom.png") no-repeat scroll 0 0 transparent;*/
+    bottom:5px;
+    color:#535353;
+    font-size:10px;
+    height:198px;
+    margin:-30px 0;
+    padding:0;
+    position:absolute;
+    text-align:center;
+    width:800px;
+    z-index:-1;
+}
+
+
+
+table.form td{
+    padding: 5px;
+}
+.form.login{
+    font-size: 18px;
+    padding: 10px;
+    height: 785px;
+}
+.form.login #backButton{
+    border: 0;
+    width: auto;
+}
+.form.login .button{margin-top: 20px;}
+.form.login span{margin-top: 10px;}
+input, select{
+    width: 250px;
+    height: 30px;
+    margin-right: 15px;
+    font-size: 16px;
+    border: 1px solid #888;}
+.form th, label{font-size: 18px;}
+
+
+
+
+/*/tabela/*/
+.listagem  {
+    border-spacing:0;
+    font-size:11px;
+    padding:0;
+    width:100%;
+    /*height:27px;*/
+    background: url("/images/thead_full.jpg") no-repeat 0 4px;
+}
+table#calendar {background: url("/images/thead_full.jpg") no-repeat 0 4px;}
+
+.listagem_duplo table.listagem {
+    background: url("/images/thead_full_duplo.jpg") no-repeat 0 4px !important;
+}
+#accordion thead {
+    background: url("/images/fundo_list_buttons_over.gif") repeat-x 0 4px !important;
+    color: #fff;
+}
+#accordion table{
+    background:none repeat scroll 0 0 #DDDDDD;
+    border-spacing:0;
+    font-size:11px;
+    width:100%;
+}
+.listagem  {
+    color: #363535;
+}
+.listagem  a{
+    text-decoration: none;
+    color: #363535;
+}
+.listagem  a:hover{
+    text-decoration: underline;
+}
+.listagem tbody tr:hover td, #accordion tbody tr:hover td{
+    background: #ddd;
+}
+
+
+.listagem thead th, #calendar th, #accordion th {
+    padding: 8px 10px 5px;
+    color: white;
+    text-transform: capitalize;
+    text-align: left;
+    line-height: 18px;
+    vertical-align: top;
+}
+
+.listagem thead th.ultima_coluna {
+    /*border-top: 5px white solid;*/
+}
+
+.listagem td, .listagem th, #accordion td{
+    padding: 5px 10px;
+}
+
+.listagem tr.par {
+    background-color: #d6d6d6;
+}
+
+.listagem tbody tr td, #accordion tbody tr td{border-bottom: 1px dotted #ccc; background: #fff;}
+.listagem tr.dados:hover {background-color: #cdcdcd;}
+.listagem tr.dados a, .form tr td{color: #000; text-decoration: none;}
+.listagem tr.dados a:hover{color: #000; text-decoration:underline;}
+
+.listagem th.ultima_coluna,
+.listagem td.ultima_coluna {
+    text-align: right;
+    padding-right: 35px;
+}
+
+.listagem .ultima_coluna img {
+    margin-right: 15px;
+}
+
+
+
+.tb_grande{
+    width: 95%;
+}
+
+.lista_letras {
+    position: absolute;
+    margin-left: -15px;
+    margin-top: 40px;
+    display: block;
+}
+.lista_letras a{
+    background: url("/images/iphone/indice_bg.png") no-repeat;
+    width:60px;
+    height:41px;
+    color:#fff;
+    font-size: 18px;
+    padding: 10px 28px 30px 12px;
+    line-height: 55px;
+    text-decoration: none;
+}
+
+#tabela_clientes table{
+    width: 98%;
+    margin-left: 40px;
+    height: 100%;
+}
+
+
+
+
+
+
+#slideshow {
+    position:relative;
+    /*height:376px;*/
+    height:85%;
+    /*width:490px;*/
+    /*overflow: hidden;*/
+    /*border: 1px solid blue;*/
+    overflow: hidden;
+    /*margin:0 0 0 -45px;*/
+    left: 0;
+    text-align: left;
+    width: 95%;
+
+}
+
+#slideshow img {
+    position:absolute;
+    top:0;
+    left:0;
+    z-index:8;
+    width: 100%;
+    /*height: 800px;*/
+    height: 100%;
+    overflow: hidden;
+    /*border: 1px solid fuchsia;*/
+    float: left;
+}
+
+#slideshow img.active {
+    z-index:10;
+}
+
+#slideshow img.last-active {
+    z-index:9;
+
+}
+
+
+.banner_01{
+    background: url("/images/iphone/banner_hoggar.jpg") no-repeat bottom center;
+    /*width: 100%;
+    height: 100%;*/
+}
+.banner_02{
+    background: url("/images/iphone/banner_partner.jpg") no-repeat bottom center;
+}
+.banner_03{
+    background: url("/images/iphone/banner_boxer.jpg") no-repeat bottom center;
+/*    width: 100%;
+    height: 100%;*/
+}

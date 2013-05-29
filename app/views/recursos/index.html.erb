@@ -1,0 +1,12 @@
+<% content_for :titulo, 'Recursos' %>
+<% listagem_table :new => new_recurso_path,  :headers => ['Imagem','Nome', 'Descrição','Acessórios','Opcionais'] do %>
+  <% @recursos.each do |r| %>
+    <% listagem_tr :edit => edit_recurso_path(r) do %>
+      <td><%= image_tag("/recursos/" + r.id+".jpg", :width => '50') %></td>
+      <td><%= link_to h(r.nome), recurso_path(r.id) %></td>
+      <td><%=h r.descricao%></td>
+      <td><%=h r.acessorios%></td>
+      <td><%=h r.opcionais%></td>
+    <% end %>
+  <% end %>
+<% end %>

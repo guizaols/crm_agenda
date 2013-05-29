@@ -1,0 +1,15 @@
+<% content_for :titulo, 'Origem' %>
+
+<p>
+  <b>Nome:</b>
+  <%=h @origem.nome %>
+</p>
+
+<p>
+  <b>Descrição:</b>
+  <%=h @origem.descricao %>
+</p>
+
+
+<%= link_to '', edit_origem_path(@origem), :class=>['bt_alterar',' float_left'] %>
+<%= link_to '', origens_path, :class=>['bt_voltar',' float_left'] %>

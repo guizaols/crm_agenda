@@ -1,0 +1,11 @@
+<% content_for :titulo, 'Usuários' %>
+<% listagem_table :new => new_usuario_path,  :headers => ['Nome', 'E-mail'] do %>
+  <% @usuarios.each do |u| %>
+    <% listagem_tr :edit => edit_usuario_path(u), :destroy=>usuario_path(u) do %>
+      <td><%= h(u.name) %></td>
+      <td><%= h(u.email) %></td>
+    <% end %>
+  <% end %>
+<% end %>
+
+

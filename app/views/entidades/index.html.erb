@@ -1,0 +1,11 @@
+<% content_for :titulo, 'Concessionárias' %>
+<% listagem_table :new => new_entidade_path,  :headers => ['Concessionária', 'Responsável','Telefone','Email'] do %>
+  <% @entidades.each do |g| %>
+    <% listagem_tr :edit => edit_entidade_path(g) do %>
+      <td><%= link_to h(g.nome), entidade_path(g.id) %></td>
+      <td><%=h g.nome_responsavel  %></td>
+     <td><%=h g.telefone_responsavel.join(",")  %></td>
+      <td><%=h g.email_responsavel.join(",")  %></td>
+    <% end %>
+  <% end %>
+<% end %>

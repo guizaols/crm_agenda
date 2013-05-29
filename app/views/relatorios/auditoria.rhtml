@@ -1,0 +1,36 @@
+<%unless @dados.blank?%>
+<h1>Auditoria</h1>
+<br />
+
+<div id="accordion">
+  <% @dados.each do |p|%>
+    <h3><a href="#"><%= p.first.name rescue (p.first.nome rescue nil) %> </a></h3>
+    <div>
+      <table class="listagem">
+        <thead>
+          <tr>
+            <th>Data</th>
+            <th>Operação</th>
+            <th>Cliente</th>
+            <th>Proposta</th>
+            <th>Histórico</th>
+          </tr>
+        </thead>
+        <%p.last.each do |a|%>
+          <tbody>
+            <tr>
+              <td><%=h(a.data) %></td>
+              <td><%=  a.operacao rescue nil %></td>
+              <td><%= link_to h(a.pessoa.nome),pessoa_path(a.pessoa.id) rescue nil%></td>
+              <td><%= link_to h(a.proposta.nome),pessoa_proposta_path(a.pessoa.id,a.proposta.id) rescue nil%></td>
+              <td><%= link_to h(a.proposta.nome),pessoa_proposta_path(a.pessoa.id,a.proposta.id) rescue nil%></td>
+            </tr>
+          </tbody>
+        <%end%>
+      </table>
+    </div>
+  <%end%>
+</div>
+<%else%>
+<p><b> Não foram encontrados registros com esses parâmetros! </b></p>
+<%end%>

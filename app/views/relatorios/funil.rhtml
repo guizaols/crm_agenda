@@ -1,0 +1,57 @@
+<h1>Relatório de Status das Negociações</h1>
+<br />
+<%form_tag funil_relatorios_path, :method=>"get" do%>
+  <p class="tb_pequeno">
+    <b>Status: </b><%=select_tag 'pesquisa[status]',options_for_select(Acompanhamento.all.collect{|x| [x.nome,x.id]},(params[:pesquisa][:status].to_i rescue nil))%>
+
+    <%if current_usuario.perfil_id == 3%>
+      <b>Concessionária </b><%= select_tag 'pesquisa[entidade_id]',options_for_select(['']+Entidade.all.collect{|x| [x.nome,x.id]},(params[:pesquisa][:entidade_id].to_i rescue nil)) %>
+    <%end%>
+
+
+    <%=submit_tag "Pesquisar", :class=>'button'%>
+  </p>
+
+<%end%>
+
+<%unless @propostas.blank?%>
+  <h4 >Número de propostas encontradas: <%= @propostas.length rescue nil %></h4>
+  <table class="listagem">
+    <thead>
+      <tr>
+        <th>Data Início</th>
+        <th>Cliente</th>
+        <th>Produto</th>
+        <th>Consultor Comercial</th>
+        <th>Valor</th>
+        <%if current_usuario.perfil_id == 3%>
+        <th>Concessionária</th>
+        <%end%>
+
+      </tr>
+    </thead>
+    <%@propostas.each do |proposta|%>
+    <tbody>
+      <tr class="dados">
+        <td><%=h(proposta.data_inicio) %></td>
+        <td><%= (link_to((proposta.pessoa.nome rescue nil),pessoa_proposta_path(proposta.pessoa.id,proposta.id)) rescue nil)%></td>
+        <td><%=h proposta.produto.nome rescue nil%></td>
+        <td><%=h proposta.usuario.name rescue nil%></td>
+        <td><%=h preco_formatado((proposta.valor rescue nil),"R$")%></td>
+        <%if current_usuario.perfil_id == 3%>
+        <td><%=h proposta.usuario.entidade.nome rescue nil %></td>
+       <%end%>
+
+      </tr>
+    </tbody>
+    <% end %>
+  </table>
+
+  <h3>VALOR TOTAL(R$): <%= preco_formatado((@propostas.collect{|x| x.converte_valor}.sum rescue 0),"R$") %> </h3>
+<%else%>
+  <%if params[:pesquisa].blank?%>
+  <h4>Escolha um status para realizar a pesquisa!</h4>
+  <%else%>
+  <h4>Não foram encontrados registros com esses dados!</h4>
+  <%end%>
+<%end%>

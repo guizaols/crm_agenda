@@ -1,0 +1,87 @@
+<% content_for :titulo, 'Concessionária' %>
+<table>
+  <tr>
+    <td class="field_descriptor" style="text-align: right;">Concessionária:</td>
+    <td><%=@entidade.nome %> </td>
+  </tr>
+  <%= show_unless_blank 'Responsável', @entidade.nome_responsavel %>
+  <%= show_unless_blank 'Email Responsável', @entidade.email_responsavel.join(",") %>
+  <%= show_unless_blank 'Telefone Responsável', @entidade.telefone_responsavel.join(",") %>
+  <%= show_unless_blank 'Cidade', @entidade.cidade %>
+  <%= show_unless_blank 'Bairro', @entidade.bairro %>
+  <%= show_unless_blank 'Número', @entidade.numero%>
+  <%= show_unless_blank 'Observações', @entidade.observacoes%>
+</table>
+<br />
+<br />
+<%= link_to '', entidades_path, :class=>['bt_voltar', ' float_left'] %>
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<h1>Usuários</h1>
+
+<% listagem_table :new => new_usuario_path,  :headers => ['Nome', 'E-mail'] do %>
+  <% @entidade.usuarios.each do |u| %>
+    <% listagem_tr :edit => edit_usuario_path(u), :destroy=>usuario_path(u) do %>
+      <td><%= h(u.name) %></td>
+      <td><%= h(u.email) %></td>
+    <% end %>
+  <% end %>
+<% end %>
+<br />
+<br />
+<%= link_to_function 'Novo Usuário', :class=>"button" do |page| page << "$('form_usuario').toggle();" end%>
+
+
+
+<div id="form_usuario" style="display:none;">
+  <%form_remote_tag :url=>{:controller=>"entidades",:action=>"cria_usuario"} do %>
+    <table>
+      <tr>
+        <td class="field_descriptor">Nome</td>
+        <td><%=  text_field_tag 'usuario[name]' %></td>
+      </tr>
+      <tr>
+        <td class="field_descriptor">Login</td>
+        <td>      <%=  text_field_tag 'usuario[login]' %>
+        </td>
+      </tr>
+      <tr>
+        <td class="field_descriptor">Email</td>
+        <td><%=  text_field_tag 'usuario[email]' %></td>
+      </tr>
+
+      <tr>
+        <td class="field_descriptor">Senha</td>
+        <td><%=  password_field_tag 'usuario[password]'%>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="field_descriptor">Confirmação de Senha</td>
+        <td>          <%=  password_field_tag 'usuario[password_confirmation]' %>
+          <%=hidden_field_tag 'usuario[entidade_id]',@entidade.id%>
+
+        </td>
+      </tr>
+      <tr>
+        <td class="field_descriptor">Perfil</td>
+        <td>
+      <%=  select_tag 'usuario[perfil_id]',options_for_select([['Administrador da Concessionária',1],['Usuário Comum',2]]) %>
+
+        </td>
+      </tr>
+      <tr>
+        <td class="field_descriptor"></td>
+        <td><%=submit_tag 'Salvar' %></td>
+      </tr>
+
+    </table>
+  <%end%>
+</div>

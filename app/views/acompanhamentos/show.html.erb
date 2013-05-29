@@ -1,0 +1,19 @@
+<% content_for :titulo, 'Status' %>
+<p>
+  <b>Nome:</b>
+  <%=h @acompanhamento.nome %>
+</p>
+
+<p>
+  <b>Descrição:</b>
+  <%=h @acompanhamento.descricao %>
+</p>
+
+<p>
+  <b>Vendido?</b>
+  <%=h @acompanhamento.vendido_verbose? %>
+</p>
+
+
+<%= link_to '', edit_acompanhamento_path(@acompanhamento), :class=>['bt_alterar',' float_left'] %>
+<%= link_to '', acompanhamentos_path, :class=>['bt_voltar',' float_left'] %>

@@ -1,0 +1,100 @@
+<% content_for :titulo, "Rota para os compromissos do dia" %>
+
+
+
+ <%form_tag :url=>{:controller=>"compromissos",:action=>"rotas"},:method=>"get" do%>
+    <table class="pesquisa">
+      <tr>
+        <th>
+          <label>Data:</label>
+        </th>
+
+        <td>
+              <td><%=text_field_tag 'data',params[:data], :class=>'input_medio'%></td>
+        </td>
+          <td><div id="botao"><%=submit_tag "", :class=>'bt_buscar' %></div></td>
+      </tr>
+    </table>
+  <%end%>
+
+
+
+
+<%if @compromissos.length > 0%>
+  <% listagem_table :headers => ['Cliente','Data','Hora','Descrição','Status'] do %>
+    <%  @compromissos.each do |compromisso|%>
+      <% listagem_tr  do%>
+        <td><%=h compromisso.pessoa.nome%></td>
+        <td><%=h compromisso.data%></td>
+        <td><%=h compromisso.hora%></td>
+        <td><%=h compromisso.descricao%></td>
+        <td><%=h compromisso.status_verbose%></td>
+      <% end %>
+    <% end %>
+  <%end%>
+
+<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=true&amp;key=ABQIAAAA1xEBakGolsyyc10pbA9qZRRKxVyVDS-qPrThq1j3QzUP-op6yxScnW9Qouqumv97R-OJPWJpbxn7Wg" type="text/javascript"></script>
+
+  <script type="text/javascript">
+    var map;
+    var directionsPanel;
+    var directions;
+
+    function initialize() {
+      if (GBrowserIsCompatible()) {
+
+        map = new GMap2(document.getElementById("map_canvas"));
+        map.setCenter(new GLatLng(42.351505,-71.094455), 15);
+        directionsPanel = document.getElementById("route");
+        directions = new GDirections(map, directionsPanel);
+        GEvent.addListener(directions, "load", onGDirectionsLoad);
+        GEvent.addListener(directions, "error", handleErrors);
+        directions.load("from: <%=@endereco_prestige["endereco_prestige"] %><%=@destinos %>");
+
+      }
+    }
+
+    function setDirections(fromAddress, toAddress)
+    {
+      directions.load("from: " + fromAddress + " to: " + toAddress);
+    }
+
+function onGDirectionsLoad(){
+	}
+
+ function handleErrors(){
+   	   if (directions.getStatus().code == G_GEO_UNKNOWN_ADDRESS)
+	     alert("Endereço de destino Inválido.\n Erro código: " + directions.getStatus().code);
+           else if (directions.getStatus().code == G_GEO_SERVER_ERROR)
+	     alert("As direções não estão corretas.\n Erro código: " + directions.getStatus().code);
+	   else if (directions.getStatus().code == G_GEO_MISSING_QUERY)
+	     alert("The HTTP q parameter was either missing or had no value. For geocoder requests, this means that an empty address was specified as input. For directions requests, this means that no query was specified in the input.\n Error code: " + directions.getStatus().code);
+
+	   else if (directions.getStatus().code == G_UNAVAILABLE_ADDRESS)
+	     alert("The geocode for the given address or the route for the given directions query cannot be returned due to legal or contractual reasons.\n Error code: " + directions.getStatus().code);
+
+	   else if (directions.getStatus().code == G_GEO_BAD_KEY)
+	     alert("Key inválida. \n Erro código: " + directions.getStatus().code);
+
+	   else if (directions.getStatus().code == G_GEO_BAD_REQUEST)
+	     alert("A rota requirida não é válida.\n Erro código: " + directions.getStatus().code);
+
+	   else alert("Erro interno no servidor.");
+
+	}
+
+  </script>
+  <br />
+  <br />
+  <div style="float: left;">
+      <div id="map_canvas" style="width: 650px; height: 500px;"></div>
+    </div>
+  <div id="route" style="width: 500px;float: right;"></div>
+  <br style="clear: both;" />
+
+  <%javascript_tag do%>
+    initialize();
+  <%end%>
+<%else%>
+  <p>Não foram encontrados registros de visita para esta data!</p>
+<%end%>

@@ -1,0 +1,21 @@
+<div id="listagem_por_inicial">
+  <% if @pessoas.empty? %>
+  <p>
+    <b>Nenhum registro encontrado.</b>
+  </p>
+  <% else %>
+    <% listagem_table :new => new_pessoa_path,  :headers => ['Nome', 'Email', 'Telefone','Responsável pelo Cliente',"Último Contato","Nº Propostas"] do %>
+      <% @pessoas.each do |pessoa| %>
+        <tr <%= pessoa.compromissos_hoje.blank? ? "" : "style='color:red;'"%> >
+          <td><%= link_to h(pessoa.nome), pessoa %></td>
+          <td><%=h pessoa.email.blank? ? "Nenhum email cadastrado" : pessoa.email.join(" / ") %></td>
+          <td><%=h pessoa.telefone.join(" / ") %></td>
+          <td><%=h pessoa.usuarios.collect(&:name).join(",") %></td>
+          <td><%= pessoa.ultimo_contato %></td>
+          <td><%=h pessoa.numero_de_propostas %></td>
+          <td><%=link_to "Alterar", edit_pessoa_path(pessoa) %></td>
+        </tr>
+      <% end %>
+    <% end %>
+  <% end %>
+</div>

@@ -1,0 +1,72 @@
+<% content_for :titulo, 'Concessionárias' %>
+<div class="form">
+  <% form_for(@entidade) do |f| %>
+
+    <%= f.error_messages %>
+    <table>
+      <tr>
+        <td id="nome"  class="field_descriptor">Concessionária</td>
+        <td> <%= f.text_field :nome, :simple_tag=>true %></td>
+      </tr>
+
+      <tr>
+        <td id="nome"  class="field_descriptor">Proprietário</td>
+        <td> <%= f.text_field :nome_responsavel, :simple_tag=>true %></td>
+      </tr>
+
+      <tr>
+        <td  class="field_descriptor" valign="top">Telefones/Fax <%= link_to_function "+" do |page|
+            page.insert_html :bottom, "telefones_secundarios", :partial => 'telefone'  end %> </td>
+        <td>
+          <ul id="telefones_secundarios" style="list-style-type: none;">
+            <%= render :partial => 'telefone'  %><%= render :partial => 'telefone', :object => 'telefone', :collection => @entidade.telefone_responsavel   if @entidade.telefone_responsavel%>
+          </ul></td>
+      </tr>
+
+      <tr>
+        <td  class="field_descriptor" valign="top">Emails
+          <%= link_to_function "+" do |page| page.insert_html :bottom, "emails_secundarios", :partial => 'email' end %></td>
+        <td>
+          <ul id="emails_secundarios"  style="list-style-type: none;">
+            <%= render :partial => 'email'  %><%= render :partial => 'email', :object => 'email', :collection => @entidade.email_responsavel   if @entidade.email_responsavel%>
+          </ul>
+        </td>
+      </tr>
+
+      <tr>
+        <td  class="field_descriptor">Cidade</td>
+        <td><%= f.text_field :cidade, :simple_tag=>true %></td>
+      </tr>
+
+
+      <tr>
+        <td  class="field_descriptor">Bairro</td>
+        <td><%= f.text_field :bairro, :simple_tag=>true %></td>
+      </tr>
+
+      <tr>
+        <td  class="field_descriptor">Endereço</td>
+        <td><%= f.text_field :endereco, :simple_tag=>true %></td>
+      </tr>
+
+
+      <tr>
+        <td  class="field_descriptor" valign="top">Observações</td>
+        <td>
+          <%= f.text_area :observacoes,:cols => 35, :rows => 10, :simple_tag=>true %>
+        </td>
+      </tr>
+
+
+
+      <td>
+      </td>
+      <td>
+        <%= link_to '', entidades_path, :class=>'bt_voltar float_left' %>
+        <%= f.submit '', :class=>'bt_salvar float_left' %>
+      </td>
+    <% end %>
+  </table>
+
+</div>
+

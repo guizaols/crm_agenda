@@ -1,0 +1,54 @@
+<h1>Relatório de Vendas</h1>
+<div id="accordion1">
+  <%Categoria.all.each do |c|%>
+    <h3><a href="#"><%=c.nome %></a></h3>
+    <div>
+      <table class="listagem">
+        <thead>
+          <tr>
+            <th>Cliente</th>
+            <th>Produto</th>
+            <th>Consultor</th>
+            <th>Valor</th>
+            <th>Concessionária</th>
+          </tr>
+        </thead>
+        <%valor = 0%>
+        <%if current_usuario.perfil_id != 3%>
+          <%propostas = Proposta.all(:conditions=>["acompanhamento_id = ? and entidade_id = ?",@status_venda.id,current_usuario.entidade_id])%>
+        <%else%>
+          <%propostas = Proposta.all(:conditions=>["acompanhamento_id = ?",@status_venda.id])%>
+        <%end%>
+        <%total_unidades = 0%>
+        <%propostas.each do |prop|%>
+          <%if prop.produto.categoria == c%>
+          <%total_unidades += prop.quantidade.to_i%>
+            <%if @data_inicial.blank? || @data_final.blank?%>
+              <tr>
+                <td><%=prop.pessoa.nome rescue nil%></td>
+                <td><%=prop.produto.nome rescue nil %></td>
+                <td><%=prop.usuario.name rescue nil%></td>
+                <td><%=prop.valor.real_contabil  %></td>
+                <td><%=prop.usuario.entidade.nome  rescue nil%></td>
+                <% valor += prop.valor.quantia %>
+              </tr>
+            <%elsif prop.data_venda.to_date >= @data_inicial && prop.data_venda.to_date <= @data_final %>
+              <tr>
+                <td><%=prop.pessoa.nome rescue nil%></td>
+                <td><%=prop.produto.nome rescue nil %></td>
+                <td><%=prop.usuario.name rescue nil%></td>
+                <td><%=prop.valor.real_contabil  %></td>
+                <td><%=prop.usuario.entidade.nome  rescue nil%></td>
+                <% valor += prop.valor.quantia %>
+              </tr>
+
+            <%end%>
+          <%end%>
+        <%end%>
+
+      </table>
+      <p><b>Valor Total: </b><%=Dinheiro.new(valor/100).real_contabil%> </p>
+      <p><b>Total de Unidades: </b><%=total_unidades%> </p>
+    </div>
+  <%end%>
+</div>

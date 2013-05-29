@@ -1,0 +1,10 @@
+<% content_for :titulo, 'Segmentos' %>
+<% listagem_table :new => new_grupo_path,  :headers => ['Nome', 'Descrição'] do %>
+  <% @grupos.each do |g| %>
+    <% listagem_tr :edit => edit_grupo_path(g) do %>
+      <td><%= link_to h(g.nome), grupo_path(g.id) %></td>
+      <td><%=h g.descricao%></td>
+    <% end %>
+  <% end %>
+<% end %>
+

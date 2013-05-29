@@ -1,0 +1,146 @@
+require 'test/unit'
+require File.dirname( __FILE__ ) + '/../../../config/environment.rb'
+require File.dirname( __FILE__ ) + '/../brazilian-rails/init.rb'
+require File.dirname( __FILE__ ) + '/../init.rb'
+
+class FindByHashTest < Test::Unit::TestCase
+
+  def test_empty_hash
+    assert_equal nil, {}.to_conditions
+  end
+  
+  def test_simple_conditions
+    conferir_conversao ['(nome = ?)', 'João da Silva'], 
+                       { :nome => 'João da Silva' }
+                 
+    conferir_conversao ['(nome = ?)', 'João da Silva'], 
+                       { 'nome' => 'João da Silva' }
+                 
+    conferir_conversao ['(nome = ?) AND (idade = ?)', 'João da Silva', 30], 
+                       { :nome => 'João da Silva', :idade => 30 }
+  end
+  
+  def test_conditions_with_alias
+    conferir_conversao ['(livro.nome = ?)', 'João da Silva'], 
+                       { 'livro.nome' => 'João da Silva' }
+                 
+    conferir_conversao ['(livros.nome = ?)', 'Joao'], 
+                       { 'livros.nome' => 'Joao', :procurar_somente_por => ['livros.nome'] }
+  end
+  
+  def test_is_null_conditions
+    conferir_conversao ['(data_de_nascimento IS NULL)'], 
+                       { :data_de_nascimento => nil }
+  end
+  
+  def test_like_conditions
+    conferir_conversao ['(nome LIKE ?)', '%joao%'], 
+                       { :nome_like => 'joao' }
+                 
+    conferir_conversao ['(nome LIKE ?)', '%joao%'], 
+                       { :nome_contains => 'joao' }
+    
+    conferir_conversao nil, 
+                       { :nome_contains => nil }
+                     
+    conferir_conversao nil, 
+                       { :nome_contains => '' }
+end
+  
+  def test_in_array_conditions
+    conferir_conversao ['(nome IN (?, ?, ?))', 'joao', 'tiago', 'mateus'], 
+                       { :nome => ['joao', 'tiago', 'mateus'] }
+    conferir_conversao ['(1 = 0)'], 
+                       { :nome => [] }
+  end
+  
+  def test_manual_conditions
+    conferir_conversao ['(idade = 5)'], 
+                       { :campo_manual => 'idade = 5' }
+                 
+    conferir_conversao ['(idade = 5) AND (nome = ?)', 'Joao'],
+                       { :primeiro_manual => 'idade = 5', :segundo_manual => ['nome = ?', 'Joao'] }
+                 
+    conferir_conversao ['(nome = ? or nome = ?)', 'Joao', 'Tiago'], 
+                       { :campo_manual => ['nome = ? or nome = ?', 'Joao', 'Tiago'] }
+                 
+    conferir_conversao nil, 
+                       { :campo_manual => '' }
+                 
+    conferir_conversao nil, 
+                       { :campo_manual => [] }
+  end
+  
+  def test_ignorar_conditions
+    conferir_conversao nil, 
+                       { :nome => '(ALL)' }
+    
+    conferir_conversao ['(idade = ?)', 5], 
+                       { :idade => 5, :cidade => '(ALL)' }
+  end
+  
+  def test_desigualdades
+    conferir_conversao ['(idade > ?)', 5], 
+                       { :idade_maior_que => 5 }
+    conferir_conversao ['(idade >= ?)', 5], 
+                       { :idade_maior_ou_igual_a => 5 }
+    conferir_conversao ['(idade < ?)', 5], 
+                       { :idade_menor_que => 5 }
+    conferir_conversao ['(idade <= ?)', 5], 
+                       { :idade_menor_ou_igual_a => 5 }
+  end
+  
+  def test_procurar_somente_por
+    conferir_conversao nil, 
+                       { :nome => 'Joao', :procurar_somente_por => [:idade] }
+                 
+    conferir_conversao ['(nome = ?)', 'Joao'], 
+                       { :nome => 'Joao', :procurar_somente_por => [:nome] }
+                 
+    conferir_conversao ['(nome = ?)', 'Joao'], 
+                       { :nome => 'Joao', :idade => 30, :procurar_somente_por => [:nome] }
+                 
+    conferir_conversao ['(nome = ?)', 'Joao'], 
+                       { 'nome' => 'Joao', 'idade' => 30, :procurar_somente_por => [:nome] }
+                     
+    conferir_conversao ['(admin = ?)', true], 
+                       { :admin? => 'true', :procurar_somente_por => [:admin?] }
+end
+
+  def test_date_conditions
+    conferir_conversao ['(created_at = ?)', '2007-06-05'.to_date.to_s(:db)], 
+                       { :created_at_as_date => '05/06/2007' }
+                       
+    conferir_conversao ['(created_at > ?)', '2007-06-05'.to_date.to_s(:db)],
+                       { :created_at_as_date_maior_que => '05/06/2007' }
+  end
+  
+  def test_boolean_conditions
+    conferir_conversao ['(admin = ?)', true], 
+                       { :admin? => 'true' }
+                       
+    conferir_conversao ['(root = ?)', false], 
+                       { :root? => 'false' }
+                     
+    conferir_conversao nil, 
+                       { :root? => 'other_option' }
+  end
+
+  def test_condicoes_se_existir
+    conferir_conversao ['(nome = ?)', 'joao'], 
+                       { :nome_se_existir => 'joao' }
+    conferir_conversao nil, 
+                       { :nome_se_existir => '' }
+  end
+  
+private
+
+  def conferir_conversao(expected, hash)
+    antes = {}
+    hash.each do |k, v|
+      antes[k] = (v.dup rescue v)
+    end
+    assert_equal expected, hash.to_conditions
+    assert_equal antes, hash, "Hash modificado ao utilizar to_conditions"
+  end
+end

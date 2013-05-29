@@ -1,0 +1,9 @@
+<% content_for :titulo, 'Moedas' %>
+<% listagem_table :new => new_moeda_path,  :headers => ['Nome', 'Valor'] do %>
+  <% @moedas.each do |m| %>
+    <% listagem_tr :edit => edit_moeda_path(m) do %>
+      <td><%= link_to h(m.nome), moeda_path(m.id) %></td>
+      <td><%=h preco_formatado((m.valor rescue nil),m.unidade)%></td>
+    <% end %>
+  <% end %>
+<% end %>

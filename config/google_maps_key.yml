@@ -1,9 +1,12 @@
 #development: ABQIAAAA1xEBakGolsyyc10pbA9qZRQPjWcUD3lULnS9mZD8kGWRQieW6RR1snAUi6w6XGgwfDRMJ9O36u3vhg
-development: ABQIAAAA1xEBakGolsyyc10pbA9qZRTJQa0g3IQ9GZqIMmInSLzwtGDKaBTdPBFqXb1Av4ldt2z6cMvFFXvqsQ
-endereco_prestige: Avenida das Torres,1719,São José dos Pinhais
+# development: ABQIAAAA1xEBakGolsyyc10pbA9qZRTJQa0g3IQ9GZqIMmInSLzwtGDKaBTdPBFqXb1Av4ldt2z6cMvFFXvqsQ
+# endereco_prestige: Avenida das Torres,1719,São José dos Pinhais
 
 #Servidor Inovare
 #production: ABQIAAAAFECaiQWu9lH_6sX02XpolhRvI7H3dbbNsakISdUzZA1NeBwSzRSFVE5pYTRdz3ZzRnNGNnBUCQYKXA
 
 #http://www.prestigepeugeot.com.br
 #production: ABQIAAAAFECaiQWu9lH_6sX02XpolhTMCB02Rpl2hCJLgck32Lm69IeRHxTD-opOrZPd7wjZWqMJZi50TLgFBQ
+
+development: AIzaSyBrZVZCX0wpE7n8nREyNnGDeTQ_c9GT480
+endereco_prestige: Avenida 7 de Setembro,2500,Curitiba

@@ -3,11 +3,11 @@ class HistoricoClientesController < ApplicationController
   before_filter :carrega_cliente
 
   def index
-    @historicos = HistoricoCliente.find_all_by_pessoa_id(params[:pessoa_id],:order=>" created_at DESC")
+    @historicos = HistoricoCliente.find_all_by_pessoa_id(params[:pessoa_id], :order => " created_at DESC")
   end
 
   def show
-    @historico = HistoricoCliente.find_by_id_and_pessoa_id(params[:id],params[:pessoa_id])
+    @historico = HistoricoCliente.find_by_id_and_pessoa_id(params[:id], params[:pessoa_id])
   end
 
   def new
@@ -28,10 +28,10 @@ class HistoricoClientesController < ApplicationController
                 redirect_to pessoa_path(@pessoa)
 
       else
-        render :action => "new" 
+        render :action => "new"
       end
     end
-  
+
   def update
     @historico_cliente = HistoricoCliente.find_by_id_and_pessoa_id(params[:id],params[:pessoa_id])
     @historico_cliente.usuario_id = current_usuario.id
@@ -40,7 +40,7 @@ class HistoricoClientesController < ApplicationController
         flash[:notice] = 'Histórico do cliente atualizado com sucesso!'
         redirect_to pessoa_path(@pessoa)
       else
-         render :action => "edit" 
+         render :action => "edit"
       end
   end
 
@@ -55,7 +55,7 @@ class HistoricoClientesController < ApplicationController
   private
 
   def carrega_cliente
-    @pessoa = Pessoa.find params[:pessoa_id]
+    @pessoa = Pessoa.find(params[:pessoa_id])
   end
 
 end

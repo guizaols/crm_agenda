@@ -1,18 +1,17 @@
 <p>
   <b>Nome:</b>
-  <%=h @historico_cliente.nome %>
+  <%=h @historico.pessoa.nome %>
 </p>
 
 <p>
   <b>Data:</b>
-  <%=h @historico_cliente.data %>
+  <%=h @historico.data %>
 </p>
 
 <p>
   <b>Descricao:</b>
-  <%=h @historico_cliente.descricao %>
+  <%=h @historico.descricao %>
 </p>
 
-
-<%= link_to 'Edit', edit_historico_cliente_path(@historico_cliente) %> |
-<%= link_to 'Back', historico_clientes_path %>
+<%= link_to '', edit_pessoa_historico_cliente_path(@pessoa, @historico), :class => ['bt_alterar',' float_left'] %>
+<%= link_to '', pessoa_path(@pessoa), :class => ['bt_voltar', ' float_left'] %>

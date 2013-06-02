@@ -7,17 +7,19 @@ body {
 
 #regua{
     background: url("/images/regua.png") repeat-x;
-    height: 70px; 
-    top: 0pt; 
+    height: 70px;
+    top: 0pt;
     z-index: 0;
     width: 100%;
 }
 
-#heading{
+#heading {
     height: 191px;
-    background: url("/images/logo_peugeot_professional.png") no-repeat 38px 42px;}
+    /*background: url("/images/logo_peugeot_professional.png") no-repeat 38px 42px;*/
+}
+
 #heading #logo {
-    background: url("/images/inovare_logo.jpg") no-repeat right center;
+    /*background: url("/images/inovare_logo.jpg") no-repeat right center;*/
     height:80px;
     width:175px;}
 #heading #logado {
@@ -28,9 +30,9 @@ body {
     position:absolute;
     text-decoration:none;
 }
+
 #heading #logado img{margin: -6px 0;}
 #heading #logado span{margin-right: 5px;}
-
 
 td { padding: 0px;}
 ul, li {margin: 0; padding: 0;}
@@ -298,7 +300,7 @@ table#legenda {
 .auto_complete {
     width: 350px;
     background: #fff;
-    margin: 0px;   
+    margin: 0px;
 }
 
 .auto_complete ul {
@@ -723,7 +725,7 @@ form .field_descriptor, .form .field_descriptor{text-align: right; vertical-alig
 /*
 #calendar th,*/
 #calendar td {
-    color: #ccc;    
+    color: #ccc;
     font-size: 10px;
     border: 1px solid #ccc;
     background: #ccc;
@@ -814,7 +816,7 @@ table#tipo_compromisso{ padding-left: 15px;}
 .detalhes .imagem{
     float: left;
     text-align: center;
-    width: 50%; 
+    width: 50%;
     margin-bottom: 25px
 }
 .detalhes .informacoes{

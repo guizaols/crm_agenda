@@ -3,18 +3,15 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <title>Agenda de Compromissos</title>
-
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <%= stylesheet_link_tag 'inovare',"colorpicker","layout","jquery-ui-1.8.1.custom","modalbox" "calendar_date_select", 'menu'%>
     <% if false %> <link rel="shortcut icon" href="/images/favicon.ico" /> <% end %>
     <%= javascript_include_tag :defaults,'menu',"jquery-1.4","jquery-ui-1.8.1.custom.min","masks","jquery.tools.min","dragdrop", "cufon","Chalet-LondonNineteenEighty_500.font","Chalet-LondonNineteenSeventy_500.font","colorpicker","jquery.maskedinput","jquery.maskedinputmoney"%>
     <!--[if IE]>
     <%= stylesheet_link_tag 'inovare_ie' %>
-
     <![endif]-->
   </head>
   <body>
-
     <div id="secao_interna">
       <div id="heading">
         <div id="logado">
@@ -29,41 +26,38 @@
                 <tr>
                   <td>
                     <ul>
-                      <%if current_usuario.perfil_id == Usuario::ADMINISTRADOR_CONCESSIONARIA || current_usuario.perfil_id == Usuario::PEUGEOT%>
-                        <li ><%=link_to 'Empresa',minha_empresa_path%></li>
-                        <li><%=link_to "Segmentos",grupos_path %></li>
-                        <li><%= link_to "Produtos", produtos_path %></li>
-                        <li><%= link_to "Origens", origens_path %></li>
-                        <li><%= link_to "Prospects", listagem_prospects_pessoas_path %></li>
+                      <% if current_usuario.perfil_id == Usuario::ADMINISTRADOR_CONCESSIONARIA || current_usuario.perfil_id == Usuario::PEUGEOT %>
+                        <!-- <li><%#=link_to 'Empresa',minha_empresa_path%></li> -->
+                        <li><%= link_to 'Grupos', grupos_path %></li>
+                        <!-- <li><%#= link_to 'Produtos', produtos_path %></li> -->
+                        <li><%= link_to 'Origens', origens_path %></li>
+                        <!-- <li><%#= link_to 'Prospects', listagem_prospects_pessoas_path %></li> -->
                         <li><%= link_to 'E-mail Marketing', mails_path %></li>
-                      <%end%>
+                      <% end %>
                     </ul>
                   </td>
                   <td>
                     <ul>
-                      <%if current_usuario.perfil_id == Usuario::ADMINISTRADOR_CONCESSIONARIA || current_usuario.perfil_id == Usuario::VENDEDOR || current_usuario.perfil_id == Usuario::RECEPCIONISTA || current_usuario.perfil_id == Usuario::TELEMARKETING || current_usuario.perfil_id == Usuario::PEUGEOT%>
-                        <li><%=link_to "Agenda",main_path %></li>
+                      <% if current_usuario.perfil_id == Usuario::ADMINISTRADOR_CONCESSIONARIA || current_usuario.perfil_id == Usuario::VENDEDOR || current_usuario.perfil_id == Usuario::RECEPCIONISTA || current_usuario.perfil_id == Usuario::TELEMARKETING || current_usuario.perfil_id == Usuario::PEUGEOT %>
+                        <li><%= link_to 'Agenda', main_path %></li>
                         <li><%= link_to 'Clientes', pessoas_path %></li>
-                      <%end%>
-                      <%if current_usuario.perfil_id == Usuario::ADMINISTRADOR_CONCESSIONARIA || current_usuario.perfil_id == Usuario::VENDEDOR %>
-                        <li><%= link_to 'Rotas',:controller=>"compromissos",:action=>"rotas" %></li>
-                      <%end%>
-                         <%if current_usuario.perfil_id == Usuario::RECEPCIONISTA %>
-                            <li><%= link_to "Origens", origens_path %></li>
-                         <%end%>
+                        <li><%= link_to 'Tipo Compromissos', tipo_compromissos_path %></li>
+                      <% end %>
+                      <%# if current_usuario.perfil_id == Usuario::ADMINISTRADOR_CONCESSIONARIA || current_usuario.perfil_id == Usuario::VENDEDOR %>
+                        <!-- <li><%#= link_to 'Rotas', :controller => 'compromissos', :action => 'rotas' %></li> -->
+                      <%# end %>
                     </ul>
                   </td>
-                  <% if current_usuario.perfil_id == Usuario::ADMINISTRADOR_CONCESSIONARIA || current_usuario.perfil_id == Usuario::PEUGEOT%>
+                  <% if current_usuario.perfil_id == Usuario::ADMINISTRADOR_CONCESSIONARIA || current_usuario.perfil_id == Usuario::PEUGEOT %>
                     <td>
                       <ul>
-                        <li><%= link_to 'Usuários',usuarios_path %></li>
-                        <li><%= link_to 'Categorias',categorias_path %></li>
-                        <li><%= link_to 'Relatórios',menu_relatorios_path %></li>
-                        <li><%= link_to 'Status ',acompanhamentos_path %></li>
-                        <li><%= link_to 'Tipo Compromissos',tipo_compromissos_path %></li>
-                        <%if current_usuario.perfil_id == Usuario::PEUGEOT%>
-                          <li><%= link_to 'Concessionárias',entidades_path %></li>
-                        <%end%>
+                        <li><%= link_to 'Usuários', usuarios_path %></li>
+                        <li><%= link_to 'Categorias', categorias_path %></li>
+                        <li><%= link_to 'Relatórios', menu_relatorios_path %></li>
+                        <!-- <li><%#= link_to 'Status', acompanhamentos_path %></li> -->
+                        <%# if current_usuario.perfil_id == Usuario::PEUGEOT %>
+                          <!-- <li><%#= link_to 'Concessionárias', entidades_path %></li> -->
+                        <%# end %>
                       </ul>
                     </td>
                   <%end%>
@@ -95,7 +89,7 @@
         <%= javascript_include_tag "tabs" %>
         <%= javascript_include_tag "jquery.flot.pie.pack" %>
       </div>
-      <div id="rodape"><p>Gerenciador de Vendas - Inovare</p></div>
+      <div id="rodape"><p>DevConnIT - Agenda de Compromissos</p></div>
     </div>
   </body>
   <script type="text/javascript">preparePage();</script>

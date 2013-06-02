@@ -1,25 +1,25 @@
 <% content_for :titulo, 'Cliente' %>
-
 <div class="form">
-
-  <div style="float: right;">  <%=render :partial=>'localizacao_cliente',:locals=>{:p=>@pessoa}%></div>
-
-
+  <div style="float: right;">
+    <%=render :partial => 'localizacao_cliente', :locals => {:p => @pessoa} %>
+  </div>
   <table padding="2">
     <tr>
       <td><%= link_to 'Alterar Dados', edit_pessoa_path(@pessoa), :class=>'button' %></td>
-      <td class="separacao"><%=link_to 'Compromissos',pessoa_compromissos_path(@pessoa.id), :class=>'button' %></td>
-      <td class="separacao"><%= link_to 'Negociações',pessoa_propostas_path(@pessoa), :class=>'button' %></td>
+      <td class="separacao">
+        <%= link_to 'Compromissos', pessoa_compromissos_path(@pessoa.id), :class => 'button' %>
+      </td>
+      <!-- <td class="separacao"><%#= link_to 'Negociações',pessoa_propostas_path(@pessoa), :class=>'button' %></td> -->
     </tr>
   </table>
-
-<br />
-<br />
+  <br /><br />
 
   <table>
     <tr>
-      <td class="field_descriptor" style="text-align: right;"><%=@pessoa.label_nome_ou_nome_fantasia%>:</td>
-      <td><%=@pessoa.nome %> </td>
+      <td class="field_descriptor" style="text-align: right;">
+        <%= @pessoa.label_nome_ou_nome_fantasia%>:
+      </td>
+      <td><%= @pessoa.nome %></td>
     </tr>
     <%= show_unless_blank 'Razão Social', @pessoa.razao_social %>
     <%= show_unless_blank 'Contato', @pessoa.contato %>
@@ -32,14 +32,12 @@
     <%= show_unless_blank 'Telefone', @pessoa.telefone.join(",") %>
     <%= show_unless_blank 'Observações',   @pessoa.observacoes %>
   </table>
-  <br />
-  <br />
-  <%= link_to '', pessoas_path, :class=>['bt_voltar', ' float_left'] %>
+  <br /><br />
+  <%= link_to '', pessoas_path, :class => ['bt_voltar', ' float_left'] %>
 
-  <br />
-  <br />
+  <br /><br />
   <br style="clear: both;" />
-  
+
   <h3 style="margin-top: 25px;">Histórico do Cliente</h3>
   <% listagem_table :new => new_pessoa_historico_cliente_path(@pessoa),  :headers => [ 'Data','Consultor Comercial','Descrição'] do %>
     <% @historico_clientes.each do |historico| %>
@@ -50,6 +48,4 @@
       <% end %>
     <% end %>
   <% end %>
-
-
 </div>

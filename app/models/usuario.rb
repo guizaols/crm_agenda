@@ -44,22 +44,11 @@ class Usuario < ActiveRecord::Base
   has_many :suportes
   has_many :retiradas
   belongs_to :entidade
-   has_many :compromissos,:foreign_key=>'agendado_por'
+   has_many :compromissos, :foreign_key => 'agendado_por'
   has_and_belongs_to_many :pessoas
 
-  # HACK HACK HACK -- how to do attr_accessible from here?
-  # prevents a user from submitting a crafted form that bypasses activation
-  # anything else you want your user to change should be added here.
   attr_accessible :login, :email, :name,:cargo, :password, :password_confirmation,:perfil_id,:entidade_id
 
-
-
-  # Authenticates a user by their login name and unencrypted password.  Returns the user or nil.
-  #
-  # uff.  this is really an authorization, not authentication routine.  
-  # We really need a Dispatch Chain here or something.
-  # This will also let us return a human error message.
-  #
   def self.authenticate(login, password)
     return nil if login.blank? || password.blank?
     u = find_by_login(login.downcase) # need to get the salt
@@ -75,7 +64,5 @@ class Usuario < ActiveRecord::Base
   end
 
   protected
-    
-
 
 end

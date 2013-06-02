@@ -44,7 +44,7 @@ class CategoriasController < ApplicationController
 
     respond_to do |format|
       if @categoria.save
-        flash[:notice] = 'Categoria was successfully created.'
+        flash[:notice] = 'Categoria criada com sucesso.'
         format.html { redirect_to(@categoria) }
         format.xml  { render :xml => @categoria, :status => :created, :location => @categoria }
       else
@@ -61,7 +61,7 @@ class CategoriasController < ApplicationController
 
     respond_to do |format|
       if @categoria.update_attributes(params[:categoria])
-        flash[:notice] = 'Categoria was successfully updated.'
+        flash[:notice] = 'Categoria atualizada com sucesso.'
         format.html { redirect_to(@categoria) }
         format.xml  { head :ok }
       else

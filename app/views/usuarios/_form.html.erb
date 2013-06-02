@@ -19,16 +19,15 @@
       <%= f.password_field :password_confirmation %>
       <tr>
         <td class="field_descriptor">Perfil</td>
-        <%if current_usuario.perfil_id == 3%>
-        <td><%=f.select :perfil_id,[['Administrador da Concessionária',1],['Usuário Comum',2],['Peugeot',3]],{:include_blank=>true} %></td>
-        <%else%>
-        <td><%=f.select :perfil_id,[['Administrador da Concessionária',1],['Usuário Comum',2],["Recepção",4],["Telefonista",5]],{:include_blank=>true} %></td>
-        <%end%>
+        <td><%= f.select :perfil_id, [['Administrador', 1], ['Usuário Comum', 2]], {:include_blank => true} %></td>
       </tr>
       <tr>
         <td></td>
-        <td><%= f.submit '', :class=>['bt_salvar', ' float_left'] %> <%=link_to '', usuarios_path, :class=>['bt_voltar', ' float_left'] %></td>
+        <td>
+          <%= f.submit '', :class => ['bt_salvar', ' float_left'] %>
+          <%= link_to '', usuarios_path, :class => ['bt_voltar', ' float_left'] %>
+        </td>
       </tr>
-    </table>  
+    </table>
   <% end %>
 </div>

@@ -1,83 +1,17 @@
 <h1>Relatórios</h1>
 <div id="relatorio">
   <br />
-  <%=link_to 'Vendas por período',"#",{:id=>"vendas_periodo",:class=>'list_buttons'}%>
-  <div id="form_vendas_periodo" style="display:none;">
-    <%form_tag vendas_por_situacao_relatorios_path,:method=>"get" do%>
+  <%= link_to_function 'Compromissos Funcionários', {:id => 'link_compromissos', :class => 'list_buttons'} do |page| page << "return false;" end %>
+  <div id="compromissos" style="display:none;">
+    <% form_tag compromissos_funcionarios_relatorios_path, :method => 'get' do %>
       <table class="tb_pequeno">
         <tr>
           <td class="field_descriptor" style="width:100px;">
             Data Inicial
           </td>
           <td>
-            <%=text_field_tag 'pesquisa[data_inicial]',(params[:pesquisa][:data_inicial] rescue nil),{:id=>"data_inicial_picker"}%>
+            <%=text_field_tag 'pesquisa[data_inicial]',(params[:pesquisa][:data_inicial] rescue nil),{:id=>"data_inicial_picker_3"}%>
           </td>
-        </tr>
-        <tr>
-          <td class="field_descriptor">Data Final</td>
-          <td>
-            <%=text_field_tag 'pesquisa[data_final]',(params[:pesquisa][:data_final] rescue nil),{:id=>"data_final_picker"}%>
-          </td>
-        </tr>
-        <%if current_usuario.perfil_id == 3%>
-          <tr>
-            <td class="field_descriptor">Concessionária</td>
-            <td><%=select_tag 'pesquisa[entidade_id]',options_for_select(['']+Entidade.all.collect{|x| [x.nome,x.id]},(params[:pesquisa][:entidade_id].to_i rescue nil))%></td>
-          </tr>
-        <%end%>
-        <tr>
-          <td class="field_descriptor"></td>
-          <td><%=submit_tag "", :class=>'bt_salvar'%></td>
-        </tr>
-      </table>
-    <%end%>
-  </div>
-
-
-  <%=link_to 'Status de Negociação',funil_relatorios_path,:class=>'list_buttons'%>
-
-  <%=link_to 'Prospects',prospect_relatorios_path,:class=>'list_buttons'%>
-
-  <%=link_to_function 'Vendas por Categoria',{:class=>'list_buttons',:id=>"vendas_categoria"} do |page| page << "return false;"end%>
-  <div id="vendas_por_categoria" style="display:none;">
-    <%form_tag vendas_por_categoria_de_produto_relatorios_path,:method=>"get" do%>
-      <table class="tb_pequeno">
-        <tr>
-          <td class="field_descriptor" style="width:100px;">
-            Data Inicial
-          </td>
-          <td>
-            <%=text_field_tag 'pesquisa[data_inicial]',(params[:pesquisa][:data_inicial] rescue nil),{:id=>"data_inicial_picker_1"}%>
-          </td>
-
-        </tr>
-        <tr>
-          <td class="field_descriptor">Data Final</td>
-          <td>
-            <%=text_field_tag 'pesquisa[data_final]',(params[:pesquisa][:data_final] rescue nil),{:id=>"data_final_picker_1"}%>
-          </td>
-        </tr>
-        <tr>
-          <td class="field_descriptor"></td>
-          <td><%=submit_tag "", :class=>'bt_salvar'%></td>
-        </tr>
-      </table>
-    <%end%>
-  </div>
-
-<%#=link_to 'Vendas por Grupo de Cliente',vendas_por_grupo_relatorios_path,:class=>'list_buttons'%>
-  <%=link_to_function 'Vendas por Grupo de Cliente',{:class=>'list_buttons',:id=>"venda_grupo"} do |page| page << "return false;" end%>
-  <div id="vendas_por_grupo" style="display:none;">
-    <%form_tag vendas_por_grupo_relatorios_path,:method=>"get" do%>
-      <table class="tb_pequeno">
-        <tr>
-          <td class="field_descriptor" style="width:100px;">
-            Data Inicial
-          </td>
-          <td>
-            <%=text_field_tag 'pesquisa[data_inicial]',(params[:pesquisa][:data_inicial] rescue nil),{:id=>"data_inicial_picker_4"}%>
-          </td>
-
         </tr>
         <tr>
           <td class="field_descriptor">Data Final</td>
@@ -87,111 +21,9 @@
         </tr>
         <tr>
           <td class="field_descriptor"></td>
-          <td><%=submit_tag "", :class=>'bt_salvar'%></td>
+          <td><%=submit_tag '', :class => 'bt_buscar' %></td>
         </tr>
       </table>
-    <%end%>
-  </div>
-
-
-
-<%#=link_to 'Totalização Funil', funil_iterativo_relatorios_path,:class=>'list_buttons' %>
-
-<%#=link_to 'Financeiro', funil_financeiro_relatorios_path,:class=>'list_buttons' %>
-
-
-  <%if current_usuario.perfil_id != 3%>
-    <%=link_to_function 'Produtividade Departamento Comercial',{:id=>"produtividade_link",:class=>'list_buttons'} do |page| page << "return false" end%>
-    <div id="produtividade" style="display:none;">
-      <%form_tag produtividade_funcionarios_relatorios_path,:method=>"get" do%>
-        <table class="tb_pequeno">
-          <tr>
-            <td class="field_descriptor" style="width:100px;">
-              Data Inicial
-            </td>
-            <td>
-              <%=text_field_tag 'pesquisa[data_inicial]',(params[:pesquisa][:data_inicial] rescue nil),{:id=>"data_inicial_picker_1"}%>
-            </td>
-
-          </tr>
-          <tr>
-            <td class="field_descriptor">Data Final</td>
-            <td>
-              <%=text_field_tag 'pesquisa[data_final]',(params[:pesquisa][:data_final] rescue nil),{:id=>"data_final_picker_1"}%>
-            </td>
-          </tr>
-          <tr>
-            <td class="field_descriptor"></td>
-            <td><%=submit_tag "", :class=>'bt_salvar'%></td>
-          </tr>
-        </table>
-      <%end%>
-    </div>
-
-
-    <%=link_to_function 'Compromissos Funcionários',{:id=>"link_compromissos",:class=>'list_buttons'} do |page| page << "return false;" end%>
-    <div id="compromissos" style="display:none;">
-      <%form_tag compromissos_funcionarios_relatorios_path,:method=>"get" do%>
-        <table class="tb_pequeno">
-          <tr>
-            <td class="field_descriptor" style="width:100px;">
-              Data Inicial
-            </td>
-            <td>
-              <%=text_field_tag 'pesquisa[data_inicial]',(params[:pesquisa][:data_inicial] rescue nil),{:id=>"data_inicial_picker_3"}%>
-            </td>
-
-          </tr>
-          <tr>
-            <td class="field_descriptor">Data Final</td>
-            <td>
-              <%=text_field_tag 'pesquisa[data_final]',(params[:pesquisa][:data_final] rescue nil),{:id=>"data_final_picker_4"}%>
-            </td>
-          </tr>
-          <tr>
-            <td class="field_descriptor"></td>
-            <td><%=submit_tag "", :class=>'bt_salvar'%></td>
-          </tr>
-        </table>
-      <%end%>
-    </div>
-  <%end%>
-
-  <%=link_to_function 'Auditoria',{:id=>"link_auditoria",:class=>'list_buttons'} do |page| page << "return false" end%>
-  <div id="auditoria" style="display:none;">
-    <%form_tag auditoria_relatorios_path,:method=>"get" do%>
-      <table class="tb_pequeno">
-        <tr>
-          <td class="field_descriptor" style="width:100px;">
-            Data Inicial
-          </td>
-          <td>
-            <%=text_field_tag 'pesquisa[data_inicial]',(params[:pesquisa][:data_inicial] rescue nil),{:id=>"data_inicial_picker_8"}%>
-          </td>
-
-        </tr>
-        <tr>
-          <td class="field_descriptor">Data Final</td>
-          <td>
-            <%=text_field_tag 'pesquisa[data_final]',(params[:pesquisa][:data_final] rescue nil),{:id=>"data_final_picker_9"}%>
-          </td>
-        </tr>
-
-
-        <%if current_usuario.perfil_id == 3%>
-          <tr>
-            <td class="field_descriptor">Concessionária</td>
-            <td><%=select_tag 'pesquisa[entidade_id]',options_for_select(['']+Entidade.all.collect{|x| [x.nome,x.id]},(params[:pesquisa][:entidade_id].to_i rescue nil))%></td>
-          </tr>
-        <%end%>
-
-
-        <tr>
-          <td class="field_descriptor"></td>
-          <td><%=submit_tag "", :class=>'bt_salvar'%></td>
-        </tr>
-      </table>
-    <%end%>
+    <% end %>
   </div>
 </div>
-

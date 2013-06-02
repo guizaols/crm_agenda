@@ -1,4 +1,4 @@
-# This controller handles the login/logout function of the site.  
+# This controller handles the login/logout function of the site.
 class SessoesController < ApplicationController
 
   @@display_name = 'Login'
@@ -8,7 +8,7 @@ class SessoesController < ApplicationController
   before_filter :iphone_request?
   before_filter :mobile_request?
   skip_before_filter :login_required
-  
+
   def new
   end
 
@@ -23,16 +23,9 @@ class SessoesController < ApplicationController
       self.current_usuario = usuario
       new_cookie_flag = (params[:remember_me] == "1")
       handle_remember_cookie! new_cookie_flag
-      
-      if usuario.perfil_id == 2 || usuario.perfil_id == 4 || usuario.perfil_id == 5
-         redirect_to main_path
-      else
-        redirect_to minha_empresa_path
-      end
 
-
-
-      flash[:notice] = "Bem vindo!"
+      redirect_to main_path
+      flash[:notice] = 'Bem vindo!'
     else
       note_failed_signin
       @login       = params[:login]

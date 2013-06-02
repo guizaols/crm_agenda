@@ -1,41 +1,33 @@
-<% form_for @tipo_compromisso,:builder => TableFormBuilder do |f| %>
+<% form_for @tipo_compromisso, :builder => TableFormBuilder do |f| %>
   <%= f.error_messages %>
-<table>
+  <table>
     <%= f.text_field :nome %>
     <%= f.text_field :color %>
+    <tr>
+      <td class="field_descriptor">Visita Externa?</td>
+      <td><%=f.check_box :visita_externa,:simple_tag=>true,:class=>"checkbox"%></td>
+    </tr>
+    <tr>
+      <td class="field_descriptor"></td>
+      <td>
+        <%= f.submit '', :class=>['bt_salvar', ' float_left'] %>
+        <%= link_to '', tipo_compromissos_path, :class => ['bt_voltar', ' float_left'] %>
+      </td>
+    </tr>
+  </table>
+<% end %>
 
-      <tr>
-        <td class="field_descriptor">Visita Externa?</td>
-        <td><%=f.check_box :visita_externa,:simple_tag=>true,:class=>"checkbox"%></td>
-      </tr>
-
- <tr>
-    <td class="field_descriptor"></td>
-    <td><%= f.submit '', :class=>['bt_salvar', ' float_left'] %><%= link_to '', tipo_compromissos_path, :class=>['bt_voltar', ' float_left'] %></td>
-  </tr>
-
-
-
-</table>
-
-
-
-<script>
-    J('#tipo_compromisso_color').ColorPicker({
-     
-     onSubmit: function(hsb, hex, rgb, el) {
-        J(el).val(hex);
-        J(el).ColorPickerHide();
-        J(el).css("background-color","#"+hex);
-      },
-      onBeforeShow: function () {
-        J(this).ColorPickerSetColor(this.value);
-      }
-    })
-    .bind('keyup', function(){
+<script type="text/javascript">
+  J('#tipo_compromisso_color').ColorPicker({
+    onSubmit: function(hsb, hex, rgb, el) {
+      J(el).val(hex);
+      J(el).ColorPickerHide();
+      J(el).css('background-color', '#' + hex);
+    },
+    onBeforeShow: function() {
       J(this).ColorPickerSetColor(this.value);
-    });
-  </script>
-
-  <% end %>
-
+    }
+  }).bind('keyup', function() {
+    J(this).ColorPickerSetColor(this.value);
+  });
+</script>

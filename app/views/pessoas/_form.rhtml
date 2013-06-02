@@ -5,13 +5,12 @@
 </script>
 <div class="form">
   <% form_for @pessoa, :builder => TableFormBuilder do |f|  %>
-
+    <%= f.error_messages %>
     <div id="tabs">
       <ul>
         <li><a href="#tabs-1">Dados Pessoais</a></li>
-
         <li><a href="#tabs-2">Contato/Endereço</a></li>
-        <li><a href="#tabs-3">Vendedor Responsável</a></li>
+        <!-- <li><a href="#tabs-3">Vendedor Responsável</a></li> -->
       </ul>
       <div id="tabs-1">
         <table>
@@ -35,7 +34,7 @@
           </tr>
 
           <tr>
-            <td  class="field_descriptor" valign="top">Telefones/Fax* <%= link_to_function "+" do |page|
+            <td class="field_descriptor" valign="top">Telefones/Fax* <%= link_to_function "+" do |page|
                 page.insert_html :bottom, "telefones_secundarios", :partial => 'telefone'  end %> </td>
             <td>
               <ul id="telefones_secundarios" style="list-style-type: none;">
@@ -104,9 +103,6 @@
             <td  class="field_descriptor">Complemento</td>
             <td><%= f.text_field :complemento, :simple_tag=>true %></td>
           </tr>
-
-
-
           <tr>
             <td  class="field_descriptor" valign="top">Emails
               <%= link_to_function "+" do |page| page.insert_html :bottom, "emails_secundarios", :partial => 'email' end %></td>
@@ -124,37 +120,34 @@
             </td>
           </tr>
         </table>
-
-
-
       </div>
-      <div id="tabs-3">
+
+      <!-- <div id="tabs-3">
         <table>
           <tr>
             <td class="field_descriptor">Funcionários</td>
             <td>
-              <ul class="lista_funcionarios">
-                <% for  usuario in Usuario.find(:all,:conditions=>["entidade_id = ?",current_usuario.entidade_id]) -%>
-                  <li>
-                    <label for="pessoa_usuario_ids">
-                      <%= check_box_tag "pessoa[usuario_ids][]", "#{usuario.id}", @pessoa.usuarios.any?{|u| u.id == usuario.id},{:simple_tag=>true, :class=>"checkbox"}%>
-                      <%= "#{usuario.name}" %></label>
-                  </li>
-                <% end %>
-              </ul>
+              <ul class="lista_funcionarios"> -->
+                <%# for  usuario in Usuario.find(:all,:conditions=>["entidade_id = ?",current_usuario.entidade_id]) -%>
+                  <!-- <li>
+                    <label for="pessoa_usuario_ids"> -->
+                      <%#= check_box_tag "pessoa[usuario_ids][]", "#{usuario.id}", @pessoa.usuarios.any?{|u| u.id == usuario.id},{:simple_tag=>true, :class=>"checkbox"}%>
+                      <%#= "#{usuario.name}" %></label>
+                  <!-- </li> -->
+                <%# end %>
+              <!-- </ul>
             </td>
           </tr>
         </table>
-
-
-      </div>
+      </div> -->
     </div>
     <table>
       <tr>
-        <td><%= f.submit "", :class=>['bt_salvar', ' float_left'] %><%= link_to '', pessoas_path, :class=>['bt_voltar', ' float_left'] %></td>
+        <td>
+          <%= f.submit '', :class => ['bt_salvar', ' float_left'] %>
+          <%= link_to '', pessoas_path, :class => ['bt_voltar', ' float_left'] %>
+        </td>
       </tr>
     </table>
-
   </div><!-- End demo -->
-
-<%end%>
+<% end %>

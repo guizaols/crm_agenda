@@ -3,6 +3,7 @@
 # Specifies gem version of Rails to use when vendor/rails is not present
 RAILS_GEM_VERSION = '2.3.4' unless defined? RAILS_GEM_VERSION
 ENV['RAILS_ENV'] ||= 'production'
+ENV['RACK_ENV'] ||= 'production'
 
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
@@ -41,12 +42,14 @@ Rails::Initializer.run do |config|
   config.i18n.default_locale = :pt
 end
 
-# ActionMailer::Base.smtp_settings = {
-#   :address => 'smtp.inovare.net',
-#   :port => '25',
-#   :user_name => 'no-reply@inovare.net',
-#   :password => 'inovare1105',
-#   :authentication => :login
-# }
+ActionMailer::Base.smtp_settings = {
+  :enable_starttls_auto => true,
+  :address => 'smtp.gmail.com',
+  :port => 587,
+  :domain => 'devconnit.com',
+  :authentication => :plain,
+  :user_name => 'no-reply@devconnit.com',
+  :password => 'no-reply#135792468',
+}
 # Descomentar a linha abaixo quando for necessário excluir todos os arquivos em cache ao abrir o server
 # Inovare.excluir_arquivos_de_cache

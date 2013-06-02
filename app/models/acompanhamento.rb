@@ -21,13 +21,13 @@ class Acompanhamento < ActiveRecord::Base
   end
 
   def tem_status_vendido?
-    
+
     tipo = Acompanhamento.find(:all,:conditions=>["vendido = 1"]).first rescue nil
     retorno = true
     if !tipo.blank?
       if tipo.id == self.id
         return false
-      else 
+      else
         return true
       end
     else

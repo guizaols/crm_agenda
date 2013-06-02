@@ -11,7 +11,7 @@ class ApplicationController < ActionController::Base
     request.format == :iphone
   end
 
-  
+
   def mobile_request?
     iphone_request?
   end
@@ -23,7 +23,7 @@ class ApplicationController < ActionController::Base
   end
 
   protected
-  
+
   #Exibição de títulos diferentes para cada página (SEO):
   @@display_name = nil
   def display_name
@@ -38,7 +38,7 @@ class ApplicationController < ActionController::Base
     when 'index': 'Lista'
     else action_name.untaint
     end
-    @meta_description = 'Sistema desenvolvido pela Inovare (www.inovare.net)'
+    @meta_description = 'Sistema desenvolvido pela DevConnIT'
   end
 
   #Breadcrumbs

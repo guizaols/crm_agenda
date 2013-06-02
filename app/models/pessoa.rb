@@ -20,7 +20,6 @@ class Pessoa < ActiveRecord::Base
   belongs_to :entidade
 
 
-
   HUMANIZED_ATTRIBUTES = {
     :cpf => 'O campo CPF',
     :cnpj=> 'O campo CNPJ',

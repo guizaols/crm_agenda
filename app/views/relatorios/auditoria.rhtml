@@ -12,18 +12,18 @@
             <th>Data</th>
             <th>Operação</th>
             <th>Cliente</th>
-            <th>Proposta</th>
-            <th>Histórico</th>
+            <!-- <th>Proposta</th> -->
+            <!-- <th>Histórico</th> -->
           </tr>
         </thead>
         <%p.last.each do |a|%>
           <tbody>
             <tr>
-              <td><%=h(a.data) %></td>
-              <td><%=  a.operacao rescue nil %></td>
+              <td><%= h(a.data) %></td>
+              <td><%= a.operacao rescue nil %></td>
               <td><%= link_to h(a.pessoa.nome),pessoa_path(a.pessoa.id) rescue nil%></td>
-              <td><%= link_to h(a.proposta.nome),pessoa_proposta_path(a.pessoa.id,a.proposta.id) rescue nil%></td>
-              <td><%= link_to h(a.proposta.nome),pessoa_proposta_path(a.pessoa.id,a.proposta.id) rescue nil%></td>
+              <!-- <td><%#= link_to h(a.proposta.nome),pessoa_proposta_path(a.pessoa.id,a.proposta.id) rescue nil%></td> -->
+              <!-- <td><%#= link_to h(a.proposta.nome),pessoa_proposta_path(a.pessoa.id,a.proposta.id) rescue nil%></td> -->
             </tr>
           </tbody>
         <%end%>

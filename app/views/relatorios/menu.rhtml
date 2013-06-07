@@ -1,5 +1,33 @@
 <h1>Relatórios</h1>
 <div id="relatorio">
+  <%= link_to_function 'Auditoria', {:id=>"link_auditoria",:class=>'list_buttons'} do |page| page << "return false" end%>
+  <div id="auditoria" style="display:none;">
+    <%form_tag auditoria_relatorios_path,:method=>"get" do%>
+      <table class="tb_pequeno">
+        <tr>
+          <td class="field_descriptor" style="width:100px;">
+            Data Inicial
+          </td>
+          <td>
+            <%=text_field_tag 'pesquisa[data_inicial]',(params[:pesquisa][:data_inicial] rescue nil),{:id=>"data_inicial_picker_8"}%>
+          </td>
+
+        </tr>
+        <tr>
+          <td class="field_descriptor">Data Final</td>
+          <td>
+            <%=text_field_tag 'pesquisa[data_final]',(params[:pesquisa][:data_final] rescue nil),{:id=>"data_final_picker_9"}%>
+          </td>
+        </tr>
+        <tr>
+          <td class="field_descriptor"></td>
+          <td><%=submit_tag "", :class=>'bt_buscar'%></td>
+        </tr>
+      </table>
+    <% end %>
+  </div>
+
+
   <br />
   <%= link_to_function 'Compromissos Funcionários', {:id => 'link_compromissos', :class => 'list_buttons'} do |page| page << "return false;" end %>
   <div id="compromissos" style="display:none;">

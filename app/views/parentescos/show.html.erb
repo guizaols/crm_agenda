@@ -1,0 +1,22 @@
+<p>
+  <b>Nome:</b>
+  <%=h @parentesco.nome %>
+</p>
+
+<p>
+  <b>Tipo de parentesco:</b>
+  <%=h @parentesco.tipo_parentesco %>
+</p>
+
+<p>
+  <b>Data de nascimento:</b>
+  <%=h @parentesco.data_nascimento %>
+</p>
+
+<p>
+  <b>Idade:</b>
+  <%=h @parentesco.idade %>
+</p>
+
+<%= link_to '', edit_pessoa_parentesco_path(@pessoa, @parentesco), :class => ['bt_alterar',' float_left'] %>
+<%= link_to '', pessoa_path(@pessoa), :class => ['bt_voltar', ' float_left'] %>

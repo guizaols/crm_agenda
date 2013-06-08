@@ -105,6 +105,12 @@ J("#proposta_data_inicio").datepicker({
     dateFormat: 'dd/mm/yy'
 });
 
+J('input, textarea').keyup(function() {
+    if(J(this).attr('class') != 'emails')
+        this.value = this.value.toUpperCase();
+});
+
+
 
 function modal_compromisso()
 {

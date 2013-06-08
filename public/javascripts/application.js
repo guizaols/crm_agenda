@@ -26,11 +26,11 @@ function desmarcar_cheque_a_vista()
 
 function mostrar_pesquisa_por_tipo_situacao()
 {
-    
+
     if ($('busca_por_situacao').checked)
         $('situacao').show();
     else
-        $('situacao').hide();    
+        $('situacao').hide();
 
 }
 
@@ -89,7 +89,7 @@ function desenha_a_tela_de_cadastrar_pessoa()
         $('matricula').hide();
         $('cargo').hide();
         $('ativo').hide();
-    }    
+    }
 }
 
 function verifica_se_existe_conta_contabil()
@@ -127,14 +127,14 @@ function atualiza_cores_das_trs_de_listagem() {
 }
 
 function verifica_filtro_tipo_de_relatorio(){
-    if (($('busca_opcoes').value == 'Contas a Receber') || ($('busca_opcoes').value == 'Geral do Contas a Receber')) 
+    if (($('busca_opcoes').value == 'Contas a Receber') || ($('busca_opcoes').value == 'Geral do Contas a Receber'))
     {
-        $('tipo_situacao').show();   
+        $('tipo_situacao').show();
     }
     else
     {
         $('tipo_situacao').hide();
-    }       
+    }
 }
 
 function addClass(element, value) {
@@ -159,18 +159,18 @@ function removeClass(element, value) {
 function valor_total_do_rateio()
 {
     var j=0,soma=0.0,valor=0;
-    $$('input.valores').each(function(value) 
+    $$('input.valores').each(function(value)
     {
-        
+
         if ((value.value).empty())
-            valor= 0.0; 
+            valor= 0.0;
         else
-            valor =parseFloat(value.value) * 100; 
-      
-       
+            valor =parseFloat(value.value) * 100;
+
+
         soma = soma + valor;
     });
-    
+
     if (isNaN(soma))
         soma=0.0;
     else
@@ -184,16 +184,16 @@ function valor_total_do_rateio()
 function valor_total_das_parcelas()
 {
     var soma=0,valor=0;
-    $$('input.valor').each(function(value) 
+    $$('input.valor').each(function(value)
     {
         if ((value.value).empty())
-            valor= 0.0; 
+            valor= 0.0;
         else
-            valor =parseFloat(value.value) * 100; 
-       
+            valor =parseFloat(value.value) * 100;
+
         soma = soma + valor;
     });
-    
+
     if (isNaN(soma))
         soma=0.0;
     else
@@ -202,7 +202,7 @@ function valor_total_das_parcelas()
         $('soma_total_das_parcelas').innerHTML = (formatar_dinheiro(soma.toString()));
         verifica_se_valor_do_documento_e_igual_a_soma_das_parcelas();
     }
-    
+
 }
 
 function verifica_se_valor_do_documento_e_igual_a_soma_das_parcelas()
@@ -217,13 +217,13 @@ function verifica_se_valor_do_documento_e_igual_a_soma_das_parcelas()
         $('soma_total_das_parcelas').style.color='#FF0000';
         $('valor_do_documento').style.color='#FF0000';
     }
-    
+
 }
 
 
 function verifica_se_valor_do_rateio_e_igual_ao_da_parcela()
 {
-    
+
     if($('valor_da_parcela').innerHTML == $('soma_total_do_rateio').innerHTML)
     {
         $('valor_da_parcela').style.color='#00FF00';
@@ -276,7 +276,7 @@ function formatar_dinheiro(numero)
 
 function mostra_elemento_justificativa()
 {
-    
+
     if(parseFloat($('parcela_outros_acrescimos_em_reais').value) > 0)
     {
         $('justificativa_outros').highlight();
@@ -286,29 +286,29 @@ function mostra_elemento_justificativa()
     {
         $('justificativa_outros').hide();
     }
-    
+
 }
 
 function valor_total()
 {
     var j=0,soma=0,valor=0;
-    $$('input.valores').each(function(value) 
+    $$('input.valores').each(function(value)
     {
         if ((value.value).empty())
-            valor= 0.0; 
+            valor= 0.0;
         else
-            valor =parseFloat(value.value) * 100; 
+            valor =parseFloat(value.value) * 100;
         soma = soma + valor;
-        
+
     });
-    $$('input.valores_desconto').each(function(value) 
+    $$('input.valores_desconto').each(function(value)
     {
         if ((value.value).empty())
-            valor= 0.0; 
+            valor= 0.0;
         else
-            valor =parseFloat(value.value) * (-100); 
+            valor =parseFloat(value.value) * (-100);
         soma = soma + valor;
-        
+
     });
     if (isNaN(soma))
         soma=0.0;
@@ -321,19 +321,19 @@ function valor_total()
 }
 
 function confirmarAlteracao()
-{    
+{
     if (confirm ("Deseja replicar este rateio para todas as parcelas?"))
     {
         $('replicar_para_todos').value=1;
     }
 }
 
-function verificaSeElementoEstaAparecendo() 
+function verificaSeElementoEstaAparecendo()
 {
-    
-    var conta_tags=0;   
+
+    var conta_tags=0;
     $$('input.valor').each(function(value){
-        conta_tags = conta_tags + 1; 
+        conta_tags = conta_tags + 1;
     });
     if(conta_tags < 1)
     {
@@ -346,20 +346,20 @@ function verificaSeElementoEstaAparecendo()
 }
 
 function atualiza_valores_retido_liquido_e_aliquota(valor,parcela)
-{  
+{
     var indice=0,
     id_aliquota='',
     id_imposto='',
     id_valor='',
     retido=0.0,
-    vetor_aliquotas = new Array(),vetor_valores = new Array(); 
+    vetor_aliquotas = new Array(),vetor_valores = new Array();
     valor = valor / 100.0;
     parcela = parcela/100.0;
-    
+
     $$('input.valor').each(function(value)
     {
         indice = value.id.split("_")[3]
-        id_imposto="dados_do_imposto_"+indice.toString()+"_imposto_id";    
+        id_imposto="dados_do_imposto_"+indice.toString()+"_imposto_id";
         id_aliquota = "dados_do_imposto_"+indice.toString()+"_aliquota";
         id_valor = value.id;
         vetor_aliquotas[indice] = parseFloat($(id_imposto).value.split("#").last());
@@ -374,7 +374,7 @@ function atualiza_valores_retido_liquido_e_aliquota(valor,parcela)
             retido = retido + vetor_valores[indice];
         }
     });
-    
+
     atualiza_cabecalho(parcela);
 }
 
@@ -387,10 +387,10 @@ function atualiza_item_de_lancamento_de_imposto(valor_doc,parcela,indice){
     valor_calc = 0,
     valor = 0.0,
     valor_doc = valor_doc/100.0,
-    
+
     //atualiza_os_valores_do_indice
-    
-    id_imposto = "dados_do_imposto_"+indice+"_imposto_id";    
+
+    id_imposto = "dados_do_imposto_"+indice+"_imposto_id";
     id_aliquota = "dados_do_imposto_"+indice+"_aliquota";
     id_valor = "dados_do_imposto_"+indice+"_valor_imposto";
     aliquota = parseFloat($(id_imposto).value.split("#").last());
@@ -401,18 +401,18 @@ function atualiza_item_de_lancamento_de_imposto(valor_doc,parcela,indice){
     }
     else{
         $(id_aliquota).value = aliquota;
-        $(id_valor).value = valor_calc.toFixed(2);  
+        $(id_valor).value = valor_calc.toFixed(2);
     }
 
-    
-    atualiza_cabecalho(parcela); 
-  
+
+    atualiza_cabecalho(parcela);
+
 }
 
 function atualiza_cabecalho(parcela){
-    
+
     var liquido = 0.0,
-    indice_soma = 0,    
+    indice_soma = 0,
     retido = 0;
 
     $$('input.valor').each(function(value){
@@ -421,16 +421,16 @@ function atualiza_cabecalho(parcela){
             retido += parseFloat($("dados_do_imposto_"+indice_soma.toString()+"_valor_imposto").value);
         }
     });
-    
+
     parcela = parcela/100.0;
-    
+
     if(!retido){
         liquido = parcela;
     }
     else{
         liquido = parcela - retido;
     }
-    
+
     if (retido > parcela){
         $('retido').setAttribute('class', 'retidovermelho')
         document.getElementById("retido").innerHTML = 'R$'+'<span>&nbsp;</span>'+ formatar_dinheiro((retido.toFixed(2)).toString())
@@ -440,19 +440,19 @@ function atualiza_cabecalho(parcela){
         $('retido').setAttribute('class', 'retidopreto')
         document.getElementById("retido").innerHTML = 'R$'+'<span>&nbsp;</span>'+ formatar_dinheiro((retido.toFixed(2)).toString())
         document.getElementById("liquido").innerHTML ='R$'+'<span>&nbsp;</span>'+ formatar_dinheiro((liquido.toFixed(2)).toString())
-    } 
+    }
 }
- 
+
 function insere_nome_e_id_para_baixa(id,elemento)
 {
-     
+
     unidade_centro = $('unidade_centro').value.split("_");
-    
+
     if (parseFloat(id.value) > 0)
     {
         nome = 'parcela_nome_unidade_organizacional'+'_'+elemento;
         elemento_id = 'parcela_unidade_organizacional'+'_'+elemento+'_id';
-        
+
         nome_centro = 'parcela_nome_centro'+'_'+elemento;
         id_do_centro = 'parcela_centro'+'_'+elemento+'_id';
         if ($(nome).value.empty())
@@ -461,18 +461,18 @@ function insere_nome_e_id_para_baixa(id,elemento)
             $(elemento_id).value=unidade_centro[0];
             $(id_do_centro).value = unidade_centro[2];
             $(nome_centro).value = unidade_centro[3];
-            
-            
+
+
         }
     }
-             
+
 }
 
 
-    
+
 function exibir_explicacao_para_busca(ordem,mensagem)
 {
-    
+
     if (ordem == 'exibir') {
         id_explicacao = 'explicacao_busca';
         texto_explicacao = 'explicacao_texto';
@@ -545,7 +545,7 @@ function desmarcar_recebimento_vencimento()
         $('tr_datas').show();
     else
         $('tr_datas').hide();
-    
+
 }
 
 function seleciona_situacoes()
@@ -586,15 +586,15 @@ function AplicaMascara(Mascara, elemento){
         }
     }
     elemento.value = novo_valor;
- 
+
 }
 
-function preparePage() { 
+function preparePage() {
     Cufon.replace("#menu",{
         fontFamily: "Chalet-LondonNineteenEighty"
     });
     Cufon.replace("h1", {
-        fontFamily: "Chalet-LondonNineteenEighty"    
+        fontFamily: "Chalet-LondonNineteenEighty"
     });
     Cufon.replace(".button", "input.button", {
         fontFamily: "Chalet-LondonNineteenSeventy"

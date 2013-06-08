@@ -1,11 +1,19 @@
 class RelatoriosController < ApplicationController
 
-  before_filter :verifica_se_eh_admin
-  before_filter :verificar_iphone,:only=>[:funil]
-  before_filter :iphone_request?,:only=>[:funil]
-  before_filter :mobile_request?,:only=>[:funil]
+  before_filter :verifica_se_eh_admin, :except => [:aniversarios]
+  before_filter :verificar_iphone, :only=>[:funil]
+  before_filter :iphone_request?, :only=>[:funil]
+  before_filter :mobile_request?, :only=>[:funil]
 
 
+  def aniversarios
+    @pessoas = Pessoa.find(:all, :conditions => ['entidade_id = ? AND
+                                                  DAY(data_nascimento) = ? AND
+                                                  MONTH(data_nascimento) = ?',
+                                                  current_usuario.entidade_id,
+                                                  Date.today.day, Date.today.month],
+                          :order => 'nome ASC, data_nascimento DESC')
+  end
 
 
   def prospect
@@ -60,7 +68,7 @@ class RelatoriosController < ApplicationController
   end
 
   def menu
-  
+
   end
 
   def espelho
@@ -101,11 +109,11 @@ class RelatoriosController < ApplicationController
 
 
   def funil_iterativo
-    
+
   end
 
   def funil_financeiro
-    
+
   end
 
   private

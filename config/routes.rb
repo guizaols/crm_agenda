@@ -25,7 +25,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :mails, :collection => { :mail_group => :post }
 
   map.resources :produtos
-  map.resources :relatorios,:collection=>{:vendas_por_grupo=>:any,:vendas_por_categoria_de_produto=>:any,:prospect=>:any,:auditoria=>:any,:espelho=>:any,:compromissos_funcionarios=>:any,:funil_financeiro=>:any,:funil_iterativo=>:any,:produtividade_funcionarios=>:any,:funil=>:any,:menu=>:any,:vendas_por_situacao=>:any}
+  map.resources :relatorios,:collection=>{:aniversarios => :get, :vendas_por_grupo=>:any,:vendas_por_categoria_de_produto=>:any,:prospect=>:any,:auditoria=>:any,:espelho=>:any,:compromissos_funcionarios=>:any,:funil_financeiro=>:any,:funil_iterativo=>:any,:produtividade_funcionarios=>:any,:funil=>:any,:menu=>:any,:vendas_por_situacao=>:any}
   map.resource :main,:controller => "main"
   map.resource :minha_empresa,:controller=>"minha_empresa"
   map.resources :suportes, :member=>{:proposta_enviada => :any,:finalizar_solicitacao_orcamento=>:post,:aprovacao_tecnica=>:post,:aprovacao_administrativa=>:post}
@@ -41,8 +41,9 @@ ActionController::Routing::Routes.draw do |map|
       proposta.resources :historicos
     end
     pessoa.resources :historico_clientes
+    pessoa.resources :parentescos
   end
- 
+
   map.resource :sessao
 
   # The priority is based upon order of creation: first created -> highest priority.
@@ -63,7 +64,7 @@ ActionController::Routing::Routes.draw do |map|
 
   # Sample resource route with sub-resources:
   #   map.resources :products, :has_many => [ :comments, :sales ], :has_one => :seller
-  
+
   # Sample resource route with more complex sub-resources
   #   map.resources :products do |products|
   #     products.resources :comments

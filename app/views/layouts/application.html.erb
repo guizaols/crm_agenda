@@ -28,19 +28,19 @@
                     <ul>
                       <% if current_usuario.perfil_id == Usuario::ADMINISTRADOR_CONCESSIONARIA || current_usuario.perfil_id == Usuario::PEUGEOT %>
                         <!-- <li><%#=link_to 'Empresa',minha_empresa_path%></li> -->
+                        <li><%= link_to 'Categorias', categorias_path %></li>
                         <li><%= link_to 'Segmentos', grupos_path %></li>
                         <!-- <li><%#= link_to 'Produtos', produtos_path %></li> -->
                         <li><%= link_to 'Origens', origens_path %></li>
                         <!-- <li><%#= link_to 'Prospects', listagem_prospects_pessoas_path %></li> -->
-                        <li><%= link_to 'E-mail Marketing', mails_path %></li>
                       <% end %>
                     </ul>
                   </td>
                   <td>
                     <ul>
                       <% if current_usuario.perfil_id == Usuario::ADMINISTRADOR_CONCESSIONARIA || current_usuario.perfil_id == Usuario::VENDEDOR || current_usuario.perfil_id == Usuario::RECEPCIONISTA || current_usuario.perfil_id == Usuario::TELEMARKETING || current_usuario.perfil_id == Usuario::PEUGEOT %>
-                        <li><%= link_to 'Agenda', main_path %></li>
                         <li><%= link_to 'Clientes', pessoas_path %></li>
+                        <li><%= link_to 'Usuários', usuarios_path %></li>
                         <li><%= link_to 'Tipo Compromissos', tipo_compromissos_path %></li>
                       <% end %>
                       <%# if current_usuario.perfil_id == Usuario::ADMINISTRADOR_CONCESSIONARIA || current_usuario.perfil_id == Usuario::VENDEDOR %>
@@ -51,8 +51,9 @@
                   <% if current_usuario.perfil_id == Usuario::ADMINISTRADOR_CONCESSIONARIA || current_usuario.perfil_id == Usuario::PEUGEOT %>
                     <td>
                       <ul>
-                        <li><%= link_to 'Usuários', usuarios_path %></li>
-                        <li><%= link_to 'Categorias', categorias_path %></li>
+                        <li><%= link_to 'Agenda', main_path %></li>
+                        <li><%= link_to 'Aniversariantes', aniversarios_relatorios_path %></li>
+                        <li><%= link_to 'E-mail Marketing', mails_path %></li>
                         <li><%= link_to 'Relatórios', menu_relatorios_path %></li>
                         <!-- <li><%#= link_to 'Status', acompanhamentos_path %></li> -->
                         <%# if current_usuario.perfil_id == Usuario::PEUGEOT %>

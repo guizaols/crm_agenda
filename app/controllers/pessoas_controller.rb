@@ -42,7 +42,7 @@ class PessoasController < ApplicationController
     else
       @pessoas = Pessoa.buscar_clientes(params[:busca],current_usuario)
     end
-    
+
   end
 
 
@@ -59,7 +59,7 @@ class PessoasController < ApplicationController
       end
       @pessoas = r
     end
-  
+
     render :update do |page|
       page.replace_html :tabela_clientes,:partial=>"listagem_pessoa",:locals=>{:pessoas=>@pessoas,:valor_1=>params[:valor_1]}
     end
@@ -135,15 +135,16 @@ alert('oi');
   def show
     @pessoa = Pessoa.find params[:id]
     @historico_clientes = @pessoa.historico_clientes
+    @parentescos = @pessoa.parentescos
     @historico = Historico.new
-    @endereco_prestige = YAML::load File.read(RAILS_ROOT + '/config/google_maps_key.yml')
+    # @endereco_prestige = YAML::load File.read(RAILS_ROOT + '/config/google_maps_key.yml')
   end
 
   def edit
     @pessoa = Pessoa.find params[:id]
-    @origem_solicitacao = request.env["HTTP_REFERER"].match %r{^.*propostas.*$} rescue nil
-    p @origem_solicitacao.blank?
-    p "************************"
+    # @origem_solicitacao = request.env["HTTP_REFERER"].match %r{^.*propostas.*$} rescue nil
+    # p @origem_solicitacao.blank?
+    # p "************************"
   end
 
   def create

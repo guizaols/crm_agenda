@@ -11,11 +11,11 @@ class HistoricoClientesController < ApplicationController
   end
 
   def new
-    @historico = HistoricoCliente.new
+    @historico_cliente = HistoricoCliente.new
   end
 
   def edit
-    @historico = HistoricoCliente.find_by_id_and_pessoa_id(params[:id],params[:pessoa_id])
+    @historico_cliente = HistoricoCliente.find_by_id_and_pessoa_id(params[:id],params[:pessoa_id])
   end
 
   def create
@@ -23,31 +23,31 @@ class HistoricoClientesController < ApplicationController
     @historico_cliente.usuario_id = current_usuario.id
     @historico_cliente.pessoa_id = @pessoa.id
 
-      if @historico_cliente.save
-        flash[:notice] = 'Histórico do cliente foi criado com sucesso!'
-                redirect_to pessoa_path(@pessoa)
-
-      else
-        render :action => "new"
-      end
+    if @historico_cliente.save
+      flash[:notice] = 'Histórico do cliente foi criado com sucesso!'
+      redirect_to pessoa_path(@pessoa)
+    else
+      @historico_cliente.errors.full_messages.collect{|item| p "* #{item}"}.join("\n")
+      render :action => 'new'
     end
+  end
 
   def update
     @historico_cliente = HistoricoCliente.find_by_id_and_pessoa_id(params[:id],params[:pessoa_id])
     @historico_cliente.usuario_id = current_usuario.id
     @historico_cliente.pessoa_id = @pessoa.id
     if @historico_cliente.update_attributes(params[:historico_cliente])
-        flash[:notice] = 'Histórico do cliente atualizado com sucesso!'
-        redirect_to pessoa_path(@pessoa)
-      else
-         render :action => "edit"
-      end
+      flash[:notice] = 'Histórico do cliente atualizado com sucesso!'
+      redirect_to pessoa_path(@pessoa)
+    else
+      render :action => 'edit'
+    end
   end
 
   def destroy
     @historico_cliente = HistoricoCliente.find_by_id_and_pessoa_id(params[:id],params[:pessoa_id])
     @historico_cliente.destroy
-     redirect_to(historico_clientes_url)
+    redirect_to(historico_clientes_url)
   end
 
 

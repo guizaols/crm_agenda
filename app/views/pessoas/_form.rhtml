@@ -34,6 +34,11 @@
           </tr>
 
           <tr>
+            <td id="data_nascimento"  class="field_descriptor">Data de nascimento*</td>
+            <td> <%= f.text_field :data_nascimento, :simple_tag=>true %></td>
+          </tr>
+
+          <tr>
             <td class="field_descriptor" valign="top">Telefones/Fax* <%= link_to_function "+" do |page|
                 page.insert_html :bottom, "telefones_secundarios", :partial => 'telefone'  end %> </td>
             <td>
@@ -76,8 +81,8 @@
           </tr>
 
           <tr id="email_contato" <%= 'style="display:none"' if @pessoa.tipo_pessoa == 1  %>>
-            <td  class="field_descriptor"> Email do Contato</td>
-            <td><%= f.text_field :telefone_contato, :simple_tag=>true  %></td>
+            <td  class="field_descriptor"> E-mail do Contato</td>
+            <td><%= f.text_field :telefone_contato, :simple_tag=>true, :class => 'emails' %></td>
           </tr>
           <tr>
             <td  class="field_descriptor">CEP</td>
@@ -104,11 +109,11 @@
             <td><%= f.text_field :complemento, :simple_tag=>true %></td>
           </tr>
           <tr>
-            <td  class="field_descriptor" valign="top">Emails
+            <td  class="field_descriptor" valign="top">E-mails
               <%= link_to_function "+" do |page| page.insert_html :bottom, "emails_secundarios", :partial => 'email' end %></td>
             <td>
               <ul id="emails_secundarios"  style="list-style-type: none;">
-                <%= render :partial => 'email'  %><%= render :partial => 'email', :object => 'email', :collection => @pessoa.email   if @pessoa.email%>
+                <%= render :partial => 'email' %><%= render :partial => 'email', :object => 'email', :collection => @pessoa.email if @pessoa.email %>
               </ul>
             </td>
           </tr>

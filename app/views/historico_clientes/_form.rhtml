@@ -1,23 +1,35 @@
 <div class="form">
-
-  <% form_for [@pessoa, @historico], :builder => TableFormBuilder do |p| %>
-    <%= p.error_messages%> <br />
+  <% form_for [@pessoa, @historico_cliente], :builder => TableFormBuilder do |p| %>
+    <%= p.error_messages %>
+    <br />
     <table>
       <tr>
-        <td class="field_descriptor">Consultor Comercial</td>
+        <td class="field_descriptor">Assessor</td>
         <td><b><%=current_usuario.name %></b></td>
       </tr>
       <tr>
-        <td class="field_descriptor">Data</td>
-        <td><%=p.text_field :data,:simple_tag=>true %></td>
+        <td class="field_descriptor">Tipo da Ação</td>
+        <td><%= p.text_field :tipo_acao, :simple_tag => true %></td>
       </tr>
-      <%= p.text_area :descricao,:label=> 'Descrições',:cols => 35, :rows => 10 %>
-
+      <tr>
+        <td class="field_descriptor">Data</td>
+        <td><%= p.text_field :data, :simple_tag => true %></td>
+      </tr>
+      <tr>
+        <td class="field_descriptor">Status</td>
+        <td><%= p.select :status, status_for_select , :simple_tag => true %></td>
+      </tr>
+      <%= p.text_area :motivo, :label => 'Motivo', :cols => 35, :rows => 10 %>
+      <%= p.text_area :objetivo, :label => 'Objetivos', :cols => 35, :rows => 10 %>
+      <%= p.text_area :atividades, :label => 'O que foi feito?', :cols => 35, :rows => 10 %>
+      <%= p.text_area :descricao, :label => 'Outras informações', :cols => 35, :rows => 10 %>
       <tr>
         <td></td>
-        <td><%= p.submit "", :class=>['bt_salvar', ' float_left'] %> <%= link_to '', pessoa_path(@pessoa), :class=>['bt_voltar', ' float_left'] %></td>
+        <td>
+          <%= p.submit '', :class => ['bt_salvar', ' float_left'] %>
+          <%= link_to '', pessoa_path(@pessoa), :class=>['bt_voltar', ' float_left'] %>
+        </td>
       </tr>
-
     </table>
   <% end %>
 </div>

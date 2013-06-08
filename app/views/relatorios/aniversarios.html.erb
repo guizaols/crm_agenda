@@ -1,0 +1,13 @@
+<h1>Aniversariantes do dia: <%= Date.today.to_s_br %></h1>
+
+<div id="tabela_clientes" class="listagem_duplo">
+  <% listagem_table :headers => ['Nome', 'Data de nascimento', 'E-mail'] do %>
+    <% @pessoas.each do |pessoa| %>
+      <tr>
+        <td><%= link_to h(pessoa.nome), pessoa %></td>
+        <td><%=h pessoa.data_nascimento %></td>
+        <td><%=h pessoa.email.blank? ? 'Nenhum email cadastrado' : pessoa.email.join(' / ') %></td>
+      </tr>
+    <% end %>
+  <% end %>
+</div>

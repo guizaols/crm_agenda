@@ -7,7 +7,7 @@ class Pessoa < ActiveRecord::Base
 #  validates_presence_of :nome, :telefone,:endereco,:bairro,:numero, :message =>"deve ser preenchido"
  # validates_presence_of :razao_socisal, :message => 'deve ser preenchido', :if => :juridica?
   validates_inclusion_of :tipo_pessoa, :in => [FISICA, JURIDICA],:message =>"deve ser selecionado"
-  validates_presence_of :nome,:telefone,:origem, :message => 'deve ser preenchido', :if => :fisica?
+  validates_presence_of :nome,:telefone,:origem, :data_nascimento, :message => 'deve ser preenchido', :if => :fisica?
   validates_presence_of :razao_social,:telefone,:grupo,:origem, :message => 'deve ser preenchido', :if => :juridica?
   serialize :email
   serialize :telefone
@@ -15,9 +15,11 @@ class Pessoa < ActiveRecord::Base
   belongs_to :origem
   has_many :propostas
   has_many :historico_clientes
+  has_many :parentescos
   has_and_belongs_to_many :usuarios
   belongs_to :grupo
   belongs_to :entidade
+  data_br_field :data_nascimento
 
 
   HUMANIZED_ATTRIBUTES = {
@@ -38,7 +40,8 @@ class Pessoa < ActiveRecord::Base
     :origem => 'O campo Origem',
     :observacoes =>'O campo Observações',
     :bairro =>'O campo Bairro',
-    :grupo=>"O campo Segmento"
+    :grupo=>'O campo Segmento',
+    :data_nascimento => 'O campo Data de nascimento'
   }
 
   def self.human_attribute_name(attr)

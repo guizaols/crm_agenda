@@ -17,10 +17,11 @@
   <table>
     <tr>
       <td class="field_descriptor" style="text-align: right;">
-        <%= @pessoa.label_nome_ou_nome_fantasia%>:
+        <%= @pessoa.label_nome_ou_nome_fantasia %>:
       </td>
       <td><%= @pessoa.nome %></td>
     </tr>
+    <%= show_unless_blank 'Data de nascimento', @pessoa.data_nascimento %>
     <%= show_unless_blank 'Razão Social', @pessoa.razao_social %>
     <%= show_unless_blank 'Contato', @pessoa.contato %>
     <%= show_unless_blank @pessoa.label_do_campo_cpf_cnpj, @pessoa.fisica? ? @pessoa.cpf : @pessoa.cnpj %>
@@ -28,7 +29,7 @@
     <%= show_unless_blank 'Endereço',   [@pessoa.endereco, @pessoa.numero].reject(&:blank?).join(', ') %>
     <%= show_unless_blank 'Bairro',    @pessoa.bairro%>
     <%#= show_unless_blank 'Localidade',   @pessoa.nome_localidade %>
-    <%= show_unless_blank 'Email',   @pessoa.email.join(",") %>
+    <%= show_unless_blank 'E-mail',   @pessoa.email.join(",") %>
     <%= show_unless_blank 'Telefone', @pessoa.telefone.join(",") %>
     <%= show_unless_blank 'Observações',   @pessoa.observacoes %>
   </table>
@@ -39,13 +40,28 @@
   <br style="clear: both;" />
 
   <h3 style="margin-top: 25px;">Histórico do Cliente</h3>
-  <% listagem_table :new => new_pessoa_historico_cliente_path(@pessoa),  :headers => [ 'Data','Consultor Comercial','Descrição'] do %>
+  <% listagem_table :new => new_pessoa_historico_cliente_path(@pessoa), :headers => ['Data', 'Consultor Comercial', 'Tipo de Ação', 'Status'] do %>
     <% @historico_clientes.each do |historico| %>
-      <% listagem_tr :edit => edit_pessoa_historico_cliente_path(@pessoa,historico),:destroy=>(pessoa_historico_cliente_path(@pessoa,historico)) do %>
+      <% listagem_tr :edit => edit_pessoa_historico_cliente_path(@pessoa,historico), :destroy => (pessoa_historico_cliente_path(@pessoa, historico)) do %>
         <td><%= link_to h(historico.data), pessoa_historico_cliente_path(@pessoa,historico)%></td>
-        <td><%=h historico.usuario.name rescue nil%></td>
-        <td><%=h historico.descricao%></td>
+        <td><%=h historico.usuario.name rescue nil %></td>
+        <td><%=h historico.tipo_acao %></td>
+        <td><%=h historico.status_verbose %></td>
       <% end %>
     <% end %>
   <% end %>
+
+
+  <h3 style="margin-top: 25px;">Parentescos</h3>
+  <% listagem_table :new => new_pessoa_parentesco_path(@pessoa), :headers => ['Nome', 'Tipo de parentesco', 'Data de nascimento', 'Idade'] do %>
+    <% @parentescos.each do |parentesco| %>
+      <% listagem_tr :edit => edit_pessoa_parentesco_path(@pessoa, parentesco), :destroy => (pessoa_parentesco_path(@pessoa, parentesco)) do %>
+        <td><%= link_to h(parentesco.nome), pessoa_parentesco_path(@pessoa, parentesco) %></td>
+        <td><%=h parentesco.tipo_parentesco %></td>
+        <td><%=h parentesco.data_nascimento %></td>
+        <td><%=h parentesco.idade %></td>
+      <% end %>
+    <% end %>
+  <% end %>
+
 </div>

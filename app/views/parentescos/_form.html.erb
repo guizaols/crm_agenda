@@ -1,0 +1,27 @@
+<div class="form">
+  <% form_for [@pessoa, @parentesco], :builder => TableFormBuilder do |p| %>
+    <%= p.error_messages%> <br />
+    <table>
+      <tr>
+        <td class="field_descriptor">Nome</td>
+        <td><%= p.text_field :nome, :simple_tag => true %></td>
+      </tr>
+      <tr>
+        <td class="field_descriptor">Tipo de parentesco</td>
+        <td><%= p.text_field :tipo_parentesco, :simple_tag => true %></td>
+      </tr>
+      <tr>
+        <td class="field_descriptor">Data de nascimento</td>
+        <td><%= p.text_field :data_nascimento, :simple_tag => true %></td>
+      </tr>
+      <tr>
+        <td class="field_descriptor">Idade</td>
+        <td><%= p.text_field :idade, :simple_tag => true %></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td><%= p.submit '', :class => ['bt_salvar', ' float_left'] %> <%= link_to '', pessoa_path(@pessoa), :class=>['bt_voltar', ' float_left'] %></td>
+      </tr>
+    </table>
+  <% end %>
+</div>

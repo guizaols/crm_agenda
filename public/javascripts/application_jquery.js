@@ -106,7 +106,7 @@ J("#proposta_data_inicio").datepicker({
 });
 
 J('input, textarea').keyup(function() {
-    if(J(this).attr('class') != 'emails')
+    if(J(this).attr('class') != 'emails' && J(this).attr('class') != 'input_medio emails')
         this.value = this.value.toUpperCase();
 });
 
